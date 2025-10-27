@@ -56,7 +56,7 @@ class GarageCar {
                 status = boxes[i].toString();
             }
             System.out.println("Бокс " + (i + 1) + ": " + status);
-        }
+        }//переписать на stream
     }
 
 
