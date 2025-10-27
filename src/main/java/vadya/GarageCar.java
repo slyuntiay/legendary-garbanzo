@@ -1,6 +1,5 @@
 package vadya;
 
-import java.util.stream.IntStream;
 
 class GarageCar {
     private Car[] boxes;
@@ -32,10 +31,6 @@ class GarageCar {
         return car;
     }
 
-    public boolean isFree(int boxNumber) {
-        return boxNumber >= 1 && boxNumber <= boxes.length &&
-                boxes[boxNumber - 1] == null;
-    }
 
     public int getFreeBoxNumber() {
         for (int i = boxes.length - 1; i >= 0; i--) {
