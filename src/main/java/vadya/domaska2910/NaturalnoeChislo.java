@@ -6,11 +6,20 @@ public class NaturalnoeChislo {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         int number = scanner.nextInt();
+
+        long startTime = System.currentTimeMillis();
+
         for (int i = 2; i <= number; i++) {
             if (isNumber(i)) {
                 System.out.println(i + "");
             }
         }
+
+        long endTime = System.currentTimeMillis();
+        long finalTime = endTime - startTime;
+
+        System.out.println("Время " + finalTime);
+        scanner.close();
     }
 
     public static boolean isNumber(int number) {
