@@ -2,7 +2,7 @@ package vadya.domaska2910;
 
 import java.util.Scanner;
 
-public class NaturalnoeChislo {
+public class SimplenoeChislo {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         int number = scanner.nextInt();
@@ -14,7 +14,8 @@ public class NaturalnoeChislo {
                 System.out.println(i + "");
             }
         }
-
+        //if (n < sqlt(t))
+        //if  (n < sqlt(2,3,5,7,11,13,,,,25))
         long endTime = System.currentTimeMillis();
         long finalTime = endTime - startTime;
 
