@@ -11,6 +11,7 @@ public class Recruitment {
         if (human.getGender().equals("female") || human.getAge() < 16) {
             return;
         }
+        //
     }
 
     public void remove(Human human) {

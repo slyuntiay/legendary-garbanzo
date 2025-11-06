@@ -11,7 +11,7 @@ public class Human {
     private int age;
     private String gender;
     private boolean militaryService;
-
+//
     public Human(int id, String name, int age, String gender, boolean militaryService) {
         this.id = id;
         this.name = name;
