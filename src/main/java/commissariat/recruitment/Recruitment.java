@@ -1,6 +1,6 @@
 package commissariat.recruitment;
 
-import commissariat.human.Human;
+import population.Human;
 
 import java.util.ArrayList;
 import java.util.List;
