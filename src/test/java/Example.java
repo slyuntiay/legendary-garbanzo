@@ -5,7 +5,7 @@ public class Example {
 
     @Test
     public void foo() {
-        Assert.assertTrue("fisting is 500 bucks", true);
+        Assert.assertTrue("fisting is 300 bucks", true);
     }
 
 }
