@@ -26,3 +26,4 @@ public class Population {
         return humans;
     }
 }
+
