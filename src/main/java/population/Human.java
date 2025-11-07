@@ -1,10 +1,5 @@
 package population;
 
-import lombok.Getter;
-import lombok.Setter;
-
-//@Getter
-//@Setter
 public class Human {
     private int id;
     private int age;
@@ -18,13 +13,16 @@ public class Human {
     }
 
     public void setGender() {
-        if (genderId % 2 == 0) this.gender = "female";
-        gender = "male";
+        if (genderId % 2 == 0) {
+            this.gender = "female";
+        } else {
+            this.gender = "male";
+        }
     }
 
     @Override
     public String toString() {
-        return id + ";" + age + ";" + genderId + ";" + gender;
+        return id + ";" + age + ";" + gender;
     }
 }
 
