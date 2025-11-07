@@ -5,16 +5,25 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public abstract class Human {
+public class Human {
     private int id;
-    private String name;
     private int age;
+    private int genderId;
     private String gender;
 
-    public Human(int id, String name, int age, String gender) {
+    public Human(int id, int age, int genderId) {
         this.id = id;
-        this.name = name;
         this.age = age;
-        this.gender = gender;
+        this.genderId = genderId;
+    }
+
+    public void setGender() {
+        if (genderId % 2 == 0) this.gender = "female";
+        gender = "male";
+    }
+
+    @Override
+    public String toString() {
+        return id + ";" + age + ";" + genderId + ";" + gender;
     }
 }
