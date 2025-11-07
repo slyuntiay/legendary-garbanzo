@@ -3,8 +3,8 @@ package population;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
-@Setter
+//@Getter
+//@Setter
 public class Human {
     private int id;
     private int age;
