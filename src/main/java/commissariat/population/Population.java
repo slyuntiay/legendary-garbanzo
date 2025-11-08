@@ -1,4 +1,4 @@
-package population;
+package commissariat.population;
 
 import lombok.Getter;
 

@@ -1,4 +1,4 @@
-package population;
+package commissariat.population;
 
 public class Human {
     private int id;
