@@ -8,12 +8,18 @@ import lombok.Setter;
 public class Candidate {
     private String candidateName;
     private int votes;
+
     public Candidate(String candidateName) {
         this.candidateName = candidateName;
         this.votes = votes;
     }
-    public void addVotes(){
+
+    public void addVotes() {
         this.votes++;
+    }
+
+    public void removeVotes() {
+        this.votes--;
     }
 
     @Override
@@ -29,3 +35,6 @@ public class Candidate {
 //Сделать возможность отзыва голоса
 //
 //Добавить статистику (% голосов)
+//lvl 3
+//добавить список людей которые будут давать рандомные голоса
+//....
