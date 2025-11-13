@@ -26,36 +26,26 @@ public class SumsOfPrimes {
     public void addSum(int sum) {
         ArrayList<Integer> values = new ArrayList<>();
         int difference = sum;
-        for (int firstNumberI = searchPrime(difference); firstNumberI >= 0 && difference != 0; --firstNumberI) {
-            difference -= primes.getPrimes().get(firstNumberI);
-            if (difference < 2) {
-                difference = sum;
-                continue;
-            }
+        for (int indexOfPrime = 0; primes.getPrimes().get(indexOfPrime) <= sum / 2; ++indexOfPrime) {
+            difference -= primes.getPrimes().get(indexOfPrime);
             if (primes.isPrime(difference)) {
+                values.add(primes.getPrimes().get(indexOfPrime));
                 values.add(difference);
-                values.add(primes.getPrimes().get(firstNumberI));
                 sums.put(sum, values);
                 return;
             }
-            for (int secondNumberI = searchPrime(difference); secondNumberI >= 0 && difference != 0; --secondNumberI) {
-                difference -= primes.getPrimes().get(secondNumberI);
-                if (difference == 0) {
-                    values.add(primes.getPrimes().get(secondNumberI));
-                    values.add(primes.getPrimes().get(firstNumberI));
-                    sums.put(sum, values);
-                }
-            }
+            difference = sum;
         }
-    }
-
-    public int searchPrime(int number) {
-        for (int index = 0; index < primes.getPrimes().size(); index++) {
-            if (primes.getPrimes().get(index) > number) {
-                return index - 1;
+        for (int indexOfPrime = 0; primes.getPrimes().get(indexOfPrime) <= sum / 2; ++indexOfPrime) {
+            difference -= primes.getPrimes().get(indexOfPrime);
+            if (sums.containsKey(difference) && sums.get(difference).size() < 3) {
+                values.add(primes.getPrimes().get(indexOfPrime));
+                values.addAll(sums.get(difference));
+                sums.put(sum, values);
+                return;
             }
+            difference = sum;
         }
-        return -1;
     }
 
     public void printSums() {
