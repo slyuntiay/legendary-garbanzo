@@ -28,7 +28,7 @@ public class ListOfPrimes {
         }
     }
 
-    private boolean isPrime(int number) {
+    public boolean isPrime(int number) {
         double numberSqrt = Math.sqrt(number);
         for (int index = 0; primes.get(index) <= numberSqrt; ++index) {
             if (number % primes.get(index) == 0) {
