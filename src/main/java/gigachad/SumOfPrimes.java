@@ -22,9 +22,9 @@ public class SumOfPrimes {
         for (int n = 0; n < 100000; n++) {
             computePrimesThatAddUpToN(n);
         }
-        for (int n = 100000; n > 0; n--) {
-            computePrimesThatAddUpToN(n);
-        }
+//        for (int n = 100000; n > 0; n--) {
+//            computePrimesThatAddUpToN(n);
+//        }
         long endTime = System.currentTimeMillis();
         long finalTime = endTime - startTime;
         System.out.println("Time " + finalTime);
