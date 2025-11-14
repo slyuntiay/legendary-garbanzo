@@ -25,6 +25,16 @@ public class SumsOfPrimes {
 
     public void addSum(int sum) {
         ArrayList<Integer> values = new ArrayList<>();
+        if (sum % 2 != 0) {
+            if (primes.isPrime(sum - 2)) {
+                values.add(2);
+                values.add(sum - 2);
+                sums.put(sum, values);
+                return;
+            } else {
+                addSumOfThree(sum);
+            }
+        }
         int difference = sum;
         for (int indexOfPrime = 0; primes.getPrimes().get(indexOfPrime) <= sum / 2; ++indexOfPrime) {
             difference -= primes.getPrimes().get(indexOfPrime);
@@ -36,6 +46,11 @@ public class SumsOfPrimes {
             }
             difference = sum;
         }
+    }
+
+    public void addSumOfThree(int sum) {
+        ArrayList<Integer> values = new ArrayList<>();
+        int difference = sum;
         for (int indexOfPrime = 0; primes.getPrimes().get(indexOfPrime) <= sum / 2; ++indexOfPrime) {
             difference -= primes.getPrimes().get(indexOfPrime);
             if (sums.containsKey(difference) && sums.get(difference).size() < 3) {
