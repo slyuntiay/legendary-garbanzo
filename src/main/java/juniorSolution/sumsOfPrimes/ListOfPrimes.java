@@ -29,6 +29,7 @@ public class ListOfPrimes {
     }
 
     public boolean isPrime(int number) {
+        if (number == 0) return false;
         if (number == 2) return true;
         double numberSqrt = Math.sqrt(number);
         for (int index = 0; primes.get(index) <= numberSqrt; ++index) {

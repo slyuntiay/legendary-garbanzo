@@ -14,7 +14,7 @@ public class Main {
             long endTime = System.currentTimeMillis();
             long finalTime = endTime - startTime;
             System.out.println("Time " + finalTime);
-//            sumsOfPrimes.printSums();
+            sumsOfPrimes.printSums();
             input = scanner.nextInt();
         }
 
