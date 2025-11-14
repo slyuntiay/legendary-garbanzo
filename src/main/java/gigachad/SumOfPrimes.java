@@ -8,7 +8,6 @@ import java.util.Map;
 
 public class SumOfPrimes {
     private static int largestComputedNumber = 4;
-    private static int preComputedResultsTimes = 0;
     private static final List<Integer> foundPrimes = new ArrayList<>();
     private static final Map<Integer, List<Integer>> preComputedResults = new HashMap<>();
 
@@ -19,16 +18,15 @@ public class SumOfPrimes {
 
     public static void main(String[] args) {
         long startTime = System.currentTimeMillis();
-        for (int n = 0; n < 100000; n++) {
+        for (int n = 0; n < 10000; n++) {
             computePrimesThatAddUpToN(n);
-        }
+        }/*
         for (int n = 100000; n > 0; n--) {
             computePrimesThatAddUpToN(n);
-        }
+        }*/
         long endTime = System.currentTimeMillis();
         long finalTime = endTime - startTime;
         System.out.println("Time " + finalTime);
-        System.out.println("Pre computed results times " + preComputedResultsTimes);
     }
 
     public static List<Integer> computePrimesThatAddUpToN(int n) {
@@ -36,7 +34,6 @@ public class SumOfPrimes {
             return Collections.emptyList();
         }
         if (preComputedResults.containsKey(n)) {
-            preComputedResultsTimes++;
             return preComputedResults.get(n);
         }
 
@@ -86,17 +83,12 @@ public class SumOfPrimes {
     }
 
     private static List<Integer> computeResult(List<Integer> primesTillN, int n) {
-        for (int biggestPrimeIndex = primesTillN.size() - 1; biggestPrimeIndex >= 0 ; biggestPrimeIndex--) {
+        for (int biggestPrimeIndex = primesTillN.size() - 1; biggestPrimeIndex >= 0; biggestPrimeIndex--) {
             List<Integer> result = new ArrayList<>();
             int remainder = n;
             for (int i = biggestPrimeIndex; i >= 0; i--) {
                 int prime = primesTillN.get(i);
                 remainder -= prime;
-                if (preComputedResults.containsKey(remainder)) {
-                    preComputedResultsTimes++;
-                    result.addAll(preComputedResults.get(remainder));
-                    return result;
-                }
                 if (remainder == 0) {
                     result.add(prime);
                     Collections.reverse(result);
@@ -106,6 +98,15 @@ public class SumOfPrimes {
                     remainder += prime;
                     continue;
                 }
+                if (Collections.binarySearch(primesTillN, remainder) >= 0) {
+                    if (Collections.binarySearch(result, remainder) < 0 && remainder != prime) {
+                        result.add(prime);
+                        result.add(remainder);
+                        Collections.reverse(result);
+                        return result;
+                    }
+                }
+
                 result.add(prime);
             }
         }
