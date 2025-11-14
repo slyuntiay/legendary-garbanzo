@@ -10,6 +10,7 @@ public class SumOfPrimes {
     private static int largestComputedNumber = 4;
     private static final List<Integer> foundPrimes = new ArrayList<>();
     private static final Map<Integer, List<Integer>> preComputedResults = new HashMap<>();
+    private static final boolean canRepeatPrimes = false;
 
     static {
         foundPrimes.add(2);
@@ -99,7 +100,7 @@ public class SumOfPrimes {
                     continue;
                 }
                 if (Collections.binarySearch(primesTillN, remainder) >= 0) {
-                    if (Collections.binarySearch(result, remainder) < 0 && remainder != prime) {
+                    if (Collections.binarySearch(result, remainder) < 0 && (remainder != prime || canRepeatPrimes)) {
                         result.add(prime);
                         result.add(remainder);
                         Collections.reverse(result);
