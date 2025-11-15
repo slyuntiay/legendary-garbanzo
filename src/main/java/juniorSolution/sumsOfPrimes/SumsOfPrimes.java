@@ -30,7 +30,6 @@ public class SumsOfPrimes {
                 values.add(2);
                 values.add(sum - 2);
                 sums.put(sum, values);
-                return;
             } else {
                 addSumOfThree(sum);
             }
