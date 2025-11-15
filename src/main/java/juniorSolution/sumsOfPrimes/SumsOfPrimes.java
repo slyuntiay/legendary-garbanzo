@@ -34,17 +34,18 @@ public class SumsOfPrimes {
             } else {
                 addSumOfThree(sum);
             }
-        }
-        int difference = sum;
-        for (int indexOfPrime = 0; true; indexOfPrime++) {
-            difference -= primes.getPrimes().get(indexOfPrime);
-            if (primes.isPrime(difference)) {
-                values.add(primes.getPrimes().get(indexOfPrime));
-                values.add(difference);
-                sums.put(sum, values);
-                return;
+        } else {
+            int difference = sum;
+            for (int indexOfPrime = 0; true; indexOfPrime++) {
+                difference -= primes.getPrimes().get(indexOfPrime);
+                if (primes.isPrime(difference)) {
+                    values.add(primes.getPrimes().get(indexOfPrime));
+                    values.add(difference);
+                    sums.put(sum, values);
+                    return;
+                }
+                difference = sum;
             }
-            difference = sum;
         }
     }
 
