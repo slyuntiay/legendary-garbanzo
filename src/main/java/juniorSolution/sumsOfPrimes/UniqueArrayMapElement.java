@@ -16,7 +16,7 @@ public class UniqueArrayMapElement {
                 mapElement.put(i, mapElement.get(i) + 1);
             }
             if (!mapElement.isEmpty()) {
-                Set<Integer> mapStream = mapElement.stream()
+                Map<Integer> mapStream = mapElement.stream()
                         .limit(1)
                         .collect(Collectors.toMap());
                 System.out.println(mapStream);
