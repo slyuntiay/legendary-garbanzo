@@ -1,9 +1,6 @@
 package lAnat.uniqueNumber;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 public class UniqueNumber {
     public static void main(String[] args) {
@@ -13,33 +10,23 @@ public class UniqueNumber {
         List<Integer> list = new ArrayList<>();
 
         for (int index = 0; index < size; ++index) {
-            list.add(random.nextInt());
+            list.add(random.nextInt(0, 21));
         }
-
         System.out.println(list);
 
-//        List<Integer> newList = new ArrayList<>(list);
-//        for (int index = 0; index < list.size(); ++index) {
-//            boolean found = false;
-//            if (list.get(index) == null) {
-//                continue;
-//            }
-//            for (int index1 = index + 1; index1 < list.size(); ++index1) {
-//                if (list.get(index1) == list.get(index)) {
-//                    newList.remove(index1);
-//                    found = true;
-//                }
-//                if (found) {
-//                    newList.remove(index);
-//                }
-//            }
-//        }
-//
-//
-//        System.out.println(list);
-//        int index = 0;
-//        while (newList.get(index) != null && index < list.size()) {
-//            System.out.println(newList.get(index));
-//        }
+        for (int index = 0; index < list.size(); ++index) {
+            boolean found = false;
+            for (int index1 = 0; index1 < list.size(); ++index1) {
+                if (index1 == index) continue;
+                if ((int) list.get(index1) == list.get(index)) {
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                System.out.print(list.get(index) + " ");
+                break;
+            }
+        }
     }
 }

@@ -13,8 +13,7 @@ public class UniqueArraySetElementSet {
 
         Set<Integer> streamSet = setUnique.stream()
                 .limit(1)
-                .collect(Collectors
-                        .toSet());
+                .collect(Collectors.toSet());
         System.out.println(streamSet);
     }
 }
