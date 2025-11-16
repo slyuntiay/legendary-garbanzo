@@ -1,4 +1,4 @@
-package vadya.domaska2910;
+package vaDick.domaska2910;
 
 import java.util.Scanner;
 

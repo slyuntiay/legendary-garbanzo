@@ -1,4 +1,4 @@
-package juniorSolution.sumsOfPrimes;
+package vaDick;
 
 import java.util.HashMap;
 

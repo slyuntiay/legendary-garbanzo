@@ -1,6 +1,6 @@
-package vadya.domaska2910.primeNumbers;
+package vaDick.domaska2910.primeNumbers;
 
-import vadya.domaska2910.PrimeNumbers;
+import vaDick.domaska2910.PrimeNumbers;
 
 import java.util.Scanner;
 

@@ -1,4 +1,4 @@
-package juniorSolution.sumsOfPrimes;
+package coopSolution.sumsOfPrimes;
 
 import java.util.*;
 
