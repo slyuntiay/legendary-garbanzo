@@ -9,3 +9,5 @@ create table users
 alter table users
     owner to "LAnat";
 
+INSERT INTO public.users (user_id, name, age) VALUES (1, 'Пупкин Василий', 30);
+INSERT INTO public.users (user_id, name, age) VALUES (2, 'Иванова Ольга', 31);
