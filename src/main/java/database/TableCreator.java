@@ -10,7 +10,7 @@ public class TableCreator {
         try {
             Class.forName("org.postgresql.Driver");
             connection = DriverManager.getConnection(
-                    "jdbc:postgresql://localhost:5432/postgres", "LAnat", "3815");
+                    "jdbc:postgresql://localhost:5432/ourMarketplace", "LAnat", "3815");
             statement = connection.createStatement();
 
             String str = "CREATE TABLE users (" +
