@@ -1,5 +1,8 @@
+import marketplace.database.TableEditor;
+
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello podavans!!!");
+        String str = "DROP TABLE clients1";
+        TableEditor.editTable(str);
     }
 }
