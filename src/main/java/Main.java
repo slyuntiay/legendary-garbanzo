@@ -1,9 +1,14 @@
-import marketplace.database.TableEditor;
+import marketplace.database.PostgresConnector;
 
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+        PostgresConnector postgresConnector = new PostgresConnector(args[0], args[1], args[2]);
+        String dropSql = "DROP TABLE clients1;";
+        String createSql = "CREATE TABLE clients1();";
+        postgresConnector.execute(createSql);
+        postgresConnector.execute(dropSql);
         Scanner scanner = new Scanner(System.in);
         String str = "DROP TABLE clients1";
         TableEditor.editTable(str);
