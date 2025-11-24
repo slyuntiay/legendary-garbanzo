@@ -1,4 +1,4 @@
-package marketplace.database;
+package marketplace.repository;
 
 import lombok.Getter;
 
@@ -6,7 +6,8 @@ import java.util.Arrays;
 
 @Getter
 public enum SqlScript {
-    CREATE_PRODUCT_TABLE("CREATE TABLE PRODUCT_TABLE (id SERIAL PRIMARY KEY, name TEXT NOT NULL, price MONEY, quantity INTEGER NOT NULL);",0),
+    CREATE_PRODUCT_TABLE("CREATE TABLE PRODUCT_TABLE (id SERIAL PRIMARY KEY, name TEXT NOT NULL," +
+            " price MONEY, quantity INTEGER NOT NULL);",0),
     DROP_PRODUCT_TABLE("DROP TABLE PRODUCT_TABLE;",0),
     CREATE_PRODUCT("INSERT INTO PRODUCT_TABLE (name, price, quantity) VALUES (?, ?, ?);",3),
     DELETE_PRODUCT("DELETE FROM PRODUCT_TABLE WHERE id = ?;",1),

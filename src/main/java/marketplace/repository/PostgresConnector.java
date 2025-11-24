@@ -1,4 +1,4 @@
-package marketplace.database;
+package marketplace.repository;
 
 import lombok.RequiredArgsConstructor;
 

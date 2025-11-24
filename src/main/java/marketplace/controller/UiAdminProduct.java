@@ -1,9 +1,10 @@
-package marketplace.database;
+package marketplace.controller;
+
+import marketplace.repository.SqlScript;
 
 import java.util.Scanner;
 
-public class UiAdmin {
-
+public class UiAdminProduct {
     public static void printOptions() {
         System.out.println("Интерфейс магазина");
         System.out.println("1-Создать таблицу продуктов");
@@ -17,7 +18,6 @@ public class UiAdmin {
 
     public static SqlScript makeChoice() {
         Scanner scanner = new Scanner(System.in);
-
         int choice = scanner.nextInt();
         return SqlScript.getSql(choice);
     }

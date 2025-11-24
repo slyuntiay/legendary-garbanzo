@@ -1,6 +1,7 @@
-package marketplace.database;
+package marketplace.service;
 
 import marketplace.entity.Client;
+import marketplace.repository.PostgresConnector;
 
 import java.util.HashMap;
 import java.util.Map;
