@@ -46,5 +46,7 @@ public class PostgresConnector {
             throwables.printStackTrace();
         }
     }
+    public void deleteProduct(String sql, String name, int price, int quantity) {}
+
 
 }
