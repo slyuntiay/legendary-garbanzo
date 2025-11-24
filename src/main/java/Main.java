@@ -15,10 +15,11 @@ public class Main {
         switch (choice) {
             case 1:
                 UiAdminClients.printOptions();
-
+                break;
             case 2:
                 UiAdminProduct.printOptions();
               UiAdminProduct.runOption(postgresConnector);
+              break;
             default:
                 System.out.println("Ну и пошёл тогда на хуй!");
         }

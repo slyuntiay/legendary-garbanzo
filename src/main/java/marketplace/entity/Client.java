@@ -3,6 +3,8 @@ package marketplace.entity;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.beans.BeanProperty;
+
 @Setter
 @Getter
 public class Client {
