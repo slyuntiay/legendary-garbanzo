@@ -1,7 +1,6 @@
 package marketplace.controller;
 
-import marketplace.repository.PostgresConnector;
-import marketplace.repository.SqlScript;
+import marketplace.repository.CRUDRepository;
 
 import java.util.Scanner;
 
@@ -18,13 +17,13 @@ public class UiAdminProduct {
         System.out.println("8-Выход");
     }
 
-    public static SqlScript makeChoice() {
+    /*public static SqlScript makeChoice() {
         Scanner scanner = new Scanner(System.in);
         int choice = scanner.nextInt();
         return SqlScript.getSql(choice);
     }
 
-    public static void runOption(PostgresConnector postgresConnector) {
+    public static void runOption(CRUDRepository<?> crudRepository) {
         Scanner scanner = new Scanner(System.in);
         boolean again = true;
         while (again) {
@@ -44,5 +43,5 @@ public class UiAdminProduct {
                 postgresConnector.executeWithParam(sql.getSql(), param);
             }
         }
-    }
+    }*/
 }

@@ -1,7 +1,5 @@
 package marketplace.controller;
 
-import marketplace.repository.SqlScript;
-
 import java.util.Scanner;
 
 public class UiAdminClients {
@@ -16,10 +14,4 @@ public class UiAdminClients {
         System.out.println("7-Обновить клиентов");
     }
 
-    public static SqlScript makeChoice() {
-        Scanner scanner = new Scanner(System.in);
-
-        int choice = scanner.nextInt();
-        return SqlScript.getSql(choice);
-    }
 }
