@@ -3,7 +3,6 @@ package marketplace.repository.client;
 import lombok.RequiredArgsConstructor;
 import marketplace.entity.Client;
 import marketplace.repository.CRUDRepository;
-import marketplace.repository.product.ClientSQLScript;
 
 import java.sql.*;
 import java.util.List;
@@ -13,6 +12,26 @@ public class ClientRepo implements CRUDRepository<Client> {
     private final String url;
     private final String user;
     private final String password;
+
+    public boolean createTable() {
+        try (Connection connection = DriverManager.getConnection(url, user, password);
+             PreparedStatement statement = connection.prepareStatement(ClientSQLScript.CREATE_TABLE.getSql())){
+            statement.executeUpdate();
+        } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+        }
+        return true;
+    }
+
+    public boolean dropTable() {
+        try (Connection connection = DriverManager.getConnection(url, user, password);
+             PreparedStatement statement = connection.prepareStatement(ClientSQLScript.DROP_TABLE.getSql())){
+            statement.executeUpdate();
+        } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+        }
+        return true;
+    }
 
     @Override
     public Client create(Client client) {
@@ -44,7 +63,18 @@ public Client update(Client entity) {
 
 @Override
 public boolean delete(int id) {
-    return false;
+    try (Connection connection = DriverManager.getConnection(url, user, password);
+         PreparedStatement statement = connection.prepareStatement(ClientSQLScript.DELETE.getSql())){
+        statement.setInt(1, id);
+        int rowDeleted = statement.executeUpdate();
+        if (rowDeleted > 0) {
+            System.out.println("Клиент успешно удалён");
+        }
+        statement.executeUpdate();
+    } catch (SQLException sqlException) {
+        sqlException.printStackTrace();
+    }
+    return true;
 }
 
 @Override

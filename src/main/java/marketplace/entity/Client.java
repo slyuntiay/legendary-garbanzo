@@ -8,6 +8,7 @@ import java.beans.BeanProperty;
 @Setter
 @Getter
 public class Client {
+
     private int id;
     private String surname;
     private String name;
@@ -15,8 +16,8 @@ public class Client {
     public Client() {
     }
 
-    public Client(int id, String surname, String name) {
-        this.id = id;
+    public Client(String surname, String name) {
+        this.id = 1;
         this.surname = surname;
         this.name = name;
     }
