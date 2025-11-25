@@ -17,7 +17,6 @@ public class Client {
     }
 
     public Client(String surname, String name) {
-        this.id = 1;
         this.surname = surname;
         this.name = name;
     }
