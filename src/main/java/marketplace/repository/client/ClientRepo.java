@@ -47,7 +47,8 @@ public class ClientRepo implements CRUDRepository<Client> {
             }
             try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
-                    client.setId(generatedKeys.getInt(1));
+                    int id = generatedKeys.getInt(1);
+                    client.setId(id);
                 } else {
                     throw new SQLException("Failed to create client");
                 }

@@ -7,7 +7,7 @@ public enum ClientSQLScript {
     CREATE_TABLE("CREATE TABLE CLIENT_TABLE (id SERIAL PRIMARY KEY, surname TEXT NOT NULL," +
             " name TEXT NOT NULL);"),
     DROP_TABLE("DROP TABLE CLIENT_TABLE;"),
-    CREATE("INSERT INTO CLIENT_TABLE (id, surname, name) VALUES (?, ?, ?);"),
+    CREATE("INSERT INTO CLIENT_TABLE (surname, name) VALUES (?, ?);"),
     DELETE("DELETE FROM CLIENT_TABLE WHERE id = ?;"),
     READ("SELECT * FROM CLIENT_TABLE WHERE id = ?;"),
     READ_ALL("SELECT * FROM CLIENT_TABLE;"),
