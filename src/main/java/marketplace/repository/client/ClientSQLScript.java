@@ -2,6 +2,8 @@ package marketplace.repository.client;
 
 import lombok.Getter;
 
+import java.util.Arrays;
+
 @Getter
 public enum ClientSQLScript {
     CREATE_TABLE("CREATE TABLE CLIENT_TABLE (id SERIAL PRIMARY KEY, surname TEXT NOT NULL," +
@@ -17,5 +19,12 @@ public enum ClientSQLScript {
 
     ClientSQLScript(String sql) {
         this.sql = sql;
+    }
+
+    public static ClientSQLScript getSql(int number) {
+        return Arrays.stream(ClientSQLScript.values())
+                .filter(clientSQLScript -> clientSQLScript.ordinal() == number - 1)
+                .findFirst()
+                .orElseThrow();
     }
 }
