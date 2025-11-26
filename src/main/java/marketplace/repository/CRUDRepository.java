@@ -8,7 +8,7 @@ public interface CRUDRepository<T> {
 
     T read(int id);
 
-    T update(T entity);
+    void update(T entity);
 
     boolean delete(int id);
 

@@ -17,8 +17,10 @@ public class ClientRepo implements CRUDRepository<Client> {
         try (Connection connection = DriverManager.getConnection(url, user, password);
              PreparedStatement statement = connection.prepareStatement(ClientSQLScript.CREATE_TABLE.getSql())) {
             statement.executeUpdate();
+            System.out.println("Таблица успешно создана");
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
+            System.out.println("ОШИБКА. Не удалось создать таблицу");
         }
         return true;
     }
@@ -27,8 +29,10 @@ public class ClientRepo implements CRUDRepository<Client> {
         try (Connection connection = DriverManager.getConnection(url, user, password);
              PreparedStatement statement = connection.prepareStatement(ClientSQLScript.DROP_TABLE.getSql())) {
             statement.executeUpdate();
+            System.out.println("Таблица успешно удалена");
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
+            System.out.println("ОШИБКА. Не удалось удалить таблицу");
         }
         return true;
     }
@@ -43,14 +47,14 @@ public class ClientRepo implements CRUDRepository<Client> {
             int affectedRows = statement.executeUpdate();
 
             if (affectedRows == 0) {
-                throw new SQLException("Failed to create client");
+                throw new SQLException("ОШИБКА. Не удалось добавить клиента");
             }
             try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
                     int id = generatedKeys.getInt(1);
                     client.setId(id);
                 } else {
-                    throw new SQLException("Failed to create client");
+                    throw new SQLException("ОШИБКА. Не удалось добавить клиента");
                 }
             }
 
@@ -61,14 +65,21 @@ public class ClientRepo implements CRUDRepository<Client> {
 
     }
 
-    @Override
-    public Client read(int id) {
-        return null;
-    }
+
 
     @Override
-    public Client update(Client entity) {
-        return null;
+    public void update(Client client) {
+        try (Connection connection = DriverManager.getConnection(url, user, password);
+             PreparedStatement statement = connection.prepareStatement(ClientSQLScript.UPDATE.getSql())) {
+            statement.setString(1, client.getSurname());
+            statement.setString(2, client.getName());
+            statement.setInt(3, client.getId());
+            int affectedRows = statement.executeUpdate();
+            System.out.println("Клиент изменен" + affectedRows);
+        } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+
+        }
     }
 
     @Override
@@ -83,8 +94,22 @@ public class ClientRepo implements CRUDRepository<Client> {
             statement.executeUpdate();
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
+            System.out.println("ОШИБКА. Не удалось создать клиента");
         }
         return true;
+    }
+
+    @Override
+    public Client read(int id) {
+        try (Connection connection = DriverManager.getConnection(url, user, password);
+             PreparedStatement statement = connection.prepareStatement(ClientSQLScript.UPDATE.getSql())) {
+             statement.setInt(1, id);
+
+        } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+            System.out.println("ОШИБКА. Не удалось прочитать клиента");
+        }
+        return null;
     }
 
     @Override
