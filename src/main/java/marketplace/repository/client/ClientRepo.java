@@ -5,6 +5,7 @@ import marketplace.entity.Client;
 import marketplace.repository.CRUDRepository;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -66,7 +67,6 @@ public class ClientRepo implements CRUDRepository<Client> {
     }
 
 
-
     @Override
     public void update(Client client) {
         try (Connection connection = DriverManager.getConnection(url, user, password);
@@ -101,19 +101,42 @@ public class ClientRepo implements CRUDRepository<Client> {
 
     @Override
     public Client read(int id) {
+        Client client1 = null;
         try (Connection connection = DriverManager.getConnection(url, user, password);
-             PreparedStatement statement = connection.prepareStatement(ClientSQLScript.UPDATE.getSql())) {
-             statement.setInt(1, id);
-
+             PreparedStatement statement = connection.prepareStatement(ClientSQLScript.READ.getSql())) {
+            statement.setInt(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                Client client = new Client(resultSet.getInt("id"),
+                        resultSet.getString("surname"), resultSet.getString("name"));
+                client1 = client;
+            }
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
             System.out.println("ОШИБКА. Не удалось прочитать клиента");
         }
-        return null;
+        return client1;
     }
 
     @Override
-    public List<Client> readAll(int id) {
-        return List.of();
+    public List<Client> readAll() {
+        List<Client> list = new ArrayList<>();
+        try (Connection connection = DriverManager.getConnection(url, user, password);
+             PreparedStatement statement = connection.prepareStatement(ClientSQLScript.READ_ALL.getSql())) {
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                Client client = new Client();
+                client.setId(resultSet.getInt("id"));
+                client.setSurname(resultSet.getString("surname"));
+                client.setName(resultSet.getString("name"));
+                list.add(client);
+            }
+        } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+            System.out.println("ОШИБКА. Не удалось прочитать БД");
+        }
+        return list;
     }
 }
+
+

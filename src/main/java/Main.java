@@ -10,8 +10,7 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         ClientRepo clientRepo = new ClientRepo(args[0], args[1], args[2]);
-        Client client = new Client(1,"Ольга","Олегов");
-        clientRepo.update(client);
+        System.out.println(clientRepo.readAll());
 
 
 

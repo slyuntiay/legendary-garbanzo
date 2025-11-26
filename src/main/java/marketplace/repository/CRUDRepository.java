@@ -12,5 +12,5 @@ public interface CRUDRepository<T> {
 
     boolean delete(int id);
 
-    List<T> readAll(int id);
+    List<T> readAll();
 }
