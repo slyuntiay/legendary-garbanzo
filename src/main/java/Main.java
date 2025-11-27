@@ -13,10 +13,10 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         ClientRepo clientRepo = new ClientRepo(args[0], args[1], args[2]);
         ProductRepo productRepo = new ProductRepo(args[0], args[1], args[2]);
-       productRepo.dropTable();
-       productRepo.createTable();
 
-
+        Product product = new Product(1,"Булка",100.4,20);
+//        productRepo.create(product);
+        productRepo.update(product);
 
 
 //        boolean outsideAgain = true;
@@ -47,7 +47,7 @@ public class Main {
 //                default:
 //                    outsideAgain = false;
         System.out.println("Ну и пошёл тогда ты на хуй!");
-            }
-        }
+    }
+}
 
 

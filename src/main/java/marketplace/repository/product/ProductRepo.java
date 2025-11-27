@@ -47,7 +47,7 @@ import java.util.List;
                 statement.setDouble(2, product.getPrice());
                 statement.setInt(3, product.getQuantity());
                 int affectedRows = statement.executeUpdate();
-
+                System.out.println("Продукт создан");
                 if (affectedRows == 0) {
                     throw new SQLException("ОШИБКА. Не удалось добавить клиента");
                 }
@@ -74,6 +74,7 @@ import java.util.List;
                 statement.setString(1, product.getName());
                 statement.setDouble(2, product.getPrice());
                 statement.setInt(3, product.getQuantity());
+                statement.setInt(4, product.getId());
 
                 int affectedRows = statement.executeUpdate();
                 System.out.println("Продукт успешно изменен");

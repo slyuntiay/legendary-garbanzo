@@ -12,11 +12,16 @@ public class Product {
     private double price;
     private int quantity;
 
-    public Product() {
+    public Product() {}
 
-    }
     public Product(int id) {
         this.id = id;
+    }
+
+    public Product(String name, double price, int quantity) {
+        this.name = name;
+        this.price = price;
+        this.quantity = quantity;
     }
 
     @Override
