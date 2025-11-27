@@ -1,7 +1,5 @@
 import marketplace.controller.UiAdminClients;
 import marketplace.controller.UiAdminProduct;
-import marketplace.entity.Client;
-import marketplace.entity.Product;
 import marketplace.repository.client.ClientRepo;
 import marketplace.repository.product.ProductRepo;
 
@@ -13,41 +11,36 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         ClientRepo clientRepo = new ClientRepo(args[0], args[1], args[2]);
         ProductRepo productRepo = new ProductRepo(args[0], args[1], args[2]);
-       productRepo.dropTable();
-       productRepo.createTable();
 
 
-
-
-//        boolean outsideAgain = true;
-//        while (outsideAgain) {
-//            System.out.println("Выберите вариант:");
-//            System.out.println("1 - Работа с клиентской БД");
-//            System.out.println("2 - Работа с продуктовой БД");
-//            System.out.println("3 - Выход");
-//            int option = scanner.nextInt();
-//            switch (option) {
-//                case 1:
-//                    boolean again = true;
-//                    do {
-//                        UiAdminClients.printOptions();
-//                        option = scanner.nextInt();
-//                        try {
-//                            UiAdminClients.getOption(option);
-//                        } catch (Exception e) {
-//                            again = false;
-//                        }
-//                    }
-//                    while (again);
-//                    break;
-//                case 2:
-//                    UiAdminProduct.printOptions();
-//                    option = scanner.nextInt();
-//                    break;
-//                default:
-//                    outsideAgain = false;
-        System.out.println("Ну и пошёл тогда ты на хуй!");
+        while (true) {
+            System.out.println("Выберите вариант:");
+            System.out.println("1 - Работа с клиентской БД");
+            System.out.println("2 - Работа с продуктовой БД");
+            System.out.println("3 - Выход");
+            int option = scanner.nextInt();
+            switch (option) {
+                case 1:
+                    boolean again = true;
+                    do {
+                        UiAdminClients.printOptions();
+                        option = scanner.nextInt();
+                        try {
+                            UiAdminClients.getOption(option);
+                        } catch (Exception e) {
+                            again = false;
+                        }
+                    }
+                    while (again);
+                    break;
+                case 2:
+                    UiAdminProduct.printOptions();
+                    option = scanner.nextInt();
+                    break;
+                default:
+                    System.out.println("Ну и пошёл тогда ты на хуй!");
+                    return;
             }
         }
-
-
+    }
+}
