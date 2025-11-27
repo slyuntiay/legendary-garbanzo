@@ -71,14 +71,16 @@ public class ClientRepo implements CRUDRepository<Client> {
     public void update(Client client) {
         try (Connection connection = DriverManager.getConnection(url, user, password);
              PreparedStatement statement = connection.prepareStatement(ClientSQLScript.UPDATE.getSql())) {
+
             statement.setString(1, client.getSurname());
             statement.setString(2, client.getName());
             statement.setInt(3, client.getId());
+
             int affectedRows = statement.executeUpdate();
-            System.out.println("Клиент изменен" + affectedRows);
+            System.out.println("Клиент успешно изменен");
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
-
+            System.out.println("ОШИБКА. Не удалось изменить данные клиента");
         }
     }
 
@@ -86,7 +88,9 @@ public class ClientRepo implements CRUDRepository<Client> {
     public boolean delete(int id) {
         try (Connection connection = DriverManager.getConnection(url, user, password);
              PreparedStatement statement = connection.prepareStatement(ClientSQLScript.DELETE.getSql())) {
+
             statement.setInt(1, id);
+
             int rowDeleted = statement.executeUpdate();
             if (rowDeleted > 0) {
                 System.out.println("Клиент успешно удалён");
@@ -101,21 +105,21 @@ public class ClientRepo implements CRUDRepository<Client> {
 
     @Override
     public Client read(int id) {
-        Client client1 = null;
+        Client client = null;
         try (Connection connection = DriverManager.getConnection(url, user, password);
              PreparedStatement statement = connection.prepareStatement(ClientSQLScript.READ.getSql())) {
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                Client client = new Client(resultSet.getInt("id"),
-                        resultSet.getString("surname"), resultSet.getString("name"));
-                client1 = client;
+                String surname = resultSet.getString("surname");
+                String name = resultSet.getString("name");
+                client = new Client(id, surname, name);
             }
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
             System.out.println("ОШИБКА. Не удалось прочитать клиента");
         }
-        return client1;
+        return client;
     }
 
     @Override
