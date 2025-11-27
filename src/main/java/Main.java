@@ -18,34 +18,6 @@ public class Main {
 //        productRepo.create(product);
         productRepo.update(product);
 
-
-//        boolean outsideAgain = true;
-//        while (outsideAgain) {
-//            System.out.println("Выберите вариант:");
-//            System.out.println("1 - Работа с клиентской БД");
-//            System.out.println("2 - Работа с продуктовой БД");
-//            System.out.println("3 - Выход");
-//            int option = scanner.nextInt();
-//            switch (option) {
-//                case 1:
-//                    boolean again = true;
-//                    do {
-//                        UiAdminClients.printOptions();
-//                        option = scanner.nextInt();
-//                        try {
-//                            UiAdminClients.getOption(option);
-//                        } catch (Exception e) {
-//                            again = false;
-//                        }
-//                    }
-//                    while (again);
-//                    break;
-//                case 2:
-//                    UiAdminProduct.printOptions();
-//                    option = scanner.nextInt();
-//                    break;
-//                default:
-//                    outsideAgain = false;
         System.out.println("Ну и пошёл тогда ты на хуй!");
     }
 }
