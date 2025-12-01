@@ -85,7 +85,8 @@ import java.util.List;
         }
 
         @Override
-        public boolean delete(int id) {
+        public void delete(int id) {
+            Product product = null;
             try (Connection connection = DriverManager.getConnection(url, user, password);
                  PreparedStatement statement = connection.prepareStatement(ProductSQLScript.DELETE.getSql())) {
 
@@ -100,7 +101,6 @@ import java.util.List;
                 sqlException.printStackTrace();
                 System.out.println("ОШИБКА. Не удалось создать продукт");
             }
-            return true;
         }
 
         @Override

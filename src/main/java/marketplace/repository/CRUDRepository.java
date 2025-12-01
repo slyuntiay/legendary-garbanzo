@@ -10,7 +10,7 @@ public interface CRUDRepository<T> {
 
     void update(T entity);
 
-    boolean delete(int id);
+    void delete(int id);
 
     List<T> readAll();
 }

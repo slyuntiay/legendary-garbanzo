@@ -41,19 +41,18 @@ public class ClientRepo implements CRUDRepository<Client> {
     @Override
     public Client create(Client client) {
         try (Connection connection = DriverManager.getConnection(url, user, password);
-             PreparedStatement statement = connection.prepareStatement(ClientSQLScript.CREATE.getSql(), Statement.RETURN_GENERATED_KEYS)) {
+             PreparedStatement statement = connection.prepareStatement(
+                     ClientSQLScript.CREATE.getSql(), Statement.RETURN_GENERATED_KEYS)) {
 
             statement.setString(1, client.getSurname());
             statement.setString(2, client.getName());
-            int affectedRows = statement.executeUpdate();
+            statement.executeUpdate();
 
-            if (affectedRows == 0) {
-                throw new SQLException("ОШИБКА. Не удалось добавить клиента");
-            }
             try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
                     int id = generatedKeys.getInt(1);
                     client.setId(id);
+                    System.out.println("Клиент " + '"' + client + '"' + " успешно добавлен");
                 } else {
                     throw new SQLException("ОШИБКА. Не удалось добавить клиента");
                 }
@@ -75,9 +74,8 @@ public class ClientRepo implements CRUDRepository<Client> {
             statement.setString(1, client.getSurname());
             statement.setString(2, client.getName());
             statement.setInt(3, client.getId());
-
-            int affectedRows = statement.executeUpdate();
-            System.out.println("Клиент успешно изменен");
+            statement.executeUpdate();
+            System.out.println("Сведения о клиенте успешно изменены");
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
             System.out.println("ОШИБКА. Не удалось изменить данные клиента");
@@ -85,22 +83,24 @@ public class ClientRepo implements CRUDRepository<Client> {
     }
 
     @Override
-    public boolean delete(int id) {
+    public void delete(int id) {
+        Client client = null;
         try (Connection connection = DriverManager.getConnection(url, user, password);
              PreparedStatement statement = connection.prepareStatement(ClientSQLScript.DELETE.getSql())) {
 
             statement.setInt(1, id);
-
-            int rowDeleted = statement.executeUpdate();
-            if (rowDeleted > 0) {
-                System.out.println("Клиент успешно удалён");
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                String surname = resultSet.getString("surname");
+                String name = resultSet.getString("name");
+                client = new Client(id, surname, name);
             }
             statement.executeUpdate();
+            System.out.println("Клиент " + '"' + client + '"' + " успешно удалён");
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
-            System.out.println("ОШИБКА. Не удалось создать клиента");
+            System.out.println("ОШИБКА. Не удалось удалить клиента");
         }
-        return true;
     }
 
     @Override
@@ -108,6 +108,7 @@ public class ClientRepo implements CRUDRepository<Client> {
         Client client = null;
         try (Connection connection = DriverManager.getConnection(url, user, password);
              PreparedStatement statement = connection.prepareStatement(ClientSQLScript.READ.getSql())) {
+
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {

@@ -29,7 +29,7 @@ public class Client {
 
     @Override
     public String toString() {
-        return id + ";" + surname + ";" + name;
+        return id + " " + surname + " " + name;
     }
 
     @Override

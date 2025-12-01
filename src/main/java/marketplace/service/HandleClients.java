@@ -15,15 +15,17 @@ public class HandleClients {
     }
 
     public void showMenu() {
-        while (true) {
-            System.out.print("Меню Клиентов:");
-            System.out.print("1-Создать таблицу клиентов:");
-            System.out.print("2-Удалить таблицу клиентов:");
-            System.out.print("3-Добавить клиентов:");
-            System.out.print("4-Удалить клиента:");
-            System.out.print("5-Прочитать клиентов:");
-            System.out.print("6-Прочитать все клиентов:");
-            System.out.print("7-Обновить клиентов:");
+        boolean again = true;
+        while (again) {
+            System.out.println("Меню Клиентов:");
+            System.out.println("1 - Создать таблицу клиентов");
+            System.out.println("2 - Удалить таблицу клиентов");
+            System.out.println("3 - Добавить клиента");
+            System.out.println("4 - Удалить клиента");
+            System.out.println("5 - Получить сведения о клиенте");
+            System.out.println("6 - Получить сведения обо всех клиентах");
+            System.out.println("7 - Обновить сведения о клиенте");
+            System.out.println("8 - Выход");
             int choice = scanner.nextInt();
             switch (choice) {
                 case 1:
@@ -47,9 +49,9 @@ public class HandleClients {
                 case 7:
                     this.updateClient();
                     break;
+                default:
+                    again = false;
             }
-
-
         }
     }
 
@@ -78,13 +80,32 @@ public class HandleClients {
     private void readClient() {
         System.out.println("Введите id клиента");
         int id = scanner.nextInt();
-        clientRepo.read(id);
+        System.out.println(clientRepo.read(id));
+        System.out.println();
     }
 
     private void readAllClients() {
+        for (Client client : clientRepo.readAll()) {
+            System.out.println(client);
+        }
+        System.out.println();
     }
 
     private void updateClient() {
+        System.out.println("Введите id клиента");
+        int id = scanner.nextInt();
+        Client client = clientRepo.read(id);
+        System.out.println(client + "\n");
+        scanner.nextLine();
+
+        System.out.println("Введите новую фамилию");
+        client.setSurname(scanner.nextLine());
+
+        System.out.println("Введите новое имя");
+        client.setName(scanner.nextLine());
+
+        clientRepo.update(client);
+        System.out.println();
     }
 }
 
