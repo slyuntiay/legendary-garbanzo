@@ -2,6 +2,7 @@ package marketplace.service;
 
 import java.util.Scanner;
 
+import marketplace.entity.Client;
 import marketplace.entity.Product;
 import marketplace.repository.product.ProductRepo;
 
@@ -14,16 +15,18 @@ public class HandleProducts {
         this.scanner = scanner;
     }
 
-    public void showMenu(String[] args) {
-        while (true) {
-            System.out.print("Меню продуктов:");
-            System.out.print("1-Создать таблицу продукты:");
-            System.out.print("2-Удалить таблицу продуктов:");
-            System.out.print("3-Добавить продукт:");
-            System.out.print("4-Удалить продукт:");
-            System.out.print("5-Прочитать продукт:");
-            System.out.print("6-Прочитать все продукты:");
-            System.out.print("7-Обновить продукты:");
+    public void showMenu() {
+        boolean again = true;
+        while (again) {
+            System.out.println("Меню продуктов:");
+            System.out.println("1-Создать таблицу продукты:");
+            System.out.println("2-Удалить таблицу продуктов:");
+            System.out.println("3-Добавить продукт:");
+            System.out.println("4-Удалить продукт:");
+            System.out.println("5-Прочитать продукт:");
+            System.out.println("6-Прочитать все продукты:");
+            System.out.println("7-Обновить продукты:");
+            System.out.println("8-Выход");
 
             int choice = scanner.nextInt();
             scanner.nextLine();
@@ -46,9 +49,14 @@ public class HandleProducts {
                 case 6:
                     this.readAllProducts();
                     break;
-//                case 7:
-//                    this.updateProducts();
-//                    break;
+                case 7:
+                    this.updateProducts();
+                    break;
+                    case 8:
+                        again = false;
+                        break;
+                default:
+                    again = false;
             }
 
         }
@@ -81,17 +89,35 @@ public class HandleProducts {
     private void readProduct() {
         System.out.println("Введите id продукта");
         int id = scanner.nextInt();
-        productRepo.read(id);
+        System.out.println(productRepo.read(id));
+        System.out.println();
     }
 
     private void readAllProducts() {
-        productRepo.readAll();
+        for (Product product : productRepo.readAll()) {
+            System.out.println(product);
+        }
+        System.out.println();
     }
 
-    private void updateProducts(Product product) {
+    private void updateProducts() {
         System.out.println("Введите id продукта");
         int id = scanner.nextInt();
+        Product product = productRepo.read(id);
+        System.out.println(product + "\n");
+        scanner.nextLine();
+
+        System.out.println("Введите новое название продукта");
+        product.setName(scanner.nextLine());
+
+        System.out.println("Введите новую цену");
+        product.setPrice(scanner.nextDouble());
+
+        System.out.println("Введите кол-во");
+        product.setQuantity(scanner.nextInt());
+
         productRepo.update(product);
+        System.out.println();
     }
 }
 

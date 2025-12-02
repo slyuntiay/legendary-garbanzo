@@ -49,6 +49,9 @@ public class HandleClients {
                 case 7:
                     this.updateClient();
                     break;
+                    case 8:
+                        again = false;
+                        break;
                 default:
                     again = false;
             }

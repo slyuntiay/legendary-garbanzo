@@ -3,42 +3,47 @@ package marketplace.service;
 import marketplace.repository.client.ClientRepo;
 import marketplace.repository.product.ProductRepo;
 
-//import java.util.Scanner;
-//
-//public class ServiceUi {
-//    private final ProductRepo productRepo;
-//    private final Scanner scanner;
-//    private final ClientRepo clientRepo;
-//    private final HandleProducts handleProducts;
-//    private final HandleClients handleClients;
-//
-//    public ServiceUi(ProductRepo productRepo, Scanner scanner, ClientRepo clientRepo, HandleProducts handleProducts) {
-//        this.productRepo = productRepo;
-//        this.scanner = scanner;
-//        this.clientRepo = clientRepo;
-//        this.handleProducts = handleProducts;
-////        this.handleClients = handleClients;
-////    }
-////
-////    private void switchMenu() {
-////        switch (choice) {
-////            case 1 -> handleClients.showMenu();
-////            case 2 -> handleProducts.showMenu();
-////            case 3 -> {
-////                System.out.println("Выход");
-////                return;
-////            }
-//            default:
-//                System.out.println("Ну и пошёл тогда ты на хуй!");
-//
-//        }
-//    }
-//
-//    private void printMenu() {
-//
-//        System.out.println("\n Меню");
-//        System.out.println("\n1 - Клиент меню");
-//        System.out.println("\n2 - Продукт меню");
-//        System.out.println("\n3 - Вывох");
-//    }
-//}
+import java.util.Scanner;
+
+public class ServiceUi {
+    private final Scanner scanner;
+    private final ProductRepo productRepo;
+    private final ClientRepo clientRepo;
+    private final HandleProducts handleProducts;
+    private final HandleClients handleClients;
+
+    public ServiceUi(String url, String username, String password) {
+        this.scanner = new Scanner(System.in);
+        this.productRepo = new ProductRepo(url, username, password);
+        this.clientRepo = new ClientRepo(url, username, password);
+        this.handleProducts = new HandleProducts(productRepo, scanner);
+        this.handleClients = new HandleClients(clientRepo, scanner);
+    }
+
+    public void start() {
+        while (true) {
+            System.out.println("\n=== Главное меню ===");
+            System.out.println("1. Управление продуктами");
+            System.out.println("2. Управление клиентами");
+            System.out.println("3. Выход");
+            System.out.print("Выберите опцию: ");
+
+            int choice = scanner.nextInt();
+            scanner.nextLine();
+
+            switch (choice) {
+                case 1:
+                    handleProducts.showMenu();
+                    break;
+                case 2:
+                    handleClients.showMenu();
+                    break;
+                case 3:
+                    System.out.println("");
+                    return;
+                default:
+                    System.out.println("Неверный ввод, попробуйте снова");
+            }
+        }
+    }
+}
