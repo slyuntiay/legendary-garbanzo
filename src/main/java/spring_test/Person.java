@@ -10,8 +10,8 @@ public class Person {
         this.pet = pet;
     }
 
-//    public Person() {
-//    }
+    public Person() {
+    }
 
     public void setPet(Pet pet) {
         this.pet = pet;
