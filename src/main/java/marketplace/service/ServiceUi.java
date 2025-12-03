@@ -9,15 +9,15 @@ public class ServiceUi {
     private final Scanner scanner;
     private final ProductRepo productRepo;
     private final ClientRepo clientRepo;
-    private final HandleProducts handleProducts;
-    private final HandleClients handleClients;
+    private final ProductService productService;
+    private final ClientService clientService;
 
     public ServiceUi(String url, String username, String password) {
         this.scanner = new Scanner(System.in);
         this.productRepo = new ProductRepo(url, username, password);
         this.clientRepo = new ClientRepo(url, username, password);
-        this.handleProducts = new HandleProducts(productRepo, scanner);
-        this.handleClients = new HandleClients(clientRepo, scanner);
+        this.productService = new ProductService(productRepo, scanner);
+        this.clientService = new ClientService(clientRepo, scanner);
     }
 
     public void start() {
@@ -33,10 +33,10 @@ public class ServiceUi {
 
             switch (choice) {
                 case 1:
-                    handleProducts.showMenu();
+                    productService.showMenu();
                     break;
                 case 2:
-                    handleClients.showMenu();
+                    clientService.showMenu();
                     break;
                 case 3:
                     System.out.println("");

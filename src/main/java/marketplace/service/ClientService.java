@@ -5,11 +5,11 @@ import marketplace.repository.client.ClientRepo;
 
 import java.util.Scanner;
 
-public class HandleClients {
+public class ClientService {
     private final ClientRepo clientRepo;
     private final Scanner scanner;
 
-    public HandleClients(ClientRepo clientRepo, Scanner scanner) {
+    public ClientService(ClientRepo clientRepo, Scanner scanner) {
         this.clientRepo = clientRepo;
         this.scanner = scanner;
     }

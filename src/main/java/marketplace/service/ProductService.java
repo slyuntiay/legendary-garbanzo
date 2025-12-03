@@ -2,15 +2,14 @@ package marketplace.service;
 
 import java.util.Scanner;
 
-import marketplace.entity.Client;
 import marketplace.entity.Product;
 import marketplace.repository.product.ProductRepo;
 
-public class HandleProducts {
+public class ProductService {
     private final ProductRepo productRepo;
     private final Scanner scanner;
 
-    public HandleProducts(ProductRepo productRepo, Scanner scanner) {
+    public ProductService(ProductRepo productRepo, Scanner scanner) {
         this.productRepo = productRepo;
         this.scanner = scanner;
     }
