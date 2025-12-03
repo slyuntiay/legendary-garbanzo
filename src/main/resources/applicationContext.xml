@@ -7,17 +7,19 @@
     http://www.springframework.org/schema/context
     http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <bean id="myDog"
-          class="spring_test.Dog">
-    </bean>
-
     <bean id="myCat"
           class="spring_test.Cat">
     </bean>
 
     <bean id="person"
           class="spring_test.Person">
-        <constructor-arg ref="myDog"/>
-        <!-- <property name="pet" ref="myCat"/> -->
+        <property name="pet" ref="myCat"/>
+        <property name="surname" value="ОЛЕГ"/>
+        <property name="age" value="4"/>
     </bean>
+
+    <bean id="myDog"
+          class="spring_test.Dog">
+    </bean>
+
 </beans>
