@@ -87,20 +87,20 @@ public class ProductRepo implements CRUDRepository<Product> {
 
     @Override
     public void delete(int id) {
-        Product product = null;
+//        Product product = null;
         try (Connection connection = DriverManager.getConnection(url, user, password);
              PreparedStatement statement = connection.prepareStatement(ProductSQLScript.DELETE.getSql())) {
 
             statement.setInt(1, id);
-            ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()) {
-                String name = resultSet.getString("name");
-                double price = resultSet.getDouble("price");
-                int quantity = resultSet.getInt("quantity");
-                product = new Product(id, name, price, quantity);
-            }
+//            ResultSet resultSet = statement.executeQuery();
+//            while (resultSet.next()) {
+//                String name = resultSet.getString("name");
+//                double price = resultSet.getDouble("price");
+//                int quantity = resultSet.getInt("quantity");
+//                product = new Product(id, name, price, quantity);
+//            }
             statement.executeUpdate();
-            System.out.println("Продукт " + '"' + product + '"' + " успешно удалён");
+            System.out.println("Продукт успешно удалён");
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
             System.out.println("ОШИБКА. Не удалось удалить продукт");
