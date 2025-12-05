@@ -13,7 +13,7 @@ public enum ProductSQLScript {
     DROP_TABLE("DROP TABLE PRODUCT_TABLE;"),
     CREATE("INSERT INTO PRODUCT_TABLE (name, price," +
             " quantity) VALUES (?, ?, ?);"),
-    DELETE("DELETE FROM PRODUCT_TABLE WHERE id = ?;"),
+    DELETE("DELETE FROM PRODUCT_TABLE WHERE id = ? RETURNING id, name, price, quantity;"),
     READ("SELECT * FROM PRODUCT_TABLE WHERE id = ?;"),
     READ_ALL("SELECT * FROM PRODUCT_TABLE;"),
     UPDATE("UPDATE PRODUCT_TABLE SET name = ?, price = ?, quantity = ? WHERE id = ?;");

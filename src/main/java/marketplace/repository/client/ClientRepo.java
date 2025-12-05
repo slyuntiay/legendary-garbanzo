@@ -82,19 +82,19 @@ public class ClientRepo implements CRUDRepository<Client> {
 
     @Override
     public void delete(int id) {
-//        Client client = null;
+        Client client = null;
         try (Connection connection = DriverManager.getConnection(url, user, password);
              PreparedStatement statement = connection.prepareStatement(ClientSQLScript.DELETE.getSql())) {
 
             statement.setInt(1, id);
-//            ResultSet resultSet = statement.executeQuery();
-//            while (resultSet.next()) {
-//                String surname = resultSet.getString("surname");
-//                String name = resultSet.getString("name");
-//                client = new Client(id, surname, name);
-//            }
-            statement.executeUpdate();
-            System.out.println("Клиент успешно удалён");
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                String surname = resultSet.getString("surname");
+                String name = resultSet.getString("name");
+                client = new Client(id, surname, name);
+            }
+
+            System.out.println("Клиент " + client + " успешно удалён");
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
             System.out.println("ОШИБКА. Не удалось удалить клиента");
