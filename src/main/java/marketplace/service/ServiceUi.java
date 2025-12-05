@@ -2,20 +2,20 @@ package marketplace.service;
 
 import marketplace.repository.client.ClientRepo;
 import marketplace.repository.product.ProductRepo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.Scanner;
 
 public class ServiceUi {
     private final Scanner scanner;
-    private final ProductRepo productRepo;
-    private final ClientRepo clientRepo;
     private final ProductService productService;
     private final ClientService clientService;
 
     public ServiceUi(String url, String username, String password) {
         this.scanner = new Scanner(System.in);
-        this.productRepo = new ProductRepo(url, username, password);
-        this.clientRepo = new ClientRepo(url, username, password);
+        ProductRepo productRepo = new ProductRepo(url, username, password);
+        ClientRepo clientRepo = new ClientRepo(url, username, password);
         this.productService = new ProductService(productRepo, scanner);
         this.clientService = new ClientService(clientRepo, scanner);
     }
