@@ -15,7 +15,8 @@ public class ProductRepo implements CRUDRepository<Product> {
     private final String user;
     private final String password;
 
-    public boolean createTable() {
+    @Override
+    public void createTable() {
         try (Connection connection = DriverManager.getConnection(url, user, password);
              PreparedStatement statement = connection.prepareStatement(ProductSQLScript.CREATE_TABLE.getSql())) {
             statement.executeUpdate();
@@ -24,10 +25,10 @@ public class ProductRepo implements CRUDRepository<Product> {
             sqlException.printStackTrace();
             System.out.println("ОШИБКА. Не удалось создать таблицу");
         }
-        return true;
     }
 
-    public boolean dropTable() {
+    @Override
+    public void dropTable() {
         try (Connection connection = DriverManager.getConnection(url, user, password);
              PreparedStatement statement = connection.prepareStatement(ProductSQLScript.DROP_TABLE.getSql())) {
             statement.executeUpdate();
@@ -36,7 +37,6 @@ public class ProductRepo implements CRUDRepository<Product> {
             sqlException.printStackTrace();
             System.out.println("ОШИБКА. Не удалось удалить таблицу");
         }
-        return true;
     }
 
     @Override
