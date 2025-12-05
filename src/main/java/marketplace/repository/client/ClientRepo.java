@@ -14,7 +14,7 @@ public class ClientRepo implements CRUDRepository<Client> {
     private final String user;
     private final String password;
 
-    public boolean createTable() {
+    public void createTable() {
         try (Connection connection = DriverManager.getConnection(url, user, password);
              PreparedStatement statement = connection.prepareStatement(ClientSQLScript.CREATE_TABLE.getSql())) {
             statement.executeUpdate();
@@ -23,10 +23,9 @@ public class ClientRepo implements CRUDRepository<Client> {
             sqlException.printStackTrace();
             System.out.println("ОШИБКА. Не удалось создать таблицу");
         }
-        return true;
     }
 
-    public boolean dropTable() {
+    public void dropTable() {
         try (Connection connection = DriverManager.getConnection(url, user, password);
              PreparedStatement statement = connection.prepareStatement(ClientSQLScript.DROP_TABLE.getSql())) {
             statement.executeUpdate();
@@ -35,7 +34,6 @@ public class ClientRepo implements CRUDRepository<Client> {
             sqlException.printStackTrace();
             System.out.println("ОШИБКА. Не удалось удалить таблицу");
         }
-        return true;
     }
 
     @Override
@@ -84,19 +82,19 @@ public class ClientRepo implements CRUDRepository<Client> {
 
     @Override
     public void delete(int id) {
-        Client client = null;
+//        Client client = null;
         try (Connection connection = DriverManager.getConnection(url, user, password);
              PreparedStatement statement = connection.prepareStatement(ClientSQLScript.DELETE.getSql())) {
 
             statement.setInt(1, id);
-            ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()) {
-                String surname = resultSet.getString("surname");
-                String name = resultSet.getString("name");
-                client = new Client(id, surname, name);
-            }
+//            ResultSet resultSet = statement.executeQuery();
+//            while (resultSet.next()) {
+//                String surname = resultSet.getString("surname");
+//                String name = resultSet.getString("name");
+//                client = new Client(id, surname, name);
+//            }
             statement.executeUpdate();
-            System.out.println("Клиент " + '"' + client + '"' + " успешно удалён");
+            System.out.println("Клиент успешно удалён");
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
             System.out.println("ОШИБКА. Не удалось удалить клиента");
