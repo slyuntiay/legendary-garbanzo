@@ -4,10 +4,10 @@ import java.util.Scanner;
 
 import marketplace.entity.Product;
 import marketplace.repository.CRUDRepository;
-import marketplace.repository.product.ProductRepo;
+import org.springframework.stereotype.Service;
 
-
-public class ProductService extends Service {
+@Service
+public class ProductService extends UserService {
     public ProductService(CRUDRepository crudRepository, Scanner scanner) {
         super(crudRepository, scanner);
     }

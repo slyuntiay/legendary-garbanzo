@@ -2,11 +2,10 @@ package marketplace.service;
 
 import marketplace.entity.Client;
 import marketplace.repository.CRUDRepository;
-import marketplace.repository.client.ClientRepo;
 
 import java.util.Scanner;
 
-public class ClientService extends Service{
+public class ClientService extends UserService {
     public ClientService(CRUDRepository crudRepository, Scanner scanner) {
         super(crudRepository, scanner);
     }

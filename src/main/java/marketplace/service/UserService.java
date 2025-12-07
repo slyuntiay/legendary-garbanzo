@@ -1,16 +1,14 @@
 package marketplace.service;
 
-import marketplace.entity.Product;
 import marketplace.repository.CRUDRepository;
-import marketplace.repository.client.ClientRepo;
 
 import java.util.Scanner;
 
-public abstract class Service {
+public abstract class UserService {
     protected final CRUDRepository crudRepository;
     protected final Scanner scanner;
 
-    public Service(CRUDRepository crudRepository, Scanner scanner) {
+    public UserService(CRUDRepository crudRepository, Scanner scanner) {
         this.crudRepository = crudRepository;
         this.scanner = scanner;
     }
