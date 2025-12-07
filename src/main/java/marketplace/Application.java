@@ -1,12 +1,14 @@
 package marketplace;
 
+import marketplace.params.ConnectionParams;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 import java.util.Scanner;
-
+@Component
 @Configuration
 @ComponentScan({
         "marketplace.controller",
@@ -17,14 +19,14 @@ public class Application {
     private String user;
     private String password;
 
-   public void setConnectionUser(String url, String user, String password){
+   public void setConnectionParams(String url, String user, String password){
         this.url = url;
         this.user = user;
         this.password = password;
     }
     @Bean
-    public Params getConnetionParams(){
-        return new Params();
+    public ConnectionParams getConnectionParams(){
+        return new ConnectionParams(url, user, password);
     }
 
     @Bean

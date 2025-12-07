@@ -2,6 +2,7 @@ package marketplace.repository.client;
 
 import lombok.RequiredArgsConstructor;
 import marketplace.entity.Client;
+import marketplace.params.ConnectionParams;
 import marketplace.repository.CRUDRepository;
 import org.springframework.stereotype.Repository;
 
@@ -12,9 +13,7 @@ import java.util.List;
 @Repository
 @RequiredArgsConstructor
 public class ClientRepo implements CRUDRepository<Client> {
-    private final String url;
-    private final String user;
-    private final String password;
+   ConnectionParams connectionParams =
 
     public void createTable() {
         try (Connection connection = DriverManager.getConnection(url, user, password);
