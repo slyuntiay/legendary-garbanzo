@@ -1,13 +1,17 @@
 package marketplace.service;
 
-import java.util.Scanner;
-
 import marketplace.entity.Product;
 import marketplace.repository.CRUDRepository;
-import marketplace.repository.product.ProductRepo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-public class ProductService extends Service {
-    public ProductService(CRUDRepository crudRepository, Scanner scanner) {
+import java.util.Scanner;
+
+@Service
+public class ProductService extends EntityService<Product> {
+
+    @Autowired
+    public ProductService(CRUDRepository<Product> crudRepository, Scanner scanner) {
         super(crudRepository, scanner);
     }
 
@@ -26,8 +30,7 @@ public class ProductService extends Service {
     public void update() {
         System.out.println("Введите id продукта");
         int id = scanner.nextInt();
-        Object object = crudRepository.read(id);
-        Product product = (Product) object;
+        Product product = crudRepository.read(id);
         System.out.println(product + "\n");
         scanner.nextLine();
 

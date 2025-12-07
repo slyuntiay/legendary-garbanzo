@@ -6,7 +6,7 @@ import java.util.Objects;
 
 @AllArgsConstructor
 @Data
-public class Product {
+public class Product extends Entity {
     private int id;
     private String name;
     private double price;
@@ -15,7 +15,7 @@ public class Product {
     public Product() {}
 
     public Product(int id) {
-        this.id = id;
+        super(id);
     }
 
     public Product(String name, double price, int quantity) {

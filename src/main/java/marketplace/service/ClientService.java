@@ -3,11 +3,16 @@ package marketplace.service;
 import marketplace.entity.Client;
 import marketplace.repository.CRUDRepository;
 import marketplace.repository.client.ClientRepo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.Scanner;
 
-public class ClientService extends Service{
-    public ClientService(CRUDRepository crudRepository, Scanner scanner) {
+@Service
+public class ClientService extends EntityService<Client> {
+
+    @Autowired
+    public ClientService(CRUDRepository<Client> crudRepository, Scanner scanner) {
         super(crudRepository, scanner);
     }
 
@@ -22,8 +27,7 @@ public class ClientService extends Service{
     public void update() {
         System.out.println("Введите id клиента");
         int id = scanner.nextInt();
-        Object object = crudRepository.read(id);
-        Client client = (Client) object;
+        Client client = crudRepository.read(id);
         System.out.println(client + "\n");
         scanner.nextLine();
 

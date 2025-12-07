@@ -8,7 +8,7 @@ import java.util.Objects;
 
 @Setter
 @Getter
-public class Client {
+public class Client extends Entity {
     private int id;
     private String surname;
     private String name;
@@ -22,7 +22,7 @@ public class Client {
     }
 
     public Client(int id, String surname, String name) {
-        this.id = id;
+        super(id);
         this.surname = surname;
         this.name = name;
     }
