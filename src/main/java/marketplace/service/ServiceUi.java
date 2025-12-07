@@ -14,14 +14,10 @@ public class ServiceUi {
     private final ProductService productService;
     private final ClientService clientService;
 
-    public ServiceUi() {
-
+    public ServiceUi(ProductService productService, ClientService clientService) {
         this.scanner = new Scanner(System.in);
-        ProductRepo productRepo = new ProductRepo();
-        ClientRepo clientRepo = new ClientRepo();
-        this.productService = new ProductService(productRepo, scanner);
-        this.clientService = new ClientService(clientRepo, scanner);
-
+        this.productService = productService;
+        this.clientService = clientService;
     }
 
     public void start() {

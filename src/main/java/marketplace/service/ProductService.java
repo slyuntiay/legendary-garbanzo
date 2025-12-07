@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 import marketplace.entity.Product;
 import marketplace.repository.CRUDRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
