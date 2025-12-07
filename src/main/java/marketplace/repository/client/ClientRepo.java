@@ -13,10 +13,10 @@ import java.util.List;
 @Repository
 @RequiredArgsConstructor
 public class ClientRepo implements CRUDRepository<Client> {
-   ConnectionParams connectionParams =
+   private final ConnectionParams connectionParams;
 
     public void createTable() {
-        try (Connection connection = DriverManager.getConnection(url, user, password);
+        try (Connection connection = DriverManager.getConnection(connectionParams.getUrl(), connectionParams.getUser(), connectionParams.getPassword());
              PreparedStatement statement = connection.prepareStatement(ClientSQLScript.CREATE_TABLE.getSql())) {
             statement.executeUpdate();
             System.out.println("Таблица успешно создана");
@@ -27,7 +27,7 @@ public class ClientRepo implements CRUDRepository<Client> {
     }
 
     public void dropTable() {
-        try (Connection connection = DriverManager.getConnection(url, user, password);
+        try (Connection connection = DriverManager.getConnection(connectionParams.getUrl(), connectionParams.getUser(), connectionParams.getPassword());
              PreparedStatement statement = connection.prepareStatement(ClientSQLScript.DROP_TABLE.getSql())) {
             statement.executeUpdate();
             System.out.println("Таблица успешно удалена");
@@ -39,7 +39,7 @@ public class ClientRepo implements CRUDRepository<Client> {
 
     @Override
     public Client create(Client client) {
-        try (Connection connection = DriverManager.getConnection(url, user, password);
+        try (Connection connection = DriverManager.getConnection(connectionParams.getUrl(), connectionParams.getUser(), connectionParams.getPassword());
              PreparedStatement statement = connection.prepareStatement(
                      ClientSQLScript.CREATE.getSql(), Statement.RETURN_GENERATED_KEYS)) {
 
@@ -67,7 +67,7 @@ public class ClientRepo implements CRUDRepository<Client> {
 
     @Override
     public void update(Client client) {
-        try (Connection connection = DriverManager.getConnection(url, user, password);
+        try (Connection connection = DriverManager.getConnection(connectionParams.getUrl(), connectionParams.getUser(), connectionParams.getPassword());
              PreparedStatement statement = connection.prepareStatement(ClientSQLScript.UPDATE.getSql())) {
 
             statement.setString(1, client.getSurname());
@@ -84,7 +84,7 @@ public class ClientRepo implements CRUDRepository<Client> {
     @Override
     public void delete(int id) {
         Client client = null;
-        try (Connection connection = DriverManager.getConnection(url, user, password);
+        try (Connection connection = DriverManager.getConnection(connectionParams.getUrl(), connectionParams.getUser(), connectionParams.getPassword());
              PreparedStatement statement = connection.prepareStatement(ClientSQLScript.DELETE.getSql())) {
 
             statement.setInt(1, id);
@@ -105,7 +105,7 @@ public class ClientRepo implements CRUDRepository<Client> {
     @Override
     public Client read(int id) {
         Client client = null;
-        try (Connection connection = DriverManager.getConnection(url, user, password);
+        try (Connection connection = DriverManager.getConnection(connectionParams.getUrl(), connectionParams.getUser(), connectionParams.getPassword());
              PreparedStatement statement = connection.prepareStatement(ClientSQLScript.READ.getSql())) {
 
             statement.setInt(1, id);
@@ -125,7 +125,7 @@ public class ClientRepo implements CRUDRepository<Client> {
     @Override
     public List<Client> readAll() {
         List<Client> list = new ArrayList<>();
-        try (Connection connection = DriverManager.getConnection(url, user, password);
+        try (Connection connection = DriverManager.getConnection(connectionParams.getUrl(), connectionParams.getUser(), connectionParams.getPassword());
              PreparedStatement statement = connection.prepareStatement(ClientSQLScript.READ_ALL.getSql())) {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {

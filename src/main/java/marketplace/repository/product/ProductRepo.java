@@ -1,8 +1,8 @@
 package marketplace.repository.product;
 
 import lombok.RequiredArgsConstructor;
-import marketplace.entity.Client;
 import marketplace.entity.Product;
+import marketplace.params.ConnectionParams;
 import marketplace.repository.CRUDRepository;
 import org.springframework.stereotype.Repository;
 
@@ -13,13 +13,11 @@ import java.util.List;
 @Repository
 @RequiredArgsConstructor
 public class ProductRepo implements CRUDRepository<Product> {
-    private final String url;
-    private final String user;
-    private final String password;
+    private final ConnectionParams connectionParams;
 
     @Override
     public void createTable() {
-        try (Connection connection = DriverManager.getConnection(url, user, password);
+        try (Connection connection = DriverManager.getConnection(connectionParams.getUrl(), connectionParams.getUser(), connectionParams.getPassword());
              PreparedStatement statement = connection.prepareStatement(ProductSQLScript.CREATE_TABLE.getSql())) {
             statement.executeUpdate();
             System.out.println("Таблица успешно создана");
@@ -31,7 +29,7 @@ public class ProductRepo implements CRUDRepository<Product> {
 
     @Override
     public void dropTable() {
-        try (Connection connection = DriverManager.getConnection(url, user, password);
+        try (Connection connection = DriverManager.getConnection(connectionParams.getUrl(), connectionParams.getUser(), connectionParams.getPassword());
              PreparedStatement statement = connection.prepareStatement(ProductSQLScript.DROP_TABLE.getSql())) {
             statement.executeUpdate();
             System.out.println("Таблица успешно удалена");
@@ -43,7 +41,7 @@ public class ProductRepo implements CRUDRepository<Product> {
 
     @Override
     public Product create(Product product) {
-        try (Connection connection = DriverManager.getConnection(url, user, password);
+        try (Connection connection = DriverManager.getConnection(connectionParams.getUrl(), connectionParams.getUser(), connectionParams.getPassword());
              PreparedStatement statement = connection.prepareStatement(ProductSQLScript.CREATE.getSql(), Statement.RETURN_GENERATED_KEYS)) {
 
             statement.setString(1, product.getName());
@@ -71,7 +69,7 @@ public class ProductRepo implements CRUDRepository<Product> {
 
     @Override
     public void update(Product product) {
-        try (Connection connection = DriverManager.getConnection(url, user, password);
+        try (Connection connection = DriverManager.getConnection(connectionParams.getUrl(), connectionParams.getUser(), connectionParams.getPassword());
              PreparedStatement statement = connection.prepareStatement(ProductSQLScript.UPDATE.getSql())) {
 
             statement.setString(1, product.getName());
@@ -90,7 +88,7 @@ public class ProductRepo implements CRUDRepository<Product> {
     @Override
     public void delete(int id) {
         Product product = null;
-        try (Connection connection = DriverManager.getConnection(url, user, password);
+        try (Connection connection = DriverManager.getConnection(connectionParams.getUrl(), connectionParams.getUser(), connectionParams.getPassword());
              PreparedStatement statement = connection.prepareStatement(ProductSQLScript.DELETE.getSql())) {
 
             statement.setInt(1, id);
@@ -112,7 +110,7 @@ public class ProductRepo implements CRUDRepository<Product> {
     @Override
     public Product read(int id) {
         Product product = null;
-        try (Connection connection = DriverManager.getConnection(url, user, password);
+        try (Connection connection = DriverManager.getConnection(connectionParams.getUrl(), connectionParams.getUser(), connectionParams.getPassword());
              PreparedStatement statement = connection.prepareStatement(ProductSQLScript.READ.getSql())) {
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
@@ -132,7 +130,7 @@ public class ProductRepo implements CRUDRepository<Product> {
     @Override
     public List<Product> readAll() {
         List<Product> list = new ArrayList<>();
-        try (Connection connection = DriverManager.getConnection(url, user, password);
+        try (Connection connection = DriverManager.getConnection(connectionParams.getUrl(), connectionParams.getUser(), connectionParams.getPassword());
              PreparedStatement statement = connection.prepareStatement(ProductSQLScript.READ_ALL.getSql())) {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {

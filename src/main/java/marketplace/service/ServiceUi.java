@@ -1,5 +1,6 @@
 package marketplace.service;
 
+import marketplace.params.ConnectionParams;
 import marketplace.repository.client.ClientRepo;
 import marketplace.repository.product.ProductRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,12 +14,14 @@ public class ServiceUi {
     private final ProductService productService;
     private final ClientService clientService;
 
-    public ServiceUi(String url, String username, String password) {
+    public ServiceUi() {
+
         this.scanner = new Scanner(System.in);
-        ProductRepo productRepo = new ProductRepo(url, username, password);
-        ClientRepo clientRepo = new ClientRepo(url, username, password);
+        ProductRepo productRepo = new ProductRepo();
+        ClientRepo clientRepo = new ClientRepo();
         this.productService = new ProductService(productRepo, scanner);
         this.clientService = new ClientService(clientRepo, scanner);
+
     }
 
     public void start() {
