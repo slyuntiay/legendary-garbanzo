@@ -20,11 +20,7 @@ public class Application {
     }
 
     @Bean
-    public String[] userData(String[] args) {
-        String user;
-        String url;
-        String password;
+   public void setConnetionUser(String url, String user, String password){
 
-        return args;
     }
 }
