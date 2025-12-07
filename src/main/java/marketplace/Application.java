@@ -8,5 +8,5 @@ import org.springframework.context.annotation.Configuration;
         "marketplace.controller",
         "marketplace.service",
         "marketplace.repository"})
-public class MarketplaceConfig {
+public class Application {
 }

@@ -2,27 +2,20 @@ package marketplace.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.stereotype.Component;
 
 import java.beans.BeanProperty;
 import java.util.Objects;
 
+@Component
 @Setter
 @Getter
-public class Client {
-    private int id;
+public class Client extends Entity {
     private String surname;
     private String name;
 
-    public Client() {
-    }
-
-    public Client(String surname, String name) {
-        this.surname = surname;
-        this.name = name;
-    }
-
     public Client(int id, String surname, String name) {
-        this.id = id;
+        super(id);
         this.surname = surname;
         this.name = name;
     }

@@ -1,24 +1,24 @@
 package marketplace.entity;
 
 import lombok.*;
+import org.springframework.stereotype.Component;
 
 import java.util.Objects;
 
-@AllArgsConstructor
-@Data
-public class Product {
-    private int id;
+@Component
+@Getter
+@Setter
+public class Product extends Entity {
     private String name;
     private double price;
     private int quantity;
 
-    public Product() {}
-
     public Product(int id) {
-        this.id = id;
+        super(id);
     }
 
-    public Product(String name, double price, int quantity) {
+    public Product(int id, String name, double price, int quantity) {
+        super(id);
         this.name = name;
         this.price = price;
         this.quantity = quantity;

@@ -6,6 +6,7 @@ import marketplace.entity.Product;
 import marketplace.repository.CRUDRepository;
 import marketplace.repository.product.ProductRepo;
 
+
 public class ProductService extends Service {
     public ProductService(CRUDRepository crudRepository, Scanner scanner) {
         super(crudRepository, scanner);

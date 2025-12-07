@@ -4,11 +4,13 @@ import lombok.RequiredArgsConstructor;
 import marketplace.entity.Client;
 import marketplace.entity.Product;
 import marketplace.repository.CRUDRepository;
+import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Repository
 @RequiredArgsConstructor
 public class ProductRepo implements CRUDRepository<Product> {
     private final String url;
