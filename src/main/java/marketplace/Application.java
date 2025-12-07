@@ -13,14 +13,23 @@ import java.util.Scanner;
         "marketplace.service",
         "marketplace.repository"})
 public class Application {
+    private String url;
+    private String user;
+    private String password;
+
+   public void setConnectionUser(String url, String user, String password){
+        this.url = url;
+        this.user = user;
+        this.password = password;
+    }
+    @Bean
+    public Params getConnetionParams(){
+        return new Params();
+    }
+
     @Bean
     @Scope("prototype")
     public Scanner scanner() {
         return new Scanner(System.in);
-    }
-
-    @Bean
-   public void setConnetionUser(String url, String user, String password){
-
     }
 }
