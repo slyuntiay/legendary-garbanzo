@@ -1,12 +1,15 @@
 package marketplace.service;
 
 import marketplace.entity.Client;
+import marketplace.entity.Entity;
 import marketplace.repository.CRUDRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.Scanner;
 
+@Service
 public class ClientService extends UserService {
-    public ClientService(CRUDRepository crudRepository, Scanner scanner) {
+    public ClientService(CRUDRepository<Client> crudRepository, Scanner scanner) {
         super(crudRepository, scanner);
     }
 

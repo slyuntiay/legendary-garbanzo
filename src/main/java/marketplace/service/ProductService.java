@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ProductService extends UserService {
-    public ProductService(CRUDRepository crudRepository, Scanner scanner) {
+    public ProductService(CRUDRepository<Product> crudRepository, Scanner scanner) {
         super(crudRepository, scanner);
     }
 
