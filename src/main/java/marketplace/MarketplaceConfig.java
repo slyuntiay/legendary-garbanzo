@@ -10,7 +10,6 @@ import java.util.Scanner;
 
 @Configuration
 @ComponentScan({
-        "marketplace.controller",
         "marketplace.service",
         "marketplace.repository"})
 public class MarketplaceConfig {
