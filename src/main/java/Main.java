@@ -1,6 +1,7 @@
 
 import marketplace.Application;
 import marketplace.params.ConnectionParams;
+import marketplace.repository.basket.BasketRepo;
 import marketplace.service.ServiceUi;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
@@ -13,6 +14,7 @@ public class Main {
         serviceUi.start();
         System.out.println("Ну и пошёл тогда ты на хуй!");
         context.close();
+
     }
 }
 

@@ -1,9 +1,5 @@
 package marketplace.service;
 
-import marketplace.params.ConnectionParams;
-import marketplace.repository.client.ClientRepo;
-import marketplace.repository.product.ProductRepo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Scanner;
