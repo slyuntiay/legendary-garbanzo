@@ -20,11 +20,4 @@ public enum ClientSQLScript {
     ClientSQLScript(String sql) {
         this.sql = sql;
     }
-
-    public static ClientSQLScript getSql(int number) {
-        return Arrays.stream(ClientSQLScript.values())
-                .filter(clientSQLScript -> clientSQLScript.ordinal() == number - 1)
-                .findFirst()
-                .orElseThrow();
-    }
 }

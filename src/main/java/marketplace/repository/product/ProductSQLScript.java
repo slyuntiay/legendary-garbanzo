@@ -22,11 +22,4 @@ public enum ProductSQLScript {
     ProductSQLScript(String sql) {
         this.sql = sql;
     }
-
-    public static ProductSQLScript getSql(int number) {
-        return Arrays.stream(ProductSQLScript.values())
-                .filter(productSQLScript -> productSQLScript.ordinal() == number - 1)
-                .findFirst()
-                .orElseThrow();
-    }
 }
