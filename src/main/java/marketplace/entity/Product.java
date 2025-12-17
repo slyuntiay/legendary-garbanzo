@@ -15,9 +15,6 @@ public class Product extends Entity {
     public Product() {
     }
 
-    public Product(int id) {
-        super(id);
-    }
 
     public Product(String name, double price, int quantity) {
         this.name = name;
