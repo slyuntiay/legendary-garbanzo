@@ -1,5 +1,6 @@
 package marketplace.domain.entity;
 
+import com.example.sweater.domain.BaseEntity;
 import lombok.Getter;
 import lombok.Setter;
 
