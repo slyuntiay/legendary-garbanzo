@@ -1,15 +1,13 @@
-package marketplace.entity;
+package marketplace.domain.entity;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.stereotype.Component;
 
-import java.beans.BeanProperty;
 import java.util.Objects;
 
 @Setter
 @Getter
-public class Client extends Entity {
+public class Client extends BaseEntity {
     private String surname;
     private String name;
 

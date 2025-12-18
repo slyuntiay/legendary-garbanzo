@@ -1,7 +1,7 @@
 package marketplace.repository.product;
 
 import lombok.RequiredArgsConstructor;
-import marketplace.entity.Product;
+import marketplace.domain.entity.Product;
 import marketplace.params.ConnectionParams;
 import marketplace.repository.CRUDRepository;
 import org.springframework.stereotype.Repository;

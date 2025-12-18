@@ -1,18 +1,24 @@
-package marketplace.entity;
+package marketplace.domain.entity;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
 import lombok.*;
-import org.springframework.stereotype.Component;
 
 import java.util.Objects;
 
 @Getter
 @Setter
-public class Product extends Entity {
+@Entity
+public class Product extends BaseEntity {
+    @Id
+    @GeneratedValue
     private String name;
     private double price;
     private int quantity;
 
     public Product() {
+        super();
     }
 
 
