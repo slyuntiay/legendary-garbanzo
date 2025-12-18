@@ -1,6 +1,5 @@
 package marketplace.domain.entity;
 
-import com.example.sweater.domain.BaseEntity;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,6 +8,7 @@ import java.util.Objects;
 @Setter
 @Getter
 public class Client extends BaseEntity {
+
     private String surname;
     private String name;
 

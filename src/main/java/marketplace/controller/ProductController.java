@@ -35,7 +35,7 @@ public class ProductController {
 
         ProductResponse response = new ProductResponse();
 
-        response.setId(createdProduct.getId());
+        response.setId(createdProduct.getQuantity());
         response.setName(createdProduct.getName());
         response.setPrice(createdProduct.getPrice());
         response.setQuantity(createdProduct.getQuantity());

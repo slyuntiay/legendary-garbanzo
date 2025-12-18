@@ -1,10 +1,11 @@
-package com.example.sweater.domain;
+package marketplace.domain.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-
+@Getter
+@Setter
 @Entity
 public class BaseEntity {
     @Id
