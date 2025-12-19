@@ -1,11 +1,11 @@
 package marketplace.service;
 
-import marketplace.domain.entity.BaseEntity;
+import marketplace.entity.Entity;
 import marketplace.repository.CRUDRepository;
 
 import java.util.Scanner;
 
-public abstract class UserService<T extends BaseEntity> {
+public abstract class UserService<T extends Entity> {
     protected final CRUDRepository crudRepository;
     protected final Scanner scanner;
 

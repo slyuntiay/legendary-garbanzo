@@ -2,8 +2,9 @@ package marketplace.service;
 
 import java.util.Scanner;
 
-import marketplace.domain.entity.Product;
+import marketplace.entity.Product;
 import marketplace.repository.CRUDRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service

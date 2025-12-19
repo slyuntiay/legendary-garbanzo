@@ -1,6 +1,7 @@
 package marketplace.service;
 
-import marketplace.domain.entity.Client;
+import marketplace.entity.Client;
+import marketplace.entity.Entity;
 import marketplace.repository.CRUDRepository;
 import org.springframework.stereotype.Service;
 

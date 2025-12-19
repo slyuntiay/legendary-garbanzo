@@ -1,9 +1,11 @@
 package marketplace.repository.basket;
 
 import lombok.RequiredArgsConstructor;
-import marketplace.domain.entity.Basket;
+import marketplace.entity.Basket;
+import marketplace.entity.Client;
 import marketplace.params.ConnectionParams;
 import marketplace.repository.CRUDRepository;
+import marketplace.repository.client.ClientSQLScript;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
