@@ -1,11 +1,13 @@
-package com.example.sweater.domain;
+package marketplace.domain.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 
-@Entity
+@Getter
+@Setter
+@MappedSuperclass
 public class BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

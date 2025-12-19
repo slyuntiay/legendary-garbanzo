@@ -5,11 +5,11 @@ import marketplace.domain.entity.Product;
 import marketplace.dto.ProductDto;
 import marketplace.dto.ProductResponse;
 import marketplace.repository.product.ProductRepo;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 
 @RequestMapping("/api/clients")
@@ -20,26 +20,16 @@ public class ProductController {
     @PostMapping("/initTable")
     public ResponseEntity<String> initTable() {
         productRepo.createTable();
-        return ResponseEntity.ok("Таблица создана");
+        return ResponseEntity.ok("Создал таблицу");
     }
     @PostMapping("/dropTable")
     public ResponseEntity<String> dropTable() {
         productRepo.dropTable();
-        return ResponseEntity.ok("Таблица удалена");
+        return ResponseEntity.ok("Удалил таблицу");
     }
     @PostMapping("/createProduct")
     public ResponseEntity<ProductResponse> createProduct(@RequestBody ProductDto productDto) {
         Product product = new Product(productDto.getName(), productDto.getPrice(), productDto.getQuantity());
-
-        Product createdProduct = productRepo.create(product);
-
-        ProductResponse response = new ProductResponse();
-
-        response.setId(createdProduct.getId());
-        response.setName(createdProduct.getName());
-        response.setPrice(createdProduct.getPrice());
-        response.setQuantity(createdProduct.getQuantity());
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        return ResponseEntity.ok("Добавил продукт");
     }
 }

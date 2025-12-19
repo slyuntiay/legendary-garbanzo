@@ -1,6 +1,5 @@
 package marketplace.domain.entity;
 
-import com.example.sweater.domain.BaseEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
