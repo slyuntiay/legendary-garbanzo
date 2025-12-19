@@ -1,6 +1,6 @@
 package marketplace.service;
 
-import marketplace.domain.entity.BaseEntity;
+import com.example.sweater.domain.BaseEntity;
 import marketplace.repository.CRUDRepository;
 
 import java.util.Scanner;

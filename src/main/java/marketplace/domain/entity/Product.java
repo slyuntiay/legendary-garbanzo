@@ -1,5 +1,6 @@
 package marketplace.domain.entity;
 
+import com.example.sweater.domain.BaseEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -9,9 +10,10 @@ import java.util.Objects;
 
 @Getter
 @Setter
-
+@Entity
 public class Product extends BaseEntity {
-
+    @Id
+    @GeneratedValue
     private String name;
     private double price;
     private int quantity;

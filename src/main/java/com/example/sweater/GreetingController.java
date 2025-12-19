@@ -1,4 +1,4 @@
-package marketplace.com.example.sweater;
+package com.example.sweater;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
