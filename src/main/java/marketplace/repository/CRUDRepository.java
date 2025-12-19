@@ -1,9 +1,11 @@
 package marketplace.repository;
 
 
+import marketplace.entity.Entity;
+
 import java.util.List;
 
-public interface CRUDRepository<T> {
+public interface CRUDRepository<T extends Entity> {
     void createTable();
 
     void dropTable();

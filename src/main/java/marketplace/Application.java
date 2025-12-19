@@ -1,37 +1,12 @@
 package marketplace;
 
-import marketplace.params.ConnectionParams;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import java.util.Scanner;
-@Component
-@Configuration
-@ComponentScan({
-        "marketplace.controller",
-        "marketplace.service",
-        "marketplace.repository"})
+@SpringBootApplication
 public class Application {
-    private String url;
-    private String user;
-    private String password;
-
-   public void setConnectionParams(String url, String user, String password){
-        this.url = url;
-        this.user = user;
-        this.password = password;
-    }
-    @Bean
-    public ConnectionParams getConnectionParams(){
-        return new ConnectionParams(url, user, password);
-    }
-
-    @Bean
-    @Scope("prototype")
-    public Scanner scanner() {
-        return new Scanner(System.in);
+    public static void main(String[] args) {
+        SpringApplication.run(Application.class, args);
+        System.out.println("Ну и пошёл тогда ты на хуй!");
     }
 }

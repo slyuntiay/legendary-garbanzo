@@ -1,42 +1,19 @@
 package marketplace.service;
 
+import lombok.RequiredArgsConstructor;
+import marketplace.dto.CreateClientRequestDto;
 import marketplace.entity.Client;
-import marketplace.entity.Entity;
-import marketplace.repository.CRUDRepository;
+import marketplace.repository.client.ClientRepo;
 import org.springframework.stereotype.Service;
 
-import java.util.Scanner;
-
 @Service
-public class ClientService extends UserService {
-    public ClientService(CRUDRepository<Client> crudRepository, Scanner scanner) {
-        super(crudRepository, scanner);
-    }
+@RequiredArgsConstructor
+public class ClientService{
+    private final ClientRepo clientRepo;
 
-    public void create() {
-        System.out.println("Введите фамилию");
-        String surname = scanner.next();
-        System.out.println("Введите имя");
-        String name = scanner.next();
-        crudRepository.create(new Client(name, surname));
-    }
-
-    public void update() {
-        System.out.println("Введите id клиента");
-        int id = scanner.nextInt();
-        Object object = crudRepository.read(id);
-        Client client = (Client) object;
-        System.out.println(client + "\n");
-        scanner.nextLine();
-
-        System.out.println("Введите новую фамилию");
-        client.setSurname(scanner.nextLine());
-
-        System.out.println("Введите новое имя");
-        client.setName(scanner.nextLine());
-
-        crudRepository.update(client);
-        System.out.println();
+    public Client create(CreateClientRequestDto createClientRequestDto) {
+        Client client = new Client(createClientRequestDto);
+        return clientRepo.create(client);
     }
 }
 

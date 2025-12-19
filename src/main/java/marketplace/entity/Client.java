@@ -2,6 +2,7 @@ package marketplace.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import marketplace.dto.CreateClientRequestDto;
 import org.springframework.stereotype.Component;
 
 import java.beans.BeanProperty;
@@ -12,6 +13,11 @@ import java.util.Objects;
 public class Client extends Entity {
     private String surname;
     private String name;
+
+    public Client(CreateClientRequestDto createClientRequestDto) {
+        this.surname = createClientRequestDto.getSurname();
+        this.name = createClientRequestDto.getName();
+    }
 
     public Client(String surname, String name) {
         this.surname = surname;
