@@ -1,7 +1,7 @@
 package marketplace.service;
 
 import lombok.RequiredArgsConstructor;
-import marketplace.dto.CreateClientRequestDto;
+import marketplace.dto.clientDto.CreateClientRequestDto;
 import marketplace.entity.Client;
 import marketplace.repository.client.ClientRepo;
 import org.springframework.stereotype.Service;

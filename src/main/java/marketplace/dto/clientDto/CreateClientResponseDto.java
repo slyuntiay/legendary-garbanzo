@@ -1,4 +1,4 @@
-package marketplace.dto;
+package marketplace.dto.clientDto;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

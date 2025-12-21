@@ -1,8 +1,8 @@
-package marketplace.controller;
+package marketplace.controller.clientControler;
 
 import lombok.RequiredArgsConstructor;
-import marketplace.dto.CreateClientRequestDto;
-import marketplace.dto.CreateClientResponseDto;
+import marketplace.dto.clientDto.CreateClientRequestDto;
+import marketplace.dto.clientDto.CreateClientResponseDto;
 import marketplace.entity.Client;
 import marketplace.service.ClientService;
 import org.springframework.http.ResponseEntity;

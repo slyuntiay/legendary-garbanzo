@@ -1,7 +1,8 @@
 package marketplace.entity;
 
 import lombok.*;
-import org.springframework.stereotype.Component;
+import marketplace.dto.clientDto.CreateClientRequestDto;
+import marketplace.dto.productDto.CreateProductRequestDto;
 
 import java.util.Objects;
 
@@ -12,9 +13,13 @@ public class Product extends Entity {
     private double price;
     private int quantity;
 
-    public Product() {
-    }
 
+
+    public Product(CreateProductRequestDto createProductRequestDto) {
+        this.name = createProductRequestDto.getName();
+       this.price = createProductRequestDto.getPrice();
+       this.quantity = createProductRequestDto.getQuantity();
+    }
 
     public Product(String name, double price, int quantity) {
         this.name = name;
@@ -27,6 +32,9 @@ public class Product extends Entity {
         this.name = name;
         this.price = price;
         this.quantity = quantity;
+    }
+
+    public Product() {
     }
 
     @Override

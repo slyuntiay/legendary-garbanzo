@@ -2,10 +2,8 @@ package marketplace.entity;
 
 import lombok.Getter;
 import lombok.Setter;
-import marketplace.dto.CreateClientRequestDto;
-import org.springframework.stereotype.Component;
+import marketplace.dto.clientDto.CreateClientRequestDto;
 
-import java.beans.BeanProperty;
 import java.util.Objects;
 
 @Setter
