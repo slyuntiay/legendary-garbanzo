@@ -47,17 +47,15 @@ public class ProductRepo implements CRUDRepository<Product> {
             statement.setString(1, product.getName());
             statement.setDouble(2, product.getPrice());
             statement.setInt(3, product.getQuantity());
-            int affectedRows = statement.executeUpdate();
-            System.out.println("Продукт создан");
-            if (affectedRows == 0) {
-                throw new SQLException("ОШИБКА. Не удалось добавить клиента");
-            }
+            statement.executeUpdate();
+
             try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
                     int id = generatedKeys.getInt(1);
                     product.setId(id);
+                    System.out.println("Продукт " + '"' + product + '"' + " успешно добавлен");
                 } else {
-                    throw new SQLException("ОШИБКА. Не удалось добавить клиента");
+                    throw new SQLException("ОШИБКА. Не удалось добавить продукт");
                 }
             }
         } catch (SQLException sqlException) {
@@ -76,8 +74,8 @@ public class ProductRepo implements CRUDRepository<Product> {
             statement.setDouble(2, product.getPrice());
             statement.setInt(3, product.getQuantity());
             statement.setInt(4, product.getId());
+            statement.executeUpdate();
 
-            int affectedRows = statement.executeUpdate();
             System.out.println("Продукт успешно изменен");
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
@@ -86,7 +84,7 @@ public class ProductRepo implements CRUDRepository<Product> {
     }
 
     @Override
-    public void delete(int id) {
+    public Product delete(int id) {
         Product product = null;
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(ProductSQLScript.DELETE.getSql())) {
@@ -105,6 +103,7 @@ public class ProductRepo implements CRUDRepository<Product> {
             sqlException.printStackTrace();
             System.out.println("ОШИБКА. Не удалось удалить продукт");
         }
+        return product;
     }
 
     @Override

@@ -17,17 +17,21 @@ public class ProductService{
         Product product = new Product(createProductRequestDto);
         return productRepo.create(product);
     }
+
     public Product delete(int id){
-        productRepo.delete(id);
-        return null;
+        Product product = new Product(productRepo.delete(id));
+        return product;
     }
+
     public Product update(Product product){
         productRepo.update(product);
         return product;
     }
+
     public Product read(int id){
         return productRepo.read(id);
     }
+
     public List<Product> readAll(int id){
         return productRepo.readAll();
     }

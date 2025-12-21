@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(path = "products")
+@RequestMapping(path = "product")
 @RequiredArgsConstructor
 public class ProductController {
     private final ProductService productService;
@@ -22,7 +22,7 @@ public class ProductController {
         return ResponseEntity.ok(responseDto);
     }
 
-    @DeleteMapping(path = "/delete")
+    @DeleteMapping("delete/{id}")
     public ResponseEntity<CreateProductResponseDto> delete(@PathVariable int id) {
         Product deletedProduct = productService.delete(id);
         CreateProductResponseDto responseDto = new CreateProductResponseDto(deletedProduct);
