@@ -1,12 +1,10 @@
 package marketplace.controller.productContoller;
 
 import lombok.RequiredArgsConstructor;
-import marketplace.dto.clientDto.CreateClientRequestDto;
-import marketplace.dto.clientDto.CreateClientResponseDto;
 import marketplace.dto.productDto.CreateProductRequestDto;
 import marketplace.dto.productDto.CreateProductResponseDto;
 import marketplace.entity.Product;
-import marketplace.service.ProductService;
+import marketplace.service.productService.ProductService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,4 +28,10 @@ public class ProductController {
         CreateProductResponseDto responseDto = new CreateProductResponseDto(deletedProduct);
         return ResponseEntity.ok(responseDto);
     }
+//    @PatchMapping(path = "/update")
+//    public ResponseEntity<CreateProductResponseDto> update(@RequestBody CreateProductRequestDto createProductRequestDto){
+//        Product updateProduct = productService.update(createProductRequestDto);
+//        CreateProductResponseDto responseDto = new CreateProductResponseDto(updateProduct);
+//        return ResponseEntity.ok(responseDto);
+//    }
 }

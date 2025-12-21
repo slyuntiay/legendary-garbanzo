@@ -1,4 +1,4 @@
-package marketplace.service;
+package marketplace.service.clientService;
 
 import lombok.RequiredArgsConstructor;
 import marketplace.dto.clientDto.CreateClientRequestDto;

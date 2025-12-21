@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import marketplace.dto.clientDto.CreateClientRequestDto;
 import marketplace.dto.clientDto.CreateClientResponseDto;
 import marketplace.entity.Client;
-import marketplace.service.ClientService;
+import marketplace.service.clientService.ClientService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
