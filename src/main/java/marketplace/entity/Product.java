@@ -1,7 +1,6 @@
 package marketplace.entity;
 
 import lombok.*;
-import marketplace.dto.clientDto.CreateClientRequestDto;
 import marketplace.dto.productDto.CreateProductRequestDto;
 
 import java.util.Objects;

@@ -2,7 +2,6 @@ package marketplace.repository.client;
 
 import lombok.Getter;
 
-import java.util.Arrays;
 
 @Getter
 public enum ClientSQLScript {

@@ -2,7 +2,6 @@ package marketplace.repository.product;
 
 import lombok.RequiredArgsConstructor;
 import marketplace.config.DataSource;
-import marketplace.entity.Client;
 import marketplace.entity.Product;
 import marketplace.repository.CRUDRepository;
 import org.springframework.stereotype.Repository;
@@ -10,7 +9,6 @@ import org.springframework.stereotype.Repository;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor

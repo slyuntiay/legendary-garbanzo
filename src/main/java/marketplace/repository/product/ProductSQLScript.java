@@ -2,8 +2,6 @@ package marketplace.repository.product;
 
 import lombok.Getter;
 
-import java.util.Arrays;
-
 @Getter
 public enum ProductSQLScript {
     CREATE_TABLE("CREATE TABLE PRODUCT_TABLE (id SERIAL PRIMARY KEY, " +
