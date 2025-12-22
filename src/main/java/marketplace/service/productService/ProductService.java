@@ -10,7 +10,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class ProductService{
+public class ProductService {
     private final ProductRepo productRepo;
 
     public Product create(CreateProductRequestDto createProductRequestDto) {
@@ -18,21 +18,29 @@ public class ProductService{
         return productRepo.create(product);
     }
 
-    public Product delete(int id){
+    public Product delete(int id) {
         Product product = new Product(productRepo.delete(id));
+        if(product == null){
+            throw new RuntimeException("такой id нелья удалить" + id + "пошел нахуй");
+        }
         return product;
     }
 
-    public Product update(Product product){
+    public Product update(Product product) {
         productRepo.update(product);
         return product;
     }
 
-    public Product read(int id){
-        return productRepo.read(id);
+    public Product read(int id)  {
+        Product product = productRepo.read(id);
+        if (product == null) {
+            throw new RuntimeException("такого id нет" + id + " пошел нахуй!");
+        }
+        return product;
     }
 
-    public List<Product> readAll(int id){
+
+    public List<Product> readAll() {
         return productRepo.readAll();
     }
 }

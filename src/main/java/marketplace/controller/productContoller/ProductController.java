@@ -8,6 +8,9 @@ import marketplace.service.productService.ProductService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @RestController
 @RequestMapping(path = "product")
 @RequiredArgsConstructor
@@ -28,10 +31,32 @@ public class ProductController {
         CreateProductResponseDto responseDto = new CreateProductResponseDto(deletedProduct);
         return ResponseEntity.ok(responseDto);
     }
-//    @PatchMapping(path = "/update")
-//    public ResponseEntity<CreateProductResponseDto> update(@RequestBody CreateProductRequestDto createProductRequestDto){
-//        Product updateProduct = productService.update(createProductRequestDto);
-//        CreateProductResponseDto responseDto = new CreateProductResponseDto(updateProduct);
+//    @PutMapping("/update/{id}")
+//    public ResponseEntity<CreateProductResponseDto> update(
+//            @RequestBody CreateProductRequestDto updateRequestDto) {
+//
+//        Product updatedProduct = productService.update(id, updateRequestDto);
+//        CreateProductResponseDto responseDto = new CreateProductResponseDto(updatedProduct);
+//
 //        return ResponseEntity.ok(responseDto);
+
+//не понимаю что делать с id
 //    }
+
+    @GetMapping (path = "/read/{id}")
+    public ResponseEntity<CreateProductResponseDto> read(@PathVariable int id) {
+        Product readProduct = productService.read(id);
+        CreateProductResponseDto responseDto = new CreateProductResponseDto(readProduct);
+        return ResponseEntity.ok(responseDto);
+    }
+
+    @GetMapping (path = "/readAll/{id}")
+    public ResponseEntity<List<CreateProductResponseDto>> readAll() {
+        List<Product> products = productService.readAll();
+        List<CreateProductResponseDto> responseDto = new ArrayList<>();
+        for (Product product : products) {
+            responseDto.add(new CreateProductResponseDto(product));
+        }
+        return ResponseEntity.ok(responseDto);
+    }
 }
