@@ -12,7 +12,7 @@ public enum ProductSQLScript {
             "quantity INTEGER NOT NULL" + ");"),
     DROP_TABLE("DROP TABLE PRODUCT_TABLE;"),
     CREATE("INSERT INTO PRODUCT_TABLE (name, price," +
-            " quantity) VALUES (?, ?::numeric::money, ?);"),
+            " quantity) VALUES (?, ?, ?);"),
     DELETE("DELETE FROM PRODUCT_TABLE WHERE id = ? RETURNING id, name, price, quantity;"),
     READ("SELECT * FROM PRODUCT_TABLE WHERE id = ?;"),
     READ_ALL("SELECT * FROM PRODUCT_TABLE;"),

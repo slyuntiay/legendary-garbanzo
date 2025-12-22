@@ -2,6 +2,7 @@ package marketplace.repository.product;
 
 import lombok.RequiredArgsConstructor;
 import marketplace.config.DataSource;
+import marketplace.entity.Client;
 import marketplace.entity.Product;
 import marketplace.repository.CRUDRepository;
 import org.springframework.stereotype.Repository;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
@@ -86,28 +88,28 @@ public class ProductRepo implements CRUDRepository<Product> {
     @Override
     public Product delete(int id) {
         Product product = read(id);
-            if (product != null) {
-                try (Connection connection = dataSource.getConnection();
-                     PreparedStatement statement = connection.prepareStatement(ProductSQLScript.DELETE.getSql())) {
+        if (product != null) {
+            try (Connection connection = dataSource.getConnection();
+                 PreparedStatement statement = connection.prepareStatement(ProductSQLScript.DELETE.getSql())) {
 
-                    statement.setInt(1, id);
-                    int rowsAffected = statement.executeUpdate();
+                statement.setInt(1, id);
+                ResultSet resultSet = statement.executeQuery();
+                while (resultSet.next()) {
+                    String name = resultSet.getString("name");
+                    double price = resultSet.getDouble("price");
+                    int quantity = resultSet.getInt("quantity");
 
-                    if (rowsAffected > 0) {
-                        System.out.println("Продукт с id=" + id + " успешно удалён");
-                    } else {
-                        System.out.println("Продукт с id=" + id + " не найден");
-                        return null;
-                    }
-
-                } catch (SQLException sqlException) {
-                    sqlException.printStackTrace();
-                    System.out.println("ОШИБКА. Не удалось удалить продукт");
-                    return null;
+                    product = new Product(id, name, price, quantity);
                 }
+                System.out.println("Продукт " + product + " успешно удалён");
+            } catch (SQLException sqlException) {
+                sqlException.printStackTrace();
+                System.out.println("ОШИБКА. Не удалось удалить продукт");
             }
-            return product;
+
         }
+        return product;
+    }
 
     @Override
     public Product read(int id) {
@@ -122,6 +124,7 @@ public class ProductRepo implements CRUDRepository<Product> {
                 int quantity = resultSet.getInt("quantity");
                 product = new Product(id, name, price, quantity);
             }
+            System.out.println("Продукт " + product + " успешно прочитан");
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
             System.out.println("ОШИБКА. Не удалось прочитать продукт");
@@ -143,6 +146,7 @@ public class ProductRepo implements CRUDRepository<Product> {
                 product.setQuantity(resultSet.getInt("quantity"));
                 list.add(product);
             }
+            System.out.println(list);
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
             System.out.println("ОШИБКА. Не удалось прочитать БД");

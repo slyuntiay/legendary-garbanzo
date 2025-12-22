@@ -27,30 +27,28 @@ public class ProductController {
 
     @DeleteMapping("delete/{id}")
     public ResponseEntity<CreateProductResponseDto> delete(@PathVariable int id) {
-        Product deletedProduct = productService.delete(id);
-        CreateProductResponseDto responseDto = new CreateProductResponseDto(deletedProduct);
-        return ResponseEntity.ok(responseDto);
+        Product deletedProduct = productService.read(id);
+        productService.delete(id);
+        return ResponseEntity.ok(new CreateProductResponseDto(deletedProduct));
     }
 //    @PutMapping("/update/{id}")
 //    public ResponseEntity<CreateProductResponseDto> update(
-//            @RequestBody CreateProductRequestDto updateRequestDto) {
-//
-//        Product updatedProduct = productService.update(id, updateRequestDto);
+//            @RequestBody CreateProductRequestDto createProductRequestDto) {
+//        Product updatedProduct = productService.update(createProductRequestDto);
 //        CreateProductResponseDto responseDto = new CreateProductResponseDto(updatedProduct);
 //
 //        return ResponseEntity.ok(responseDto);
-
-//не понимаю что делать с id
+//
 //    }
 
-    @GetMapping (path = "/read/{id}")
+    @GetMapping(path = "/read/{id}")
     public ResponseEntity<CreateProductResponseDto> read(@PathVariable int id) {
         Product readProduct = productService.read(id);
         CreateProductResponseDto responseDto = new CreateProductResponseDto(readProduct);
         return ResponseEntity.ok(responseDto);
     }
 
-    @GetMapping (path = "/readAll/{id}")
+    @GetMapping(path = "/readAll")
     public ResponseEntity<List<CreateProductResponseDto>> readAll() {
         List<Product> products = productService.readAll();
         List<CreateProductResponseDto> responseDto = new ArrayList<>();
