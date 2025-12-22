@@ -19,7 +19,7 @@ public class ProductService {
     }
 
     public Product delete(int id) {
-        Product product = new Product(productRepo.delete(id));
+        Product product = productRepo.delete(id);
         if(product == null){
             throw new RuntimeException("такой id нелья удалить" + id + "пошел нахуй");
         }
