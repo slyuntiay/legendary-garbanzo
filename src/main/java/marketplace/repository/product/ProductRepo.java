@@ -85,7 +85,7 @@ public class ProductRepo implements CRUDRepository<Product> {
     }
 
     @Override
-    public Product delete(int id) {
+    public void delete(int id) {
         Product product = read(id);
         if (product != null) {
             try (Connection connection = dataSource.getConnection();
@@ -107,7 +107,6 @@ public class ProductRepo implements CRUDRepository<Product> {
             }
 
         }
-        return product;
     }
 
     @Override

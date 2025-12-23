@@ -83,7 +83,7 @@ public class ClientRepo implements CRUDRepository<Client> {
     }
 
     @Override
-    public Client delete(int id) {
+    public void delete(int id) {
         Client client = null;
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(ClientSQLScript.DELETE.getSql())) {
@@ -101,7 +101,6 @@ public class ClientRepo implements CRUDRepository<Client> {
             sqlException.printStackTrace();
             System.out.println("ОШИБКА. Не удалось удалить клиента");
         }
-        return client;
     }
 
     @Override

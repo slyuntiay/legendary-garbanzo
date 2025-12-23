@@ -16,7 +16,7 @@ public interface CRUDRepository<T extends Entity> {
 
     T update(T entity);
 
-    T delete(int id);
+    void delete(int id);
 
     List<T> readAll();
 }

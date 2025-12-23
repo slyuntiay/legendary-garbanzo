@@ -15,9 +15,6 @@ public class ClientService{
         Client client = new Client(createClientRequestDto);
         return clientRepo.create(client);
     }
-    public Client delete(int id) {
-        return clientRepo.delete(id);
-    }
 }
 
 

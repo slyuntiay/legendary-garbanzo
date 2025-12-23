@@ -18,14 +18,13 @@ public class ProductService {
         return productRepo.create(product);
     }
 
-    public Product delete(int id) {
+    public void delete(int id) {
         Product product = productRepo.read(id);
         if (product == null) {
             throw new RuntimeException("такой id нелья удалить" + id + "пошел нахуй");
 
         }
         productRepo.delete(id);
-        return product;
     }
 
     public Product update(int id, CreateProductRequestDto createProductRequestDto) {
