@@ -105,7 +105,6 @@ public class ProductRepo implements CRUDRepository<Product> {
                 sqlException.printStackTrace();
                 System.out.println("ОШИБКА. Не удалось удалить продукт");
             }
-
         }
     }
 
