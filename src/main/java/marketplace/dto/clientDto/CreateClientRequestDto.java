@@ -1,12 +1,18 @@
 package marketplace.dto.clientDto;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Getter
 public class CreateClientRequestDto {
-    private final String surname;
-    private final String name;
+    @NotBlank(message = "Фамилия обязательна, тварь!")
+    @Size(min = 2, max = 50)
+    private String surname;
 
+    @NotBlank
+    @Size(min = 2, max = 30)
+    private String name;
 }

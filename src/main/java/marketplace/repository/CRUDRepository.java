@@ -2,19 +2,18 @@ package marketplace.repository;
 
 
 import marketplace.entity.Entity;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
+@Repository
 public interface CRUDRepository<T extends Entity> {
-    void createTable();
-
-    void dropTable();
-
     T create(T entity);
 
-    T read(int id);
+    Optional<T> read(int id);
 
-    void update(T entity);
+    T update(T entity);
 
     void delete(int id);
 

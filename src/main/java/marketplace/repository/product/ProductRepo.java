@@ -2,6 +2,7 @@ package marketplace.repository.product;
 
 import lombok.RequiredArgsConstructor;
 import marketplace.config.DataSource;
+import marketplace.entity.Client;
 import marketplace.entity.Product;
 import marketplace.repository.CRUDRepository;
 import org.springframework.stereotype.Repository;
@@ -9,35 +10,36 @@ import org.springframework.stereotype.Repository;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
 public class ProductRepo implements CRUDRepository<Product> {
     private final DataSource dataSource;
 
-    @Override
-    public void createTable() {
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(ProductSQLScript.CREATE_TABLE.getSql())) {
-            statement.executeUpdate();
-            System.out.println("Таблица успешно создана");
-        } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
-            System.out.println("ОШИБКА. Не удалось создать таблицу");
-        }
-    }
-
-    @Override
-    public void dropTable() {
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(ProductSQLScript.DROP_TABLE.getSql())) {
-            statement.executeUpdate();
-            System.out.println("Таблица успешно удалена");
-        } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
-            System.out.println("ОШИБКА. Не удалось удалить таблицу");
-        }
-    }
+//    @Override
+//    public void createTable() {
+//        try (Connection connection = dataSource.getConnection();
+//             PreparedStatement statement = connection.prepareStatement(ProductSQLScript.CREATE_TABLE.getSql())) {
+//            statement.executeUpdate();
+//            System.out.println("Таблица успешно создана");
+//        } catch (SQLException sqlException) {
+//            sqlException.printStackTrace();
+//            System.out.println("ОШИБКА. Не удалось создать таблицу");
+//        }
+//    }
+//
+//    @Override
+//    public void dropTable() {
+//        try (Connection connection = dataSource.getConnection();
+//             PreparedStatement statement = connection.prepareStatement(ProductSQLScript.DROP_TABLE.getSql())) {
+//            statement.executeUpdate();
+//            System.out.println("Таблица успешно удалена");
+//        } catch (SQLException sqlException) {
+//            sqlException.printStackTrace();
+//            System.out.println("ОШИБКА. Не удалось удалить таблицу");
+//        }
+//    }
 
     @Override
     public Product create(Product product) {
@@ -68,7 +70,7 @@ public class ProductRepo implements CRUDRepository<Product> {
 
 
     @Override
-    public void update(Product product) {
+    public Product update(Product product) {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(ProductSQLScript.UPDATE.getSql())) {
 
@@ -83,6 +85,7 @@ public class ProductRepo implements CRUDRepository<Product> {
             sqlException.printStackTrace();
             System.out.println("ОШИБКА. Не удалось изменить данные продукта");
         }
+        return product;
     }
 
     @Override
@@ -108,10 +111,11 @@ public class ProductRepo implements CRUDRepository<Product> {
     }
 
     @Override
-    public Product read(int id) {
+    public Optional<Product> read(int id) {
         Product product = null;
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(ProductSQLScript.READ.getSql())) {
+
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -120,11 +124,12 @@ public class ProductRepo implements CRUDRepository<Product> {
                 int quantity = resultSet.getInt("quantity");
                 product = new Product(id, name, price, quantity);
             }
+
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
             System.out.println("ОШИБКА. Не удалось прочитать продукт");
         }
-        return product;
+        return Optional.ofNullable(product);
     }
 
     @Override

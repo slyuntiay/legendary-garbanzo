@@ -9,12 +9,14 @@ import org.springframework.stereotype.Repository;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
 public class ClientRepo implements CRUDRepository<Client> {
-   private final DataSource dataSource;
+    private final DataSource dataSource;
 
+    // устарело
     public void createTable() {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(ClientSQLScript.CREATE_TABLE.getSql())) {
@@ -26,6 +28,7 @@ public class ClientRepo implements CRUDRepository<Client> {
         }
     }
 
+    // устарело
     public void dropTable() {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(ClientSQLScript.DROP_TABLE.getSql())) {
@@ -53,7 +56,7 @@ public class ClientRepo implements CRUDRepository<Client> {
                     client.setId(id);
                     System.out.println("Клиент " + '"' + client + '"' + " успешно добавлен");
                 } else {
-                    throw new SQLException("ОШИБКА. Не удалось добавить клиента");
+                    throw new SQLException("ОШИБКА! Не удалось добавить клиента");
                 }
             }
 
@@ -64,9 +67,30 @@ public class ClientRepo implements CRUDRepository<Client> {
 
     }
 
+    @Override
+    public Optional<Client> read(int id) {
+        Client client = null;
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(ClientSQLScript.READ.getSql())) {
+
+            statement.setInt(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                String surname = resultSet.getString("surname");
+                String name = resultSet.getString("name");
+                client = new Client(id, surname, name);
+            }
+            System.out.println("Клиент " + client);
+
+        } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+            System.out.println("ОШИБКА! Клиент не найден");
+        }
+        return Optional.ofNullable(client);
+    }
 
     @Override
-    public void update(Client client) {
+    public Client update(Client client) {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(ClientSQLScript.UPDATE.getSql())) {
 
@@ -75,10 +99,12 @@ public class ClientRepo implements CRUDRepository<Client> {
             statement.setInt(3, client.getId());
             statement.executeUpdate();
             System.out.println("Сведения о клиенте успешно изменены");
+
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
             System.out.println("ОШИБКА. Не удалось изменить данные клиента");
         }
+        return client;
     }
 
     @Override
@@ -100,26 +126,6 @@ public class ClientRepo implements CRUDRepository<Client> {
             sqlException.printStackTrace();
             System.out.println("ОШИБКА. Не удалось удалить клиента");
         }
-    }
-
-    @Override
-    public Client read(int id) {
-        Client client = null;
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(ClientSQLScript.READ.getSql())) {
-
-            statement.setInt(1, id);
-            ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()) {
-                String surname = resultSet.getString("surname");
-                String name = resultSet.getString("name");
-                client = new Client(id, surname, name);
-            }
-        } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
-            System.out.println("ОШИБКА. Не удалось прочитать клиента");
-        }
-        return client;
     }
 
     @Override
