@@ -1,12 +1,9 @@
 package marketplace.controller.productContoller;
 
 import lombok.RequiredArgsConstructor;
-import marketplace.dto.clientDto.CreateClientRequestDto;
-import marketplace.dto.clientDto.CreateClientResponseDto;
 import marketplace.dto.productDto.CreateProductRequestDto;
 import marketplace.dto.productDto.CreateProductResponseDto;
 import marketplace.entity.Product;
-import marketplace.service.ProductService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
