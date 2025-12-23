@@ -1,7 +1,6 @@
 package marketplace.entity;
 
 import lombok.*;
-import marketplace.dto.clientDto.CreateClientRequestDto;
 import marketplace.dto.productDto.CreateProductRequestDto;
 
 import java.util.Objects;
@@ -13,12 +12,17 @@ public class Product extends Entity {
     private double price;
     private int quantity;
 
-
+    public Product(Product product) {
+        super(product.getId());
+        this.name = name;
+        this.price = price;
+        this.quantity = quantity;
+    }
 
     public Product(CreateProductRequestDto createProductRequestDto) {
         this.name = createProductRequestDto.getName();
-       this.price = createProductRequestDto.getPrice();
-       this.quantity = createProductRequestDto.getQuantity();
+        this.price = createProductRequestDto.getPrice();
+        this.quantity = createProductRequestDto.getQuantity();
     }
 
     public Product(String name, double price, int quantity) {
@@ -52,11 +56,6 @@ public class Product extends Entity {
 
     @Override
     public String toString() {
-        return "Product{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", price=" + price +
-                ", quantity=" + quantity +
-                '}';
+        return id + " " + name + " " + price + " тенге за штуку";
     }
 }

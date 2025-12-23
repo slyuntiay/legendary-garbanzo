@@ -1,4 +1,4 @@
-package marketplace.service;
+package marketplace.service.clientService;
 
 import lombok.RequiredArgsConstructor;
 import marketplace.dto.clientDto.CreateClientRequestDto;
@@ -14,6 +14,9 @@ public class ClientService{
     public Client create(CreateClientRequestDto createClientRequestDto) {
         Client client = new Client(createClientRequestDto);
         return clientRepo.create(client);
+    }
+    public Client delete(int id) {
+        return clientRepo.delete(id);
     }
 }
 

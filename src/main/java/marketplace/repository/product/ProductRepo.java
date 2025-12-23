@@ -47,17 +47,15 @@ public class ProductRepo implements CRUDRepository<Product> {
             statement.setString(1, product.getName());
             statement.setDouble(2, product.getPrice());
             statement.setInt(3, product.getQuantity());
-            int affectedRows = statement.executeUpdate();
-            System.out.println("Продукт создан");
-            if (affectedRows == 0) {
-                throw new SQLException("ОШИБКА. Не удалось добавить клиента");
-            }
+            statement.executeUpdate();
+
             try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
                     int id = generatedKeys.getInt(1);
                     product.setId(id);
+                    System.out.println("Продукт " + '"' + product + '"' + " успешно добавлен");
                 } else {
-                    throw new SQLException("ОШИБКА. Не удалось добавить клиента");
+                    throw new SQLException("ОШИБКА. Не удалось добавить продукт");
                 }
             }
         } catch (SQLException sqlException) {
@@ -68,7 +66,7 @@ public class ProductRepo implements CRUDRepository<Product> {
 
 
     @Override
-    public void update(Product product) {
+    public Product update(Product product) {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(ProductSQLScript.UPDATE.getSql())) {
 
@@ -76,35 +74,40 @@ public class ProductRepo implements CRUDRepository<Product> {
             statement.setDouble(2, product.getPrice());
             statement.setInt(3, product.getQuantity());
             statement.setInt(4, product.getId());
+            statement.executeUpdate();
 
-            int affectedRows = statement.executeUpdate();
             System.out.println("Продукт успешно изменен");
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
             System.out.println("ОШИБКА. Не удалось изменить данные продукта");
         }
+        return product;
     }
 
     @Override
-    public void delete(int id) {
-        Product product = null;
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(ProductSQLScript.DELETE.getSql())) {
+    public Product delete(int id) {
+        Product product = read(id);
+        if (product != null) {
+            try (Connection connection = dataSource.getConnection();
+                 PreparedStatement statement = connection.prepareStatement(ProductSQLScript.DELETE.getSql())) {
 
-            statement.setInt(1, id);
-            ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()) {
-                String name = resultSet.getString("name");
-                double price = resultSet.getDouble("price");
-                int quantity = resultSet.getInt("quantity");
-                product = new Product(id, name, price, quantity);
+                statement.setInt(1, id);
+                ResultSet resultSet = statement.executeQuery();
+                while (resultSet.next()) {
+                    String name = resultSet.getString("name");
+                    double price = resultSet.getDouble("price");
+                    int quantity = resultSet.getInt("quantity");
+
+                    product = new Product(id, name, price, quantity);
+                }
+                System.out.println("Продукт " + product + " успешно удалён");
+            } catch (SQLException sqlException) {
+                sqlException.printStackTrace();
+                System.out.println("ОШИБКА. Не удалось удалить продукт");
             }
 
-            System.out.println("Продукт " + product + " успешно удалён");
-        } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
-            System.out.println("ОШИБКА. Не удалось удалить продукт");
         }
+        return product;
     }
 
     @Override
@@ -120,6 +123,7 @@ public class ProductRepo implements CRUDRepository<Product> {
                 int quantity = resultSet.getInt("quantity");
                 product = new Product(id, name, price, quantity);
             }
+            System.out.println("Продукт " + product + " успешно прочитан");
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
             System.out.println("ОШИБКА. Не удалось прочитать продукт");
@@ -141,6 +145,7 @@ public class ProductRepo implements CRUDRepository<Product> {
                 product.setQuantity(resultSet.getInt("quantity"));
                 list.add(product);
             }
+            System.out.println(list);
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
             System.out.println("ОШИБКА. Не удалось прочитать БД");
