@@ -66,7 +66,7 @@ public class ProductRepo implements CRUDRepository<Product> {
 
 
     @Override
-    public void update(Product product) {
+    public Product update(Product product) {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(ProductSQLScript.UPDATE.getSql())) {
 
@@ -81,6 +81,7 @@ public class ProductRepo implements CRUDRepository<Product> {
             sqlException.printStackTrace();
             System.out.println("ОШИБКА. Не удалось изменить данные продукта");
         }
+        return product;
     }
 
     @Override

@@ -20,7 +20,7 @@ public class ProductService {
 
     public Product delete(int id) {
         Product product = productRepo.read(id);
-        if(product == null){
+        if (product == null) {
             throw new RuntimeException("такой id нелья удалить" + id + "пошел нахуй");
 
         }
@@ -28,12 +28,18 @@ public class ProductService {
         return product;
     }
 
-    public Product update(Product product) {
-        productRepo.update(product);
-        return product;
+    public Product update(int id, CreateProductRequestDto createProductRequestDto) {
+        Product product = productRepo.read(id);
+        if (product == null) {
+            throw new RuntimeException("не смог найти продукт для обновления");
+        }
+        product.setName(createProductRequestDto.getName());
+        product.setPrice(createProductRequestDto.getPrice());
+        product.setQuantity(createProductRequestDto.getQuantity());
+        return productRepo.update(product);
     }
 
-    public Product read(int id)  {
+    public Product read(int id) {
         Product product = productRepo.read(id);
         if (product == null) {
             throw new RuntimeException("такого id нет" + id + " пошел нахуй!");

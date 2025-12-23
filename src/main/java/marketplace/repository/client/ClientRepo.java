@@ -66,7 +66,7 @@ public class ClientRepo implements CRUDRepository<Client> {
 
 
     @Override
-    public void update(Client client) {
+    public Client update(Client client) {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(ClientSQLScript.UPDATE.getSql())) {
 
@@ -79,6 +79,7 @@ public class ClientRepo implements CRUDRepository<Client> {
             sqlException.printStackTrace();
             System.out.println("ОШИБКА. Не удалось изменить данные клиента");
         }
+        return client;
     }
 
     @Override

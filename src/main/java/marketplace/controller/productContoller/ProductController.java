@@ -31,15 +31,16 @@ public class ProductController {
         productService.delete(id);
         return ResponseEntity.ok(new CreateProductResponseDto(deletedProduct));
     }
-//    @PutMapping("/update/{id}")
-//    public ResponseEntity<CreateProductResponseDto> update(
-//            @RequestBody CreateProductRequestDto createProductRequestDto) {
-//        Product updatedProduct = productService.update(createProductRequestDto);
-//        CreateProductResponseDto responseDto = new CreateProductResponseDto(updatedProduct);
-//
-//        return ResponseEntity.ok(responseDto);
-//
-//    }
+    @PutMapping("/update/{id}")
+    public ResponseEntity<CreateProductResponseDto> update(
+            @PathVariable int id,
+            @RequestBody CreateProductRequestDto createProductRequestDto) {
+        Product updatedProduct = productService.update(id, createProductRequestDto);
+        CreateProductResponseDto responseDto = new CreateProductResponseDto(updatedProduct);
+
+        return ResponseEntity.ok(responseDto);
+
+    }
 
     @GetMapping(path = "/read/{id}")
     public ResponseEntity<CreateProductResponseDto> read(@PathVariable int id) {
