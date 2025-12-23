@@ -9,13 +9,13 @@ import org.springframework.stereotype.Repository;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
 public class ProductRepo implements CRUDRepository<Product> {
     private final DataSource dataSource;
 
-    @Override
     public void createTable() {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(ProductSQLScript.CREATE_TABLE.getSql())) {
@@ -27,7 +27,6 @@ public class ProductRepo implements CRUDRepository<Product> {
         }
     }
 
-    @Override
     public void dropTable() {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(ProductSQLScript.DROP_TABLE.getSql())) {
@@ -86,30 +85,28 @@ public class ProductRepo implements CRUDRepository<Product> {
 
     @Override
     public void delete(int id) {
-        Product product = read(id);
-        if (product != null) {
-            try (Connection connection = dataSource.getConnection();
-                 PreparedStatement statement = connection.prepareStatement(ProductSQLScript.DELETE.getSql())) {
+        Product product = null;
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(ProductSQLScript.DELETE.getSql())) {
 
-                statement.setInt(1, id);
-                ResultSet resultSet = statement.executeQuery();
-                while (resultSet.next()) {
-                    String name = resultSet.getString("name");
-                    double price = resultSet.getDouble("price");
-                    int quantity = resultSet.getInt("quantity");
+            statement.setInt(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                String name = resultSet.getString("name");
+                double price = resultSet.getDouble("price");
+                int quantity = resultSet.getInt("quantity");
 
-                    product = new Product(id, name, price, quantity);
-                }
-                System.out.println("Продукт " + product + " успешно удалён");
-            } catch (SQLException sqlException) {
-                sqlException.printStackTrace();
-                System.out.println("ОШИБКА. Не удалось удалить продукт");
+                product = new Product(id, name, price, quantity);
             }
+            System.out.println("Продукт " + product + " успешно удалён");
+        } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+            System.out.println("ОШИБКА. Не удалось удалить продукт");
         }
     }
 
     @Override
-    public Product read(int id) {
+    public Optional<Product> read(int id) {
         Product product = null;
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(ProductSQLScript.READ.getSql())) {
@@ -126,7 +123,7 @@ public class ProductRepo implements CRUDRepository<Product> {
             sqlException.printStackTrace();
             System.out.println("ОШИБКА. Не удалось прочитать продукт");
         }
-        return product;
+        return Optional.ofNullable(product);
     }
 
     @Override

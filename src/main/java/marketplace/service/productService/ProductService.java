@@ -7,6 +7,7 @@ import marketplace.repository.product.ProductRepo;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 @RequiredArgsConstructor
@@ -23,10 +24,7 @@ public class ProductService {
     }
 
     public Product update(int id, CreateProductRequestDto createProductRequestDto) {
-        Product product = productRepo.read(id);
-        if (product == null) {
-            throw new RuntimeException("не смог найти продукт для обновления");
-        }
+        Product product = read(id);
         product.setName(createProductRequestDto.getName());
         product.setPrice(createProductRequestDto.getPrice());
         product.setQuantity(createProductRequestDto.getQuantity());
@@ -34,11 +32,8 @@ public class ProductService {
     }
 
     public Product read(int id) {
-        Product product = productRepo.read(id);
-        if (product == null) {
-            throw new RuntimeException("такого id нет" + id + " пошел нахуй!");
-        }
-        return product;
+        return productRepo.read(id)
+                .orElseThrow(() -> new NoSuchElementException("Продукт не найден"));
     }
 
 
