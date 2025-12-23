@@ -56,6 +56,7 @@ public class ProductController {
         for (Product product : products) {
             responseDto.add(new CreateProductResponseDto(product));
         }
+
         return ResponseEntity.ok(responseDto);
     }
 }
