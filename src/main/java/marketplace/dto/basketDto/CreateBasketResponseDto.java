@@ -1,7 +1,8 @@
 package marketplace.dto.basketDto;
 
+import lombok.Getter;
 import marketplace.entity.Basket;
-
+@Getter
 public class CreateBasketResponseDto {
     private final int clientId;
     private final int productId;

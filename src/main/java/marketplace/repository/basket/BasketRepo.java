@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
@@ -54,24 +55,29 @@ public class BasketRepo implements CRUDRepository<Basket> {
 
     }
 
-    @Override
-    public Basket read(int id) {
-        Basket basket = null;
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(BasketSQLScript.READ.getSql())) {
 
-            statement.setInt(1, id);
-            ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()) {
-                String surname = resultSet.getString("surname");
-                String name = resultSet.getString("name");
-                basket = new Basket();
-            }
-        } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
-            System.out.println("ОШИБКА. Не удалось прочитать клиента");
-        }
-        return basket;
+//    public Basket read(int id) {
+//        Basket basket = null;
+//        try (Connection connection = dataSource.getConnection();
+//             PreparedStatement statement = connection.prepareStatement(BasketSQLScript.READ.getSql())) {
+//
+//            statement.setInt(1, id);
+//            ResultSet resultSet = statement.executeQuery();
+//            while (resultSet.next()) {
+//                String surname = resultSet.getString("surname");
+//                String name = resultSet.getString("name");
+//                basket = new Basket();
+//            }
+//        } catch (SQLException sqlException) {
+//            sqlException.printStackTrace();
+//            System.out.println("ОШИБКА. Не удалось прочитать клиента");
+//        }
+//        return basket;
+//    }
+    @Override
+    public Optional<Basket> read(int id) {
+        Basket basket = null;
+        return Optional.ofNullable(basket);
     }
 
     @Override
