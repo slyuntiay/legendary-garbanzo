@@ -85,7 +85,19 @@ public class BasketRepo implements CRUDRepository<Basket> {
 
     @Override
     public Basket update(Basket basket) {
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(BasketSQLScript.UPDATE.getSql())) {
 
+            statement.setInt(1, basket.getQuantity());
+            statement.setInt(2, basket.getClientId());
+            statement.setInt(3, basket.getProductId());
+            statement.executeUpdate();
+            System.out.println("Корзина обновлена");
+
+        } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+            System.out.println("ОШИБКА. Не удалось обновить корзину");
+        }
         return basket;
     }
 
@@ -98,14 +110,13 @@ public class BasketRepo implements CRUDRepository<Basket> {
             statement.setInt(1, clientId);
             ResultSet resultSet = statement.executeQuery();
 
-            System.out.println("Корзина:");
             while (resultSet.next()) {
                 int productId = resultSet.getInt("product_id");
                 int quantity = resultSet.getInt("quantity");
                 basket = new Basket(clientId, productId, quantity);
                 System.out.println(basket);
             }
-            System.out.println("успешно удалена");
+            System.out.println("Корзина" + basket + "успешно удалена");
 
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
