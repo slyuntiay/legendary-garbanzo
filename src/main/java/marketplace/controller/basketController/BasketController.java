@@ -44,8 +44,7 @@ public class BasketController {
     }
 
     @DeleteMapping(path = "/delete/{id}")
-    public ResponseEntity<CreateBasketResponseDto> delete(
-            @PathVariable int id) {
+    public ResponseEntity<CreateBasketResponseDto> delete(@PathVariable int id) {
         Basket basket = basketService.read(id);
         basketService.delete(id);
         CreateBasketResponseDto responseDto = new CreateBasketResponseDto(basket);

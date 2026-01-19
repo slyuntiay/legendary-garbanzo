@@ -4,8 +4,10 @@ import lombok.RequiredArgsConstructor;
 import marketplace.config.DataSource;
 import marketplace.entity.Basket;
 import marketplace.entity.Client;
+import marketplace.entity.Product;
 import marketplace.repository.CRUDRepository;
 import marketplace.repository.client.ClientSQLScript;
+import marketplace.repository.product.ProductSQLScript;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
@@ -58,25 +60,6 @@ public class BasketRepo implements CRUDRepository<Basket> {
 
     }
 
-
-//    public Basket read(int id) {
-//        Basket basket = null;
-//        try (Connection connection = dataSource.getConnection();
-//             PreparedStatement statement = connection.prepareStatement(BasketSQLScript.READ.getSql())) {
-//
-//            statement.setInt(1, id);
-//            ResultSet resultSet = statement.executeQuery();
-//            while (resultSet.next()) {
-//                String surname = resultSet.getString("surname");
-//                String name = resultSet.getString("name");
-//                basket = new Basket();
-//            }
-//        } catch (SQLException sqlException) {
-//            sqlException.printStackTrace();
-//            System.out.println("ОШИБКА. Не удалось прочитать клиента");
-//        }
-//        return basket;
-//    }
     @Override
     public Optional<Basket> read(int clientId) {
         Basket basket = null;
@@ -85,12 +68,13 @@ public class BasketRepo implements CRUDRepository<Basket> {
 
             statement.setInt(1, clientId);
             ResultSet resultSet = statement.executeQuery();
+            System.out.println("Корзина:");
             while (resultSet.next()) {
                 int productId = resultSet.getInt("product_id");
                 int quantity = resultSet.getInt("quantity");
                 basket = new Basket(clientId, productId, quantity);
+                System.out.println(basket);
             }
-            System.out.println("Корзина" + basket);
 
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
@@ -106,8 +90,27 @@ public class BasketRepo implements CRUDRepository<Basket> {
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(int clientId) {
+        Basket basket = null;
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(BasketSQLScript.DELETE.getSql())) {
 
+            statement.setInt(1, clientId);
+            ResultSet resultSet = statement.executeQuery();
+
+            System.out.println("Корзина:");
+            while (resultSet.next()) {
+                int productId = resultSet.getInt("product_id");
+                int quantity = resultSet.getInt("quantity");
+                basket = new Basket(clientId, productId, quantity);
+                System.out.println(basket);
+            }
+            System.out.println("успешно удалена");
+
+        } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+            System.out.println("ОШИБКА. Не удалось удалить корзину");
+        }
     }
 
     @Override
