@@ -18,7 +18,7 @@ public class BasketService {
     }
 
     public Basket read(int id) {
-        return basketRepo.read(id).orElseThrow(() -> new NoSuchElementException("Продукт не найден"));
+        return basketRepo.read(id).orElseThrow(() -> new NoSuchElementException("Корзина не найдена"));
     }
 
     public Basket update(Basket basket) {

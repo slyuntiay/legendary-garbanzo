@@ -16,4 +16,11 @@ public class Basket extends Entity {
         this.productId = createBasketRequestDto.getProductId();
         this.quantity = createBasketRequestDto.getQuantity();
     }
+
+    public Basket(int quantity, int productId, int clientId) {
+        this.quantity = quantity;
+        this.productId = productId;
+        this.clientId = clientId;
+    }
+
 }

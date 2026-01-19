@@ -3,7 +3,9 @@ package marketplace.repository.basket;
 import lombok.RequiredArgsConstructor;
 import marketplace.config.DataSource;
 import marketplace.entity.Basket;
+import marketplace.entity.Client;
 import marketplace.repository.CRUDRepository;
+import marketplace.repository.client.ClientSQLScript;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
@@ -47,9 +49,10 @@ public class BasketRepo implements CRUDRepository<Basket> {
             statement.setInt(2, basket.getProductId());
             statement.setInt(3, basket.getQuantity());
             statement.executeUpdate();
-
+            System.out.println("Товар успешно добавлен в корзину");
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
+            System.out.println("Товар не удалось добавить в корзину");
         }
         return basket;
 
@@ -75,8 +78,24 @@ public class BasketRepo implements CRUDRepository<Basket> {
 //        return basket;
 //    }
     @Override
-    public Optional<Basket> read(int id) {
+    public Optional<Basket> read(int clientId) {
         Basket basket = null;
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(BasketSQLScript.READ.getSql())) {
+
+            statement.setInt(1, clientId);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                int productId = resultSet.getInt("product_id");
+                int quantity = resultSet.getInt("quantity");
+                basket = new Basket(clientId, productId, quantity);
+            }
+            System.out.println("Корзина" + basket);
+
+        } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+            System.out.println("ОШИБКА! Корзина не найден");
+        }
         return Optional.ofNullable(basket);
     }
 
