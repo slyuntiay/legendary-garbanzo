@@ -123,6 +123,26 @@ public class BasketRepo implements CRUDRepository<Basket> {
             System.out.println("ОШИБКА. Не удалось удалить корзину");
         }
     }
+    public void deleteProduct(int clientId, int productId) {
+        Basket basket = null;
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(BasketSQLScript.DELETE.getSql())) {
+
+            statement.setInt(1, clientId);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                int quantity = resultSet.getInt("quantity");
+                basket = new Basket(clientId, productId, quantity);
+                System.out.println(basket);
+            }
+            System.out.println("Корзина" + basket + "успешно удалена");
+
+        } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+            System.out.println("ОШИБКА. Не удалось удалить корзину");
+        }
+    }
 
     @Override
     public List readAll() {

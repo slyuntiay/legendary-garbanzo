@@ -23,7 +23,7 @@ public class BasketService {
 
     public Basket update(int id, CreateBasketRequestDto createBasketRequestDto) {
         Basket basket = read(id);
-
+        basket.setQuantity(createBasketRequestDto.getQuantity());
         return basketRepo.update(basket);
     }
 
