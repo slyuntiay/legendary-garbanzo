@@ -126,9 +126,10 @@ public class BasketRepo implements CRUDRepository<Basket> {
     public void deleteProduct(int clientId, int productId) {
         Basket basket = null;
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(BasketSQLScript.DELETE.getSql())) {
+             PreparedStatement statement = connection.prepareStatement(BasketSQLScript.DELETEPRODUCT.getSql())) {
 
             statement.setInt(1, clientId);
+            statement.setInt(2, productId);
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {

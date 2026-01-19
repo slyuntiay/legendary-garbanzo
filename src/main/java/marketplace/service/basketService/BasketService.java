@@ -30,4 +30,7 @@ public class BasketService {
     public void delete(int id) {
         basketRepo.delete(id);
     }
+    public void deleteProduct(int clientId, int productId) {
+        basketRepo.deleteProduct(clientId,productId);
+    }
 }

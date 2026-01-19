@@ -51,5 +51,12 @@ public class BasketController {
         CreateBasketResponseDto responseDto = new CreateBasketResponseDto(basket);
         return ResponseEntity.ok(responseDto);
     }
+    @DeleteMapping(path = "/deleteProduct/{clientId}/{productId}")
+    public ResponseEntity<CreateBasketResponseDto> deleteProduct(@PathVariable int clientId, @PathVariable int productId) {
+        Basket basket = basketService.read(clientId);
+        basketService.deleteProduct(clientId,productId);
+        CreateBasketResponseDto responseDto = new CreateBasketResponseDto(basket);
+        return ResponseEntity.ok(responseDto);
+    }
 }
 
