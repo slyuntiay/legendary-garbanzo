@@ -1,7 +1,6 @@
 package marketplace.dto.clientDto;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import marketplace.entity.Client;
 

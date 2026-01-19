@@ -13,11 +13,10 @@ public enum BasketSQLScript {
             "FOREIGN KEY (product_id) REFERENCES PRODUCT_TABLE(id) ON DELETE CASCADE);"),
     DROP_TABLE("DROP TABLE BASKET_TABLE;"),
     CREATE("INSERT INTO BASKET_TABLE (client_id, product_id, quantity) VALUES (?, ?, ?);"),
-    DELETE("DELETE FROM BASKET_TABLE WHERE client_id = ? AND product_id = ? RETURNING client_id, product_id, quantity;"),
     READ("SELECT * FROM BASKET_TABLE WHERE client_id = ?;"),
     READ_ALL("SELECT * FROM BASKET_TABLE;"),
-    UPDATE("UPDATE BASKET_TABLE SET quantity = ?" + " WHERE client_id = ? AND product_id = ?;"),;
-
+    UPDATE("UPDATE BASKET_TABLE SET quantity = ?" + " WHERE client_id = ? AND product_id = ?;"),
+    DELETE("DELETE FROM BASKET_TABLE WHERE client_id = ? AND product_id = ? RETURNING client_id, product_id, quantity;");
     private final String sql;
 
     BasketSQLScript(String sql) {

@@ -19,9 +19,11 @@ public class ProductService {
         return productRepo.create(product);
     }
 
-    public void delete(int id) {
-        productRepo.delete(id);
+    public Product read(int id) {
+        return productRepo.read(id)
+                .orElseThrow(() -> new NoSuchElementException("Продукт не найден"));
     }
+
 
     public Product update(int id, CreateProductRequestDto createProductRequestDto) {
         Product product = read(id);
@@ -31,9 +33,8 @@ public class ProductService {
         return productRepo.update(product);
     }
 
-    public Product read(int id) {
-        return productRepo.read(id)
-                .orElseThrow(() -> new NoSuchElementException("Продукт не найден"));
+    public void delete(int id) {
+        productRepo.delete(id);
     }
 
 

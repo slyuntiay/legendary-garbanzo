@@ -8,8 +8,6 @@ import marketplace.service.basketService.BasketService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
-
 @RestController
 @RequestMapping(path = "basket")
 @RequiredArgsConstructor
@@ -23,11 +21,28 @@ public class BasketController {
         CreateBasketResponseDto responseDto = new CreateBasketResponseDto(basket);
         return ResponseEntity.ok(responseDto);
     }
+
     @GetMapping(path = "/read{id}")
     public ResponseEntity<CreateBasketResponseDto> read(
-            @PathVariable int id){
-        Optional<Basket> basket = basketService.read(id);
-        CreateBasketResponseDto responseDto = new CreateBasketResponseDto(basket.orElse(null));
+            @PathVariable int id) {
+        Basket basket = basketService.read(id);
+        return null;
+    }
+
+    @PutMapping(path = "/update{id}")
+    public ResponseEntity<CreateBasketResponseDto> update(
+            @PathVariable int id) {
+        Basket basket = basketService.read(id);
+        CreateBasketResponseDto responseDto = new CreateBasketResponseDto(basket);
+        return ResponseEntity.ok(responseDto);
+    }
+
+    @DeleteMapping(path = "/delete{id}")
+    public ResponseEntity<CreateBasketResponseDto> delete(
+            @PathVariable int id) {
+        Basket basket = basketService.read(id);
+        basketService.delete(id);
+        CreateBasketResponseDto responseDto = new CreateBasketResponseDto(basket);
         return ResponseEntity.ok(responseDto);
     }
 }

@@ -25,12 +25,13 @@ public class ProductController {
         return ResponseEntity.ok(responseDto);
     }
 
-    @DeleteMapping("delete/{id}")
-    public ResponseEntity<CreateProductResponseDto> delete(@PathVariable int id) {
-        Product deletedProduct = productService.read(id);
-        productService.delete(id);
-        return ResponseEntity.ok(new CreateProductResponseDto(deletedProduct));
+    @GetMapping(path = "/read/{id}")
+    public ResponseEntity<CreateProductResponseDto> read(@PathVariable int id) {
+        Product readProduct = productService.read(id);
+        CreateProductResponseDto responseDto = new CreateProductResponseDto(readProduct);
+        return ResponseEntity.ok(responseDto);
     }
+
     @PutMapping("/update/{id}")
     public ResponseEntity<CreateProductResponseDto> update(
             @PathVariable int id,
@@ -42,11 +43,11 @@ public class ProductController {
 
     }
 
-    @GetMapping(path = "/read/{id}")
-    public ResponseEntity<CreateProductResponseDto> read(@PathVariable int id) {
-        Product readProduct = productService.read(id);
-        CreateProductResponseDto responseDto = new CreateProductResponseDto(readProduct);
-        return ResponseEntity.ok(responseDto);
+    @DeleteMapping("delete/{id}")
+    public ResponseEntity<CreateProductResponseDto> delete(@PathVariable int id) {
+        Product deletedProduct = productService.read(id);
+        productService.delete(id);
+        return ResponseEntity.ok(new CreateProductResponseDto(deletedProduct));
     }
 
     @GetMapping(path = "/readAll")

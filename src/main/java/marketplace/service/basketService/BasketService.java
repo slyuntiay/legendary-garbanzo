@@ -5,8 +5,7 @@ import marketplace.dto.basketDto.CreateBasketRequestDto;
 import marketplace.entity.Basket;
 import marketplace.repository.basket.BasketRepo;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
+import java.util.NoSuchElementException;
 
 @Service
 @RequiredArgsConstructor
@@ -17,13 +16,16 @@ public class BasketService {
         Basket basket = new Basket(createBasketRequestDto);
         return basketRepo.create(basket);
     }
-    public Optional<Basket> read(int id) {
-        return basketRepo.read(id);
+
+    public Basket read(int id) {
+        return basketRepo.read(id).orElseThrow(() -> new NoSuchElementException("Продукт не найден"));
     }
+
     public Basket update(Basket basket) {
         return basketRepo.update(basket);
     }
-    public Basket delete(int id) {
-      return null;
+
+    public void delete(int id) {
+        basketRepo.delete(id);
     }
 }

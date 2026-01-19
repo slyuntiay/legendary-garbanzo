@@ -63,6 +63,27 @@ public class ProductRepo implements CRUDRepository<Product> {
         return product;
     }
 
+    @Override
+    public Optional<Product> read(int id) {
+        Product product = null;
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(ProductSQLScript.READ.getSql())) {
+            statement.setInt(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                String name = resultSet.getString("name");
+                double price = resultSet.getDouble("price");
+                int quantity = resultSet.getInt("quantity");
+                product = new Product(id, name, price, quantity);
+            }
+            System.out.println("Продукт " + product + " успешно прочитан");
+        } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+            System.out.println("ОШИБКА. Не удалось прочитать продукт");
+        }
+        return Optional.ofNullable(product);
+    }
+
 
     @Override
     public Product update(Product product) {
@@ -105,26 +126,7 @@ public class ProductRepo implements CRUDRepository<Product> {
         }
     }
 
-    @Override
-    public Optional<Product> read(int id) {
-        Product product = null;
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(ProductSQLScript.READ.getSql())) {
-            statement.setInt(1, id);
-            ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()) {
-                String name = resultSet.getString("name");
-                double price = resultSet.getDouble("price");
-                int quantity = resultSet.getInt("quantity");
-                product = new Product(id, name, price, quantity);
-            }
-            System.out.println("Продукт " + product + " успешно прочитан");
-        } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
-            System.out.println("ОШИБКА. Не удалось прочитать продукт");
-        }
-        return Optional.ofNullable(product);
-    }
+
 
     @Override
     public List<Product> readAll() {
