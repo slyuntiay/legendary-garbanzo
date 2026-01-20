@@ -83,6 +83,29 @@ public class BasketRepo implements CRUDRepository<Basket> {
         return Optional.ofNullable(basket);
     }
 
+    public Optional<Basket> readProduct(int clientId, int productId) {
+        Basket basket = null;
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(BasketSQLScript.READ_PRODUCT.getSql())) {
+
+            statement.setInt(1, clientId);
+            statement.setInt(2, productId);
+            ResultSet resultSet = statement.executeQuery();
+            System.out.println("Корзина:");
+            while (resultSet.next()) {
+                int quantity = resultSet.getInt("quantity");
+                basket = new Basket(clientId, productId, quantity);
+                System.out.println(basket);
+            }
+
+        } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+            System.out.println("ОШИБКА! Корзина не найден");
+        }
+        return Optional.ofNullable(basket);
+    }
+
+
     @Override
     public Basket update(Basket basket) {
         try (Connection connection = dataSource.getConnection();
@@ -126,7 +149,7 @@ public class BasketRepo implements CRUDRepository<Basket> {
     public void deleteProduct(int clientId, int productId) {
         Basket basket = null;
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(BasketSQLScript.DELETEPRODUCT.getSql())) {
+             PreparedStatement statement = connection.prepareStatement(BasketSQLScript.DELETE_PRODUCT.getSql())) {
 
             statement.setInt(1, clientId);
             statement.setInt(2, productId);
@@ -143,11 +166,6 @@ public class BasketRepo implements CRUDRepository<Basket> {
             sqlException.printStackTrace();
             System.out.println("ОШИБКА. Не удалось удалить корзину");
         }
-    }
-
-    @Override
-    public List readAll() {
-        return List.of();
     }
 }
 

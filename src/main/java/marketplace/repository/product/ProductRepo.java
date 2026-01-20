@@ -126,9 +126,6 @@ public class ProductRepo implements CRUDRepository<Product> {
         }
     }
 
-
-
-    @Override
     public List<Product> readAll() {
         List<Product> list = new ArrayList<>();
         try (Connection connection = dataSource.getConnection();

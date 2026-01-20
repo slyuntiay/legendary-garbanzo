@@ -21,8 +21,12 @@ public class BasketService {
         return basketRepo.read(id).orElseThrow(() -> new NoSuchElementException("Корзина не найдена"));
     }
 
-    public Basket update(int id, CreateBasketRequestDto createBasketRequestDto) {
-        Basket basket = read(id);
+    public Basket readProduct(int clientId, int productId) {
+        return basketRepo.readProduct(clientId, productId).orElseThrow(() -> new NoSuchElementException("Корзина не найдена"));
+    }
+
+    public Basket update(int clientId, int productId, CreateBasketRequestDto createBasketRequestDto) {
+        Basket basket = readProduct(clientId, productId);
         basket.setQuantity(createBasketRequestDto.getQuantity());
         return basketRepo.update(basket);
     }

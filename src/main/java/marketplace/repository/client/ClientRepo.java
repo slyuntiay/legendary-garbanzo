@@ -128,7 +128,6 @@ public class ClientRepo implements CRUDRepository<Client> {
         }
     }
 
-    @Override
     public List<Client> readAll() {
         List<Client> list = new ArrayList<>();
         try (Connection connection = dataSource.getConnection();

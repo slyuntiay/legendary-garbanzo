@@ -35,11 +35,11 @@ public class BasketController {
         }
     }
 
-    @PutMapping(path = "/update/{id}")
+    @PutMapping(path = "/update/{clientId}/{productId}")
     public ResponseEntity<CreateBasketResponseDto> update(
-            @PathVariable int id,
+            @PathVariable int clientId, @PathVariable int productId,
             @RequestBody CreateBasketRequestDto createBasketRequestDto) {
-        Basket basket = basketService.update(id, createBasketRequestDto);
+        Basket basket = basketService.update(clientId, productId, createBasketRequestDto);
         CreateBasketResponseDto responseDto = new CreateBasketResponseDto(basket);
         return ResponseEntity.ok(responseDto);
     }
