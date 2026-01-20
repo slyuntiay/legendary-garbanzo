@@ -35,6 +35,17 @@ public class BasketController {
         }
     }
 
+    @GetMapping(path = "readProduct/{clientId}/{productId}")
+    public ResponseEntity<CreateBasketResponseDto> readProduct(
+            @PathVariable int clientId, @PathVariable int productId){
+        try{
+            Basket basket = basketService.readProduct(clientId, productId);
+            return ResponseEntity.ok(new CreateBasketResponseDto(basket));
+        }catch (NoSuchElementException e){
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     @PutMapping(path = "/update/{clientId}/{productId}")
     public ResponseEntity<CreateBasketResponseDto> update(
             @PathVariable int clientId, @PathVariable int productId,

@@ -1,5 +1,6 @@
 package marketplace.entity;
 
+import jakarta.persistence.Column;
 import lombok.Getter;
 import lombok.Setter;
 import marketplace.dto.basketDto.CreateBasketRequestDto;
@@ -9,8 +10,11 @@ import java.util.Objects;
 @Getter
 @Setter
 public class Basket extends Entity {
+    @Column(unique = true, nullable = false)
     private int clientId;
+    @Column(unique = true, nullable= false)
     private int productId;
+    @Column(nullable = false)
     private int quantity;
 
     public Basket(CreateBasketRequestDto createBasketRequestDto){
