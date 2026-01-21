@@ -2,13 +2,10 @@ package marketplace.service.clientService;
 
 import lombok.RequiredArgsConstructor;
 import marketplace.dto.clientDto.CreateClientRequestDto;
-import marketplace.dto.clientDto.CreateClientResponseDto;
 import marketplace.entity.Client;
 import marketplace.repository.client.ClientRepo;
 import org.springframework.stereotype.Service;
-
 import java.util.NoSuchElementException;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor

@@ -8,9 +8,6 @@ import marketplace.service.productService.ProductService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @RestController
 @RequestMapping(path = "product")
 @RequiredArgsConstructor
@@ -19,7 +16,7 @@ public class ProductController {
 
     @PostMapping(path = "/create")
     public ResponseEntity<CreateProductResponseDto> create(@RequestBody
-                                                           CreateProductRequestDto createProductRequestDto) {
+                                                               CreateProductRequestDto createProductRequestDto) {
         Product product = productService.create(createProductRequestDto);
         CreateProductResponseDto responseDto = new CreateProductResponseDto(product);
         return ResponseEntity.ok(responseDto);
@@ -38,26 +35,11 @@ public class ProductController {
             @RequestBody CreateProductRequestDto createProductRequestDto) {
         Product updatedProduct = productService.update(id, createProductRequestDto);
         CreateProductResponseDto responseDto = new CreateProductResponseDto(updatedProduct);
-
         return ResponseEntity.ok(responseDto);
-
     }
 
     @DeleteMapping("delete/{id}")
-    public ResponseEntity<CreateProductResponseDto> delete(@PathVariable int id) {
-        Product deletedProduct = productService.read(id);
+    public void delete(@PathVariable int id) {
         productService.delete(id);
-        return ResponseEntity.ok(new CreateProductResponseDto(deletedProduct));
-    }
-
-    @GetMapping(path = "/readAll")
-    public ResponseEntity<List<CreateProductResponseDto>> readAll() {
-        List<Product> products = productService.readAll();
-        List<CreateProductResponseDto> responseDto = new ArrayList<>();
-        for (Product product : products) {
-            responseDto.add(new CreateProductResponseDto(product));
-        }
-
-        return ResponseEntity.ok(responseDto);
     }
 }

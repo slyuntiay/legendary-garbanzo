@@ -3,14 +3,14 @@ package marketplace.repository.basket;
 import lombok.RequiredArgsConstructor;
 import marketplace.config.DataSource;
 import marketplace.entity.Basket;
-import marketplace.repository.CRUDRepository;
+import marketplace.repository.CRUDBasketRepository;
 import org.springframework.stereotype.Repository;
 import java.sql.*;
 import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
-public class BasketRepo implements CRUDRepository<Basket> {
+public class BasketRepo implements CRUDBasketRepository {
     private final DataSource dataSource;
 
     @Override
@@ -30,30 +30,30 @@ public class BasketRepo implements CRUDRepository<Basket> {
 
     }
 
+//    public Optional<Basket> readAll(int clientId) {
+//        Basket basket = null;
+//        try (Connection connection = dataSource.getConnection();
+//             PreparedStatement statement = connection.prepareStatement(BasketSQLScript.READ.getSql())) {
+//
+//            statement.setInt(1, clientId);
+//            ResultSet resultSet = statement.executeQuery();
+//            System.out.println("Корзина:");
+//            while (resultSet.next()) {
+//                int productId = resultSet.getInt("product_id");
+//                int quantity = resultSet.getInt("quantity");
+//                basket = new Basket(clientId, productId, quantity);
+//                System.out.println(basket);
+//            }
+//
+//        } catch (SQLException sqlException) {
+//            sqlException.printStackTrace();
+//            System.out.println("ОШИБКА! Корзина не найден");
+//        }
+//        return Optional.ofNullable(basket);
+//    }
+
     @Override
-    public Optional<Basket> read(int clientId) {
-        Basket basket = null;
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(BasketSQLScript.READ.getSql())) {
-
-            statement.setInt(1, clientId);
-            ResultSet resultSet = statement.executeQuery();
-            System.out.println("Корзина:");
-            while (resultSet.next()) {
-                int productId = resultSet.getInt("product_id");
-                int quantity = resultSet.getInt("quantity");
-                basket = new Basket(clientId, productId, quantity);
-                System.out.println(basket);
-            }
-
-        } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
-            System.out.println("ОШИБКА! Корзина не найден");
-        }
-        return Optional.ofNullable(basket);
-    }
-
-    public Optional<Basket> readProduct(int clientId, int productId) {
+    public Optional<Basket> read(int clientId, int productId) {
         Basket basket = null;
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(BasketSQLScript.READ_PRODUCT.getSql())) {

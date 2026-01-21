@@ -8,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 @Getter
 public class CreateBasketRequestDto {
     @NotBlank(message = "А кто покупатель, еблан?!")
-
     private int clientId;
 
     @NotBlank(message = "А что покупают, еблан?!")

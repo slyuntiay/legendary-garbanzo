@@ -8,7 +8,6 @@ import marketplace.entity.Client;
 import marketplace.service.clientService.ClientService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.NoSuchElementException;
 
 @RestController
@@ -45,10 +44,7 @@ public class ClientController {
     }
 
     @DeleteMapping(path = "delete/{id}")
-    public ResponseEntity<CreateClientResponseDto> delete(@PathVariable int id) {
-        Client deletedClient = clientService.read(id);
+    public void delete(@PathVariable int id) {
         clientService.delete(id);
-        CreateClientResponseDto responseDto = new CreateClientResponseDto(deletedClient);
-        return ResponseEntity.ok(responseDto);
     }
 }

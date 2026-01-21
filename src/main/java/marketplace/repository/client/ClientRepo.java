@@ -16,30 +16,6 @@ import java.util.Optional;
 public class ClientRepo implements CRUDRepository<Client> {
     private final DataSource dataSource;
 
-    // устарело
-    public void createTable() {
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(ClientSQLScript.CREATE_TABLE.getSql())) {
-            statement.executeUpdate();
-            System.out.println("Таблица успешно создана");
-        } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
-            System.out.println("ОШИБКА. Не удалось создать таблицу");
-        }
-    }
-
-    // устарело
-    public void dropTable() {
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(ClientSQLScript.DROP_TABLE.getSql())) {
-            statement.executeUpdate();
-            System.out.println("Таблица успешно удалена");
-        } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
-            System.out.println("ОШИБКА. Не удалось удалить таблицу");
-        }
-    }
-
     @Override
     public Client create(Client client) {
         try (Connection connection = dataSource.getConnection();
@@ -126,25 +102,6 @@ public class ClientRepo implements CRUDRepository<Client> {
             sqlException.printStackTrace();
             System.out.println("ОШИБКА. Не удалось удалить клиента");
         }
-    }
-
-    public List<Client> readAll() {
-        List<Client> list = new ArrayList<>();
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(ClientSQLScript.READ_ALL.getSql())) {
-            ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()) {
-                Client client = new Client();
-                client.setId(resultSet.getInt("id"));
-                client.setSurname(resultSet.getString("surname"));
-                client.setName(resultSet.getString("name"));
-                list.add(client);
-            }
-        } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
-            System.out.println("ОШИБКА. Не удалось прочитать БД");
-        }
-        return list;
     }
 }
 

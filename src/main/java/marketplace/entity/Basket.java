@@ -1,11 +1,10 @@
 package marketplace.entity;
 
-import jakarta.persistence.Column;
+
 import lombok.Getter;
 import lombok.Setter;
 import marketplace.dto.basketDto.CreateBasketRequestDto;
 
-import java.util.Objects;
 
 @Getter
 @Setter

@@ -5,8 +5,6 @@ import marketplace.dto.productDto.CreateProductRequestDto;
 import marketplace.entity.Product;
 import marketplace.repository.product.ProductRepo;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
@@ -35,10 +33,5 @@ public class ProductService {
 
     public void delete(int id) {
         productRepo.delete(id);
-    }
-
-
-    public List<Product> readAll() {
-        return productRepo.readAll();
     }
 }
