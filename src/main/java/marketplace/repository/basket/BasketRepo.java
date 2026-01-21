@@ -13,30 +13,6 @@ import java.util.Optional;
 public class BasketRepo implements CRUDRepository<Basket> {
     private final DataSource dataSource;
 
-//    @Override
-//    public void createTable() {
-//        try (Connection connection = DriverManager.getConnection(dataSource.getConnection());
-//             PreparedStatement statement = connection.prepareStatement(BasketSQLScript.CREATE_TABLE.getSql())) {
-//            statement.executeUpdate();
-//            System.out.println("Таблица успешно создана");
-//        } catch (SQLException sqlException) {
-//            sqlException.printStackTrace();
-//            System.out.println("ОШИБКА. Не удалось создать таблицу");
-//        }
-//    }
-
-//    @Override
-//    public void dropTable() {
-//        try (Connection connection = DriverManager.getConnection(connectionParams.getUrl(), connectionParams.getUser(), connectionParams.getPassword());
-//             PreparedStatement statement = connection.prepareStatement(BasketSQLScript.DROP_TABLE.getSql())) {
-//            statement.executeUpdate();
-//            System.out.println("Таблица успешно удалена");
-//        } catch (SQLException sqlException) {
-//            sqlException.printStackTrace();
-//            System.out.println("ОШИБКА. Не удалось удалить таблицу");
-//        }
-//    }
-
     @Override
     public Basket create(Basket basket) {
         try (Connection connection = dataSource.getConnection();

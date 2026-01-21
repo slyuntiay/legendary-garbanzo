@@ -14,6 +14,7 @@ public class CreateBasketRequestDto {
     @NotBlank(message = "А что покупают, еблан?!")
     private int productId;
 
+    @NotBlank(message = "А сколько покупают, еблан?!")
     private int quantity;
 
 }

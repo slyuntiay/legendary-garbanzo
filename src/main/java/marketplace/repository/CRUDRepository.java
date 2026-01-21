@@ -1,10 +1,8 @@
 package marketplace.repository;
 
-
 import marketplace.entity.Entity;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
 import java.util.Optional;
 
 @Repository
