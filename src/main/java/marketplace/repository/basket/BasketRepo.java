@@ -94,7 +94,7 @@ public class BasketRepo implements CRUDRepository<Basket> {
     public List<Basket> readAll(int clientId) {
         List<Basket> baskets = new ArrayList<>();
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(BasketSQLScript.READ.getSql())) {
+             PreparedStatement statement = connection.prepareStatement(BasketSQLScript.READ_ALL.getSql())) {
 
             statement.setInt(1, clientId);
             try(ResultSet resultSet = statement.executeQuery()) {

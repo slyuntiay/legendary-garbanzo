@@ -2,10 +2,11 @@ package marketplace.entity;
 
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import marketplace.dto.basketDto.CreateBasketRequestDto;
 
-
+@NoArgsConstructor
 @Getter
 @Setter
 public class Basket extends Entity {

@@ -8,7 +8,9 @@ import marketplace.service.basketService.BasketService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(path = "basket")
@@ -30,41 +32,43 @@ public class BasketController {
         try {
             Basket basket = basketService.read(id);
             return ResponseEntity.ok(new CreateBasketResponseDto(basket));
-        } catch (NoSuchElementException e){
-           return ResponseEntity.notFound().build();
-        }
-    }
-
-    @GetMapping(path = "readProduct/{clientId}/{productId}")
-    public ResponseEntity<CreateBasketResponseDto> readProduct(
-            @PathVariable int clientId, @PathVariable int productId){
-        try{
-            Basket basket = basketService.readProduct(clientId, productId);
-            return ResponseEntity.ok(new CreateBasketResponseDto(basket));
-        }catch (NoSuchElementException e){
+        } catch (NoSuchElementException e) {
             return ResponseEntity.notFound().build();
         }
     }
 
-    @PutMapping(path = "/update/{clientId}/{productId}")
+    @PutMapping(path = "/update/{id}")
     public ResponseEntity<CreateBasketResponseDto> update(
-            @PathVariable int clientId, @PathVariable int productId,
+            @PathVariable int id,
             @RequestBody CreateBasketRequestDto createBasketRequestDto) {
-        Basket basket = basketService.update(clientId, productId, createBasketRequestDto);
+        Basket basket = basketService.update(id, createBasketRequestDto);
         CreateBasketResponseDto responseDto = new CreateBasketResponseDto(basket);
         return ResponseEntity.ok(responseDto);
     }
 
     @DeleteMapping(path = "/delete/{id}")
-    public ResponseEntity<CreateBasketResponseDto> delete(@PathVariable int id) {
-        Basket basket = basketService.read(id);
+    public void delete(@PathVariable int id) {
         basketService.delete(id);
-        CreateBasketResponseDto responseDto = new CreateBasketResponseDto(basket);
-        return ResponseEntity.ok(responseDto);
     }
-    @DeleteMapping(path = "/deleteProduct/{clientId}/{productId}")
-    public void deleteProduct(@PathVariable int clientId, @PathVariable int productId) {
-        basketService.deleteProduct(clientId,productId);
+
+    @GetMapping(path = "readAll/{clientId}")
+    public ResponseEntity<List<CreateBasketResponseDto>> readAll(
+            @PathVariable int clientId) {
+        try {
+            List<Basket> baskets = basketService.readAll(clientId);
+            List<CreateBasketResponseDto> responseDto = baskets.stream()
+                    .map(CreateBasketResponseDto::new)
+                    .collect(Collectors.toList());
+
+            return ResponseEntity.ok(responseDto);
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @DeleteMapping(path = "/deleteProduct/{clientId}")
+    public void deleteProduct(@PathVariable int clientId) {
+        basketService.deleteAll(clientId);
     }
 }
 
