@@ -3,74 +3,61 @@ package marketplace.repository.basket;
 import lombok.RequiredArgsConstructor;
 import marketplace.config.DataSource;
 import marketplace.entity.Basket;
-import marketplace.repository.CRUDBasketRepository;
+import marketplace.repository.CRUDRepository;
 import org.springframework.stereotype.Repository;
+
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
-public class BasketRepo implements CRUDBasketRepository {
+public class BasketRepo implements CRUDRepository<Basket> {
     private final DataSource dataSource;
 
     @Override
     public Basket create(Basket basket) {
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(BasketSQLScript.CREATE.getSql())) {
+             PreparedStatement statement = connection.prepareStatement(
+                     BasketSQLScript.CREATE.getSql(),  Statement.RETURN_GENERATED_KEYS)) {
+
             statement.setInt(1, basket.getClientId());
             statement.setInt(2, basket.getProductId());
             statement.setInt(3, basket.getQuantity());
             statement.executeUpdate();
-            System.out.println("Товар успешно добавлен в корзину");
+
+            try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    int id = generatedKeys.getInt(1);
+                    basket.setId(id);
+                } else {
+                    throw new SQLException("ОШИБКА! Не удалось добавить продукт в корзину");
+                }
+            }
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
-            System.out.println("Товар не удалось добавить в корзину");
         }
         return basket;
-
     }
 
-//    public Optional<Basket> readAll(int clientId) {
-//        Basket basket = null;
-//        try (Connection connection = dataSource.getConnection();
-//             PreparedStatement statement = connection.prepareStatement(BasketSQLScript.READ.getSql())) {
-//
-//            statement.setInt(1, clientId);
-//            ResultSet resultSet = statement.executeQuery();
-//            System.out.println("Корзина:");
-//            while (resultSet.next()) {
-//                int productId = resultSet.getInt("product_id");
-//                int quantity = resultSet.getInt("quantity");
-//                basket = new Basket(clientId, productId, quantity);
-//                System.out.println(basket);
-//            }
-//
-//        } catch (SQLException sqlException) {
-//            sqlException.printStackTrace();
-//            System.out.println("ОШИБКА! Корзина не найден");
-//        }
-//        return Optional.ofNullable(basket);
-//    }
-
     @Override
-    public Optional<Basket> read(int clientId, int productId) {
+    public Optional<Basket> read(int id) {
         Basket basket = null;
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(BasketSQLScript.READ_PRODUCT.getSql())) {
+             PreparedStatement statement = connection.prepareStatement(BasketSQLScript.READ.getSql())) {
 
-            statement.setInt(1, clientId);
-            statement.setInt(2, productId);
+            statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
-            System.out.println("Корзина:");
             while (resultSet.next()) {
+                int clientId = resultSet.getInt("client_id");
+                int productId = resultSet.getInt("product_id");
                 int quantity = resultSet.getInt("quantity");
-                basket = new Basket(clientId, productId, quantity);
-                System.out.println(basket);
+                basket = new Basket(id, clientId, productId, quantity);
             }
 
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
-            System.out.println("ОШИБКА! Корзина не найден");
         }
         return Optional.ofNullable(basket);
     }
@@ -85,56 +72,56 @@ public class BasketRepo implements CRUDBasketRepository {
             statement.setInt(2, basket.getClientId());
             statement.setInt(3, basket.getProductId());
             statement.executeUpdate();
-            System.out.println("Корзина обновлена");
 
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
-            System.out.println("ОШИБКА. Не удалось обновить корзину");
         }
         return basket;
     }
 
     @Override
-    public void delete(int clientId) {
-        Basket basket = null;
+    public void delete(int id) {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(BasketSQLScript.DELETE.getSql())) {
 
-            statement.setInt(1, clientId);
-            ResultSet resultSet = statement.executeQuery();
-
-            while (resultSet.next()) {
-                int productId = resultSet.getInt("product_id");
-                int quantity = resultSet.getInt("quantity");
-                basket = new Basket(clientId, productId, quantity);
-                System.out.println(basket);
-            }
-            System.out.println("Корзина" + basket + "успешно удалена");
+            statement.setInt(1, id);
 
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
-            System.out.println("ОШИБКА. Не удалось удалить корзину");
         }
     }
-    public void deleteProduct(int clientId, int productId) {
-        Basket basket = null;
+
+    public List<Basket> readAll(int clientId) {
+        List<Basket> baskets = new ArrayList<>();
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(BasketSQLScript.DELETE_PRODUCT.getSql())) {
+             PreparedStatement statement = connection.prepareStatement(BasketSQLScript.READ.getSql())) {
 
             statement.setInt(1, clientId);
-            statement.setInt(2, productId);
-            ResultSet resultSet = statement.executeQuery();
-
-            while (resultSet.next()) {
-                int quantity = resultSet.getInt("quantity");
-                basket = new Basket(clientId, productId, quantity);
-                System.out.println(basket);
+            try(ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    baskets.add(new Basket(
+                            resultSet.getInt("id"),
+                            clientId,
+                            resultSet.getInt("product_id"),
+                            resultSet.getInt("quantity")
+                    ));
+                }
             }
-            System.out.println("Корзина" + basket + "успешно удалена");
 
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
-            System.out.println("ОШИБКА. Не удалось удалить корзину");
+        }
+        return baskets;
+    }
+
+    public void deleteAll(int clientId) {
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(BasketSQLScript.DELETE_ALL.getSql())) {
+
+            statement.setInt(1, clientId);
+
+        } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
         }
     }
 }

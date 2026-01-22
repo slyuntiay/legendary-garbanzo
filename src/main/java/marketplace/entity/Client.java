@@ -5,8 +5,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import marketplace.dto.clientDto.CreateClientRequestDto;
 
-import java.util.Objects;
-
 @NoArgsConstructor
 @Setter
 @Getter

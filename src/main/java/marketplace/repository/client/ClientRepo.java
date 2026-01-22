@@ -7,8 +7,6 @@ import marketplace.repository.CRUDRepository;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -30,9 +28,8 @@ public class ClientRepo implements CRUDRepository<Client> {
                 if (generatedKeys.next()) {
                     int id = generatedKeys.getInt(1);
                     client.setId(id);
-                    System.out.println("Клиент " + '"' + client + '"' + " успешно добавлен");
                 } else {
-                    throw new SQLException("ОШИБКА! Не удалось добавить клиента");
+                    throw new SQLException("ОШИБКА! Не удалось добавить клиента в БД");
                 }
             }
 
@@ -40,7 +37,6 @@ public class ClientRepo implements CRUDRepository<Client> {
             sqlException.printStackTrace();
         }
         return client;
-
     }
 
     @Override
@@ -56,11 +52,9 @@ public class ClientRepo implements CRUDRepository<Client> {
                 String name = resultSet.getString("name");
                 client = new Client(id, surname, name);
             }
-            System.out.println("Клиент " + client);
 
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
-            System.out.println("ОШИБКА! Клиент не найден");
         }
         return Optional.ofNullable(client);
     }
@@ -74,33 +68,22 @@ public class ClientRepo implements CRUDRepository<Client> {
             statement.setString(2, client.getName());
             statement.setInt(3, client.getId());
             statement.executeUpdate();
-            System.out.println("Сведения о клиенте успешно изменены");
 
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
-            System.out.println("ОШИБКА. Не удалось изменить данные клиента");
         }
         return client;
     }
 
     @Override
     public void delete(int id) {
-        Client client = null;
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(ClientSQLScript.DELETE.getSql())) {
 
             statement.setInt(1, id);
-            ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()) {
-                String surname = resultSet.getString("surname");
-                String name = resultSet.getString("name");
-                client = new Client(id, surname, name);
-            }
 
-            System.out.println("Клиент " + client + " успешно удалён");
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
-            System.out.println("ОШИБКА. Не удалось удалить клиента");
         }
     }
 }
