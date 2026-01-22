@@ -69,8 +69,7 @@ public class BasketRepo implements CRUDRepository<Basket> {
              PreparedStatement statement = connection.prepareStatement(BasketSQLScript.UPDATE.getSql())) {
 
             statement.setInt(1, basket.getQuantity());
-            statement.setInt(2, basket.getClientId());
-            statement.setInt(3, basket.getProductId());
+            statement.setInt(2, basket.getId());
             statement.executeUpdate();
 
         } catch (SQLException sqlException) {
@@ -85,6 +84,7 @@ public class BasketRepo implements CRUDRepository<Basket> {
              PreparedStatement statement = connection.prepareStatement(BasketSQLScript.DELETE.getSql())) {
 
             statement.setInt(1, id);
+            statement.executeUpdate();
 
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
@@ -119,6 +119,7 @@ public class BasketRepo implements CRUDRepository<Basket> {
              PreparedStatement statement = connection.prepareStatement(BasketSQLScript.DELETE_ALL.getSql())) {
 
             statement.setInt(1, clientId);
+            statement.executeUpdate();
 
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();

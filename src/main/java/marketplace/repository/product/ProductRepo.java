@@ -81,6 +81,7 @@ public class ProductRepo implements CRUDRepository<Product> {
              PreparedStatement statement = connection.prepareStatement(ProductSQLScript.DELETE.getSql())) {
 
             statement.setInt(1, id);
+            statement.executeUpdate();
 
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();

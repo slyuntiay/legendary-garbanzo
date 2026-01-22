@@ -66,8 +66,8 @@ public class BasketController {
         }
     }
 
-    @DeleteMapping(path = "/deleteProduct/{clientId}")
-    public void deleteProduct(@PathVariable int clientId) {
+    @DeleteMapping(path = "/deleteAll/{clientId}")
+    public void deleteAll(@PathVariable int clientId) {
         basketService.deleteAll(clientId);
     }
 }

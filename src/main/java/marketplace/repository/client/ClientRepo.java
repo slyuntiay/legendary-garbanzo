@@ -81,6 +81,7 @@ public class ClientRepo implements CRUDRepository<Client> {
              PreparedStatement statement = connection.prepareStatement(ClientSQLScript.DELETE.getSql())) {
 
             statement.setInt(1, id);
+            statement.executeUpdate();
 
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
