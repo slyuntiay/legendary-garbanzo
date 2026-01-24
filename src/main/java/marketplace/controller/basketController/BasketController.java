@@ -1,6 +1,7 @@
 package marketplace.controller.basketController;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import marketplace.dto.basketDto.CreateBasketRequestDto;
 import marketplace.dto.basketDto.CreateBasketResponseDto;
 import marketplace.entity.Basket;
@@ -12,6 +13,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
+@Slf4j
 @RestController
 @RequestMapping(path = "basket")
 @RequiredArgsConstructor
@@ -27,12 +29,14 @@ public class BasketController {
     }
 
     @GetMapping(path = "/read/{id}")
-    public ResponseEntity<CreateBasketResponseDto> read(
-            @PathVariable int id) {
+    public ResponseEntity<CreateBasketResponseDto> read(@PathVariable int id) {
+        log.info("Чтение корзины ID: {}", id);
         try {
             Basket basket = basketService.read(id);
+            log.debug("Корзина {} найдена", id);
             return ResponseEntity.ok(new CreateBasketResponseDto(basket));
         } catch (NoSuchElementException e) {
+            log.warn("Корзина с ID {} не найдена", id);
             return ResponseEntity.notFound().build();
         }
     }
