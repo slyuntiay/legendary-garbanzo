@@ -1,14 +1,18 @@
 package marketplace.entity;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import marketplace.dto.clientDto.CreateClientRequestDto;
 
 @NoArgsConstructor
-@Setter
 @Getter
-public class Client extends Entity {
+@Setter
+@Entity
+@Table(name = "client_table")
+public class Client extends BaseEntity {
     private String surname;
     private String name;
 

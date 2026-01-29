@@ -1,14 +1,16 @@
 package marketplace.entity;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 import lombok.*;
 import marketplace.dto.productDto.CreateProductRequestDto;
-
-import java.util.Objects;
 
 @NoArgsConstructor
 @Getter
 @Setter
-public class Product extends Entity {
+@Entity
+@Table(name = "product_table")
+public class Product extends BaseEntity {
     private String name;
     private double price;
     private int quantity;

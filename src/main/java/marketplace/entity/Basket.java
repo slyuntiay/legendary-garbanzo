@@ -1,6 +1,8 @@
 package marketplace.entity;
 
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,7 +11,9 @@ import marketplace.dto.basketDto.CreateBasketRequestDto;
 @NoArgsConstructor
 @Getter
 @Setter
-public class Basket extends Entity {
+@Entity
+@Table(name = "basket_table")
+public class Basket extends BaseEntity {
     private int clientId;
     private int productId;
     private int quantity;

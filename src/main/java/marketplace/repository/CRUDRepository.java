@@ -1,12 +1,12 @@
 package marketplace.repository;
 
-import marketplace.entity.Entity;
+import marketplace.entity.BaseEntity;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
 @Repository
-public interface CRUDRepository<T extends Entity> {
+public interface CRUDRepository<T extends BaseEntity> {
     T create(T entity);
 
     Optional<T> read(int id);
