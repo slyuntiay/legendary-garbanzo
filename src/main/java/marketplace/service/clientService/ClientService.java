@@ -1,6 +1,7 @@
 package marketplace.service.clientService;
 
 import lombok.RequiredArgsConstructor;
+import marketplace.TransactionHelper;
 import marketplace.dto.clientDto.CreateClientRequestDto;
 import marketplace.entity.Client;
 import marketplace.repository.client.ClientRepo;
@@ -11,6 +12,8 @@ import java.util.NoSuchElementException;
 @RequiredArgsConstructor
 public class ClientService{
     private final ClientRepo clientRepo;
+
+    private final TransactionHelper transactionHelper;
 
     public Client create(CreateClientRequestDto createClientRequestDto) {
         Client client = new Client(createClientRequestDto);
@@ -30,7 +33,10 @@ public class ClientService{
     }
 
     public void delete(int id) {
-        clientRepo.delete(id);
+        transactionHelper.executeInTransaction(session -> {
+            Client client = session.get(Client.class, id);
+            session.remove(client);
+        });
     }
 }
 

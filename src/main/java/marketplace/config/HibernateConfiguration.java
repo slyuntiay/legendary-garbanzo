@@ -1,9 +1,8 @@
-package marketplace.hibernate;
+package marketplace.config;
 
 import marketplace.entity.Basket;
 import marketplace.entity.Client;
 import marketplace.entity.Product;
-import marketplace.entity.Student;
 import org.hibernate.SessionFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,7 +16,6 @@ public class HibernateConfiguration {
 
         configuration
                 .addPackage("hibernate")
-                .addAnnotatedClass(Student.class)
                 .addAnnotatedClass(Client.class)
                 .addAnnotatedClass(Product.class)
                 .addAnnotatedClass(Basket.class)
