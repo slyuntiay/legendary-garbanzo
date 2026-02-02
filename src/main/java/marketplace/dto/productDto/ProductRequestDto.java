@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Getter
-public class CreateProductRequestDto {
+public class ProductRequestDto {
     private final String name;
     private final double price;
     private final int quantity;
