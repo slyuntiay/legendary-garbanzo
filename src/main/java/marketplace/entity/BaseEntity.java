@@ -13,7 +13,8 @@ public class BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected int id;
+    @Access(AccessType.FIELD)
+    private int id;
 
     public BaseEntity(int id) {
         this.id = id;

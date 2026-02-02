@@ -28,8 +28,8 @@ public class Product extends BaseEntity {
         this.quantity = quantity;
     }
 
-    @Override
-    public String toString() {
-        return id + " " + name + " " + price + " тенге за штуку";
-    }
+//    @Override
+//    public String toString() {
+//        return id + " " + name + " " + price + " тенге за штуку";
+//    }
 }

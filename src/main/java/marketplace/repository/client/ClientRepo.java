@@ -1,12 +1,13 @@
 package marketplace.repository.client;
 
-import org.springframework.transaction.annotation.Transactional;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import marketplace.entity.Client;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
+
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -14,34 +15,25 @@ import java.util.Optional;
 @Repository
 @RequiredArgsConstructor
 public class ClientRepo {
-    private final SessionFactory sessionFactory;
 
-    @Transactional
+    @PersistenceContext
+    private EntityManager entityManager;
+
     public Client save(Client client) {
-        Session session = sessionFactory.getCurrentSession();
-        session.persist(client);
-//        log.info("save client {}", client);
+        entityManager.persist(client);
         return client;
     }
 
-    @Transactional(readOnly = true)
     public Optional<Client> find(int id) {
-        Session session = sessionFactory.getCurrentSession();
-        return Optional.ofNullable(session.find(Client.class, id));
+        return Optional.ofNullable(entityManager.find(Client.class, id));
+    }
+
+    public Client merge(Client client) {
+        return entityManager.merge(client);
     }
 
     @Transactional
-    public Client merge(Client client) {
-        Session session = sessionFactory.getCurrentSession();
-        session.merge(client);
-//        log.info("merge client {}", client);
-        return client;
+    public void remove(Client client) {
+        entityManager.remove(client);
     }
-
-   @Transactional
-    public void remove(int id) {
-        Session session = sessionFactory.getCurrentSession();
-        session.remove(id);
-//        log.info("remove client {}", id);
-   }
 }

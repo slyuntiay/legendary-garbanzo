@@ -5,7 +5,7 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import marketplace.dto.clientDto.ClientDto;
+import marketplace.dto.clientDto.ClientRequestDto;
 
 @NoArgsConstructor
 @Getter
@@ -16,9 +16,9 @@ public class Client extends BaseEntity {
     private String surname;
     private String name;
 
-    public Client(ClientDto clientDto) {
-        this.surname = clientDto.getSurname();
-        this.name = clientDto.getName();
+    public Client(ClientRequestDto clientRequestDto) {
+        this.surname = clientRequestDto.getSurname();
+        this.name = clientRequestDto.getName();
     }
 
     public Client(int id, String surname, String name) {
@@ -27,8 +27,8 @@ public class Client extends BaseEntity {
         this.name = name;
     }
 
-    @Override
-    public String toString() {
-        return id + " " + surname + " " + name;
-    }
+//    @Override
+//    public String toString() {
+//        return id + " " + surname + " " + name;
+//    }
 }
