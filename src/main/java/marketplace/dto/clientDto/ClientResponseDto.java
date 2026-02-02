@@ -6,12 +6,12 @@ import marketplace.entity.Client;
 
 @RequiredArgsConstructor
 @Getter
-public class CreateClientResponseDto {
+public class ClientResponseDto {
     private final int id;
     private final String surname;
     private final String name;
 
-    public CreateClientResponseDto(Client client) {
+    public ClientResponseDto(Client client) {
         this.id = client.getId();
         this.surname = client.getSurname();
         this.name = client.getName();

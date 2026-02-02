@@ -1,14 +1,12 @@
 package marketplace.controller.clientControler;
 
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import marketplace.dto.clientDto.ClientDto;
-import marketplace.dto.clientDto.CreateClientResponseDto;
+import marketplace.dto.clientDto.ClientResponseDto;
 import marketplace.entity.Client;
 import marketplace.service.clientService.ClientService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping(path = "client")
@@ -16,11 +14,11 @@ import java.util.NoSuchElementException;
 public class ClientController {
     private final ClientService clientService;
 
-    @PostMapping(path = "/create")
-    public ResponseEntity<CreateClientResponseDto> create(
+    @PostMapping(path = "/save")
+    public ResponseEntity<ClientResponseDto> save(
             @RequestBody ClientDto clientDto) {
         Client client = clientService.save(clientDto);
-        CreateClientResponseDto responseDto = new CreateClientResponseDto(client);
+        ClientResponseDto responseDto = new ClientResponseDto(client);
         return ResponseEntity.ok(responseDto);
     }
 

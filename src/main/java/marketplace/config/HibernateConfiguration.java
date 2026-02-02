@@ -6,8 +6,10 @@ import marketplace.entity.Product;
 import org.hibernate.SessionFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
+@EnableTransactionManagement
 public class HibernateConfiguration {
 
     @Bean
@@ -15,7 +17,7 @@ public class HibernateConfiguration {
         org.hibernate.cfg.Configuration configuration = new org.hibernate.cfg.Configuration();
 
         configuration
-                .addPackage("hibernate")
+                .addPackage("marketplace")
                 .addAnnotatedClass(Client.class)
                 .addAnnotatedClass(Product.class)
                 .addAnnotatedClass(Basket.class)
