@@ -33,7 +33,7 @@ public class ProductController {
     }
 
     @PutMapping("/merge/{id}")
-    public ResponseEntity<ProductResponseDto> update(
+    public ResponseEntity<ProductResponseDto> merge(
             @PathVariable int id,
             @Valid @RequestBody ProductRequestDto productRequestDto) {
         return productService.merge(id, productRequestDto)
