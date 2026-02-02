@@ -37,10 +37,11 @@ public class ClientService{
     }
 
     @Transactional
-    public void remove(int id) {
-        Client client = clientRepo.find(id)
-                .orElseThrow(() -> new EntityNotFoundException("Client not found: " + id));
-        clientRepo.remove(client);
+    public Optional<Boolean> remove(int id) {
+        return clientRepo.find(id).map(client -> {
+            clientRepo.remove(client);
+            return true;
+        });
     }
 }
 

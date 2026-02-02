@@ -40,7 +40,9 @@ public class ClientController {
     }
 
     @DeleteMapping(path = "/remove/{id}")
-    public void remove(@PathVariable int id) {
-        clientService.remove(id);
+    public ResponseEntity<Object> remove(@PathVariable int id) {
+        return clientService.remove(id)
+                .map(deleted -> ResponseEntity.noContent().build())
+                .orElse(ResponseEntity.notFound().build());
     }
 }
