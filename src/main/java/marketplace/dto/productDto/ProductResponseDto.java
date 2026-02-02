@@ -6,13 +6,13 @@ import marketplace.entity.Product;
 
 @RequiredArgsConstructor
 @Getter
-public class CreateProductResponseDto {
+public class ProductResponseDto {
     private final int id;
     private final String name;
     private final double price;
     private final int quantity;
 
-    public CreateProductResponseDto(Product product) {
+    public ProductResponseDto(Product product) {
         this.id = product.getId();
         this.name = product.getName();
         this.price = product.getPrice();
