@@ -1,5 +1,6 @@
 package marketplace.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.Getter;
@@ -11,24 +12,17 @@ import marketplace.dto.clientDto.ClientRequestDto;
 @Getter
 @Setter
 @Entity
-@Table(name = "client_table")
+@Table
 public class Client extends BaseEntity {
+
+    @Column(nullable = false)
     private String surname;
+
+    @Column(nullable = false)
     private String name;
 
     public Client(ClientRequestDto clientRequestDto) {
         this.surname = clientRequestDto.getSurname();
         this.name = clientRequestDto.getName();
     }
-
-    public Client(int id, String surname, String name) {
-        super(id);
-        this.surname = surname;
-        this.name = name;
-    }
-
-//    @Override
-//    public String toString() {
-//        return id + " " + surname + " " + name;
-//    }
 }

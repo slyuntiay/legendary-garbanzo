@@ -21,19 +21,20 @@ public class BasketService {
         return basketRepo.save(basket);
     }
 
-    public Basket find(int id) {
-        return basketRepo.find(id).orElseThrow(() -> new NoSuchElementException("Корзина не найдена"));
+    public Optional<Basket> find(int id) {
+        return basketRepo.find(id);
     }
 
     @Transactional
-    public Basket merge(int id, BasketRequestDto basketRequestDto) {
-        Basket basket = find(id);
-        basket.setQuantity(basketRequestDto.getQuantity());
-        return basketRepo.merge(basket);
+    public Optional<Basket> merge(int id, BasketRequestDto basketRequestDto) {
+        return basketRepo.find(id).map(basket -> {
+            basket.setQuantity(basketRequestDto.getQuantity());
+            return basketRepo.merge(basket);
+        });
     }
 
     @Transactional
-    public Optional<Object> remove(int id) {
+    public Optional<Boolean> remove(int id) {
         return basketRepo.find(id).map(basket -> {
             basketRepo.remove(basket);
             return true;

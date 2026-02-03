@@ -3,18 +3,15 @@ package marketplace.repository.product;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import lombok.RequiredArgsConstructor;
-import marketplace.entity.Client;
 import marketplace.entity.Product;
-import marketplace.repository.CRUDRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.*;
 import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
-public class ProductRepo{
+public class ProductRepo {
 
     @PersistenceContext
     private EntityManager entityManager;

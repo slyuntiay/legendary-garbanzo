@@ -11,7 +11,7 @@ import marketplace.dto.productDto.ProductRequestDto;
 @Getter
 @Setter
 @Entity
-@Table(name = "product_table")
+@Table
 public class Product extends BaseEntity {
 
     @Column(nullable = false)
@@ -28,16 +28,4 @@ public class Product extends BaseEntity {
         this.price = createProductRequestDto.getPrice();
         this.quantity = createProductRequestDto.getQuantity();
     }
-
-    public Product(int id, String name, double price, int quantity) {
-        super(id);
-        this.name = name;
-        this.price = price;
-        this.quantity = quantity;
-    }
-
-//    @Override
-//    public String toString() {
-//        return id + " " + name + " " + price + " тенге за штуку";
-//    }
 }

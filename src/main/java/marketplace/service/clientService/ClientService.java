@@ -1,6 +1,5 @@
 package marketplace.service.clientService;
 
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import marketplace.dto.clientDto.ClientRequestDto;
 import marketplace.entity.Client;

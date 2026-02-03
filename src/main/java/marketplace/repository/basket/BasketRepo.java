@@ -10,7 +10,7 @@ import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
-public class BasketRepo  {
+public class BasketRepo {
     private EntityManager entityManager;
 
     public Basket save(Basket basket) {

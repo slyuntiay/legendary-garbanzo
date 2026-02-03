@@ -4,8 +4,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import marketplace.dto.basketDto.BasketRequestDto;
 import marketplace.dto.basketDto.BasketResponseDto;
+import marketplace.dto.clientDto.ClientResponseDto;
 import marketplace.entity.Basket;
 import marketplace.service.basketService.BasketService;
+import marketplace.service.clientService.ClientService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +19,7 @@ import java.util.NoSuchElementException;
 @RequiredArgsConstructor
 public class BasketController {
     private final BasketService basketService;
+    private final ClientService clientService;
 
     @PostMapping(path = "/save")
     public ResponseEntity<BasketResponseDto> save(
@@ -28,29 +31,25 @@ public class BasketController {
 
     @GetMapping(path = "/find/{id}")
     public ResponseEntity<BasketResponseDto> find(@PathVariable int id) {
-        log.info("Чтение корзины ID: {}", id);
-        try {
-            Basket basket = basketService.find(id);
-            log.debug("Корзина {} найдена", id);
-            return ResponseEntity.ok(new BasketResponseDto(basket));
-        } catch (NoSuchElementException e) {
-            log.warn("Корзина с ID {} не найдена", id);
-            return ResponseEntity.notFound().build();
-        }
+        return basketService.find(id)
+                .map(basket -> ResponseEntity.ok(new BasketResponseDto(basket)))
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @PutMapping(path = "/merge/{id}")
     public ResponseEntity<BasketResponseDto> merge(
             @PathVariable int id,
             @RequestBody BasketRequestDto basketRequestDto) {
-        Basket basket = basketService.merge(id, basketRequestDto);
-        BasketResponseDto responseDto = new BasketResponseDto(basket);
-        return ResponseEntity.ok(responseDto);
+        return basketService.merge(id, basketRequestDto)
+                .map(basket -> ResponseEntity.ok(new BasketResponseDto(basket)))
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @DeleteMapping(path = "/remove/{id}")
-    public void remove(@PathVariable int id) {
-        basketService.remove(id);
+    public ResponseEntity<Object> remove(@PathVariable int id) {
+        return basketService.remove(id)
+                .map(deleted -> ResponseEntity.noContent().build())
+                .orElse(ResponseEntity.notFound().build());
     }
 }
 
