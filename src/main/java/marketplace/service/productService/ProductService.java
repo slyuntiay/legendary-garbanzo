@@ -17,10 +17,7 @@ public class ProductService {
 
     @Transactional
     public Product save(ProductRequestDto productRequestDto) {
-        Product product = new Product();
-        product.setName(productRequestDto.getName());
-        product.setPrice(productRequestDto.getPrice());
-        product.setQuantity(productRequestDto.getQuantity());
+        Product product = new Product(productRequestDto);
         return productRepo.save(product);
     }
 

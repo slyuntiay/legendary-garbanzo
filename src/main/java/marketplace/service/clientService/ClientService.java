@@ -17,9 +17,7 @@ public class ClientService{
 
     @Transactional
     public Client save(ClientRequestDto clientRequestDto) {
-        Client client = new Client();
-        client.setName(clientRequestDto.getName());
-        client.setSurname(clientRequestDto.getSurname());
+        Client client = new Client(clientRequestDto);;
         return clientRepo.save(client);
     }
 
