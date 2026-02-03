@@ -7,7 +7,6 @@ import marketplace.repository.basket.BasketRepo;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -21,12 +20,12 @@ public class BasketService {
         return basketRepo.save(basket);
     }
 
-    public Optional<Basket> find(int id) {
+    public Optional<Basket> find(Long id) {
         return basketRepo.find(id);
     }
 
     @Transactional
-    public Optional<Basket> merge(int id, BasketRequestDto basketRequestDto) {
+    public Optional<Basket> merge(Long id, BasketRequestDto basketRequestDto) {
         return basketRepo.find(id).map(basket -> {
             basket.setQuantity(basketRequestDto.getQuantity());
             return basketRepo.merge(basket);
@@ -34,7 +33,7 @@ public class BasketService {
     }
 
     @Transactional
-    public Optional<Boolean> remove(int id) {
+    public Optional<Boolean> remove(Long id) {
         return basketRepo.find(id).map(basket -> {
             basketRepo.remove(basket);
             return true;

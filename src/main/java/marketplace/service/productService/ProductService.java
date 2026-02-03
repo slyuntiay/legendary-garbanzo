@@ -21,12 +21,12 @@ public class ProductService {
         return productRepo.save(product);
     }
 
-    public Optional<Product> find(int id) {
+    public Optional<Product> find(Long id) {
         return productRepo.find(id);
     }
 
     @Transactional
-    public Optional<Product> merge(int id, ProductRequestDto productRequestDto) {
+    public Optional<Product> merge(Long id, ProductRequestDto productRequestDto) {
         return productRepo.find(id).map(product -> {
             product.setName(productRequestDto.getName());
             product.setPrice(productRequestDto.getPrice());
@@ -36,7 +36,7 @@ public class ProductService {
     }
 
     @Transactional
-    public Optional<Boolean> remove(int id) {
+    public Optional<Boolean> remove(Long id) {
         return productRepo.find(id).map(product -> {
             productRepo.remove(product);
             return true;

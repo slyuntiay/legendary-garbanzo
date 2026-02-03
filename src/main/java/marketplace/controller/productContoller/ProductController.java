@@ -24,7 +24,7 @@ public class ProductController {
     }
 
     @GetMapping(path = "/find/{id}")
-    public ResponseEntity<ProductResponseDto> find(@PathVariable int id) {
+    public ResponseEntity<ProductResponseDto> find(@PathVariable Long id) {
         return productService.find(id)
                 .map(product -> ResponseEntity.ok(new ProductResponseDto(product)))
                 .orElse(ResponseEntity.notFound().build());
@@ -32,7 +32,7 @@ public class ProductController {
 
     @PutMapping("/merge/{id}")
     public ResponseEntity<ProductResponseDto> merge(
-            @PathVariable int id,
+            @PathVariable Long id,
             @Valid @RequestBody ProductRequestDto productRequestDto) {
         return productService.merge(id, productRequestDto)
                 .map(product -> ResponseEntity.ok(new ProductResponseDto(product)))
@@ -40,6 +40,6 @@ public class ProductController {
     }
 
     @DeleteMapping("/remove/{id}")
-    public void remove(@PathVariable int id) {productService.remove(id);
+    public void remove(@PathVariable Long id) {productService.remove(id);
     }
 }

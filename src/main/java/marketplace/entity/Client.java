@@ -1,12 +1,13 @@
 package marketplace.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import marketplace.dto.clientDto.ClientRequestDto;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @NoArgsConstructor
 @Getter
@@ -14,6 +15,9 @@ import marketplace.dto.clientDto.ClientRequestDto;
 @Entity
 @Table
 public class Client extends BaseEntity {
+
+    @OneToMany(mappedBy = "basket", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Basket> basketList = new ArrayList<>();
 
     @Column(nullable = false)
     private String surname;

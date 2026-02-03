@@ -4,14 +4,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import marketplace.dto.basketDto.BasketRequestDto;
 import marketplace.dto.basketDto.BasketResponseDto;
-import marketplace.dto.clientDto.ClientResponseDto;
 import marketplace.entity.Basket;
 import marketplace.service.basketService.BasketService;
-import marketplace.service.clientService.ClientService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.NoSuchElementException;
 
 @Slf4j
 @RestController
@@ -19,7 +15,6 @@ import java.util.NoSuchElementException;
 @RequiredArgsConstructor
 public class BasketController {
     private final BasketService basketService;
-    private final ClientService clientService;
 
     @PostMapping(path = "/save")
     public ResponseEntity<BasketResponseDto> save(
@@ -30,7 +25,7 @@ public class BasketController {
     }
 
     @GetMapping(path = "/find/{id}")
-    public ResponseEntity<BasketResponseDto> find(@PathVariable int id) {
+    public ResponseEntity<BasketResponseDto> find(@PathVariable Long id) {
         return basketService.find(id)
                 .map(basket -> ResponseEntity.ok(new BasketResponseDto(basket)))
                 .orElse(ResponseEntity.notFound().build());
@@ -38,7 +33,7 @@ public class BasketController {
 
     @PutMapping(path = "/merge/{id}")
     public ResponseEntity<BasketResponseDto> merge(
-            @PathVariable int id,
+            @PathVariable Long id,
             @RequestBody BasketRequestDto basketRequestDto) {
         return basketService.merge(id, basketRequestDto)
                 .map(basket -> ResponseEntity.ok(new BasketResponseDto(basket)))
@@ -46,7 +41,7 @@ public class BasketController {
     }
 
     @DeleteMapping(path = "/remove/{id}")
-    public ResponseEntity<Object> remove(@PathVariable int id) {
+    public ResponseEntity<Object> remove(@PathVariable Long id) {
         return basketService.remove(id)
                 .map(deleted -> ResponseEntity.noContent().build())
                 .orElse(ResponseEntity.notFound().build());

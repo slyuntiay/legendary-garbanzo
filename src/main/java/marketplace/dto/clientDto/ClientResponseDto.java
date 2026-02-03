@@ -7,7 +7,7 @@ import marketplace.entity.Client;
 @RequiredArgsConstructor
 @Getter
 public class ClientResponseDto {
-    private final int id;
+    private final Long id;
     private final String surname;
     private final String name;
 

@@ -24,7 +24,7 @@ public class ClientRepo {
         return client;
     }
 
-    public Optional<Client> find(int id) {
+    public Optional<Client> find(Long id) {
         return Optional.ofNullable(entityManager.find(Client.class, id));
     }
 
