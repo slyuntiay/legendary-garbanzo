@@ -1,43 +1,42 @@
-//package marketplace.service.basketService;
-//
-//import lombok.RequiredArgsConstructor;
-//import marketplace.dto.basketDto.CreateBasketRequestDto;
-//import marketplace.entity.Basket;
-//import marketplace.repository.basket.BasketRepo;
-//import org.springframework.stereotype.Service;
-//
-//import java.util.List;
-//import java.util.NoSuchElementException;
-//
-//@Service
-//@RequiredArgsConstructor
-//public class BasketService {
-//    private final BasketRepo basketRepo;
-//
-//    public Basket create(CreateBasketRequestDto createBasketRequestDto) {
-//        Basket basket = new Basket(createBasketRequestDto);
-//        return basketRepo.create(basket);
-//    }
-//
-//    public Basket read(int id) {
-//        return basketRepo.read(id).orElseThrow(() -> new NoSuchElementException("Корзина не найдена"));
-//    }
-//
-//    public Basket update(int id, CreateBasketRequestDto createBasketRequestDto) {
-//        Basket basket = read(id);
-//        basket.setQuantity(createBasketRequestDto.getQuantity());
-//        return basketRepo.update(basket);
-//    }
-//
-//    public void delete(int id) {
-//        basketRepo.delete(id);
-//    }
-//
-//    public List<Basket> readAll(int clientId) {
-//        return basketRepo.readAll(clientId);
-//    }
-//
-//    public void deleteAll(int clientId) {
-//        basketRepo.deleteAll(clientId);
-//    }
-//}
+package marketplace.service.basketService;
+
+import lombok.RequiredArgsConstructor;
+import marketplace.dto.basketDto.BasketRequestDto;
+import marketplace.entity.Basket;
+import marketplace.repository.basket.BasketRepo;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.NoSuchElementException;
+import java.util.Optional;
+
+@Service
+@RequiredArgsConstructor
+public class BasketService {
+    private final BasketRepo basketRepo;
+
+    @Transactional
+    public Basket save(BasketRequestDto basketRequestDto) {
+        Basket basket = new Basket(basketRequestDto);
+        return basketRepo.save(basket);
+    }
+
+    public Basket find(int id) {
+        return basketRepo.find(id).orElseThrow(() -> new NoSuchElementException("Корзина не найдена"));
+    }
+
+    @Transactional
+    public Basket merge(int id, BasketRequestDto basketRequestDto) {
+        Basket basket = find(id);
+        basket.setQuantity(basketRequestDto.getQuantity());
+        return basketRepo.merge(basket);
+    }
+
+    @Transactional
+    public Optional<Object> remove(int id) {
+        return basketRepo.find(id).map(basket -> {
+            basketRepo.remove(basket);
+            return true;
+        });
+    }
+}

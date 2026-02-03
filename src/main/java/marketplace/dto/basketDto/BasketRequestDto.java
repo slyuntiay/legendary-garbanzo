@@ -6,7 +6,7 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Getter
-public class CreateBasketRequestDto {
+public class BasketRequestDto {
     @NotBlank(message = "А кто покупатель, еблан?!")
     private int clientId;
 

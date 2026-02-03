@@ -6,7 +6,7 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import marketplace.dto.basketDto.CreateBasketRequestDto;
+import marketplace.dto.basketDto.BasketRequestDto;
 
 @NoArgsConstructor
 @Getter
@@ -18,10 +18,10 @@ public class Basket extends BaseEntity {
     private int productId;
     private int quantity;
 
-    public Basket(CreateBasketRequestDto createBasketRequestDto){
-        this.clientId = createBasketRequestDto.getClientId();
-        this.productId = createBasketRequestDto.getProductId();
-        this.quantity = createBasketRequestDto.getQuantity();
+    public Basket(BasketRequestDto basketRequestDto){
+        this.clientId = basketRequestDto.getClientId();
+        this.productId = basketRequestDto.getProductId();
+        this.quantity = basketRequestDto.getQuantity();
     }
 
     public Basket(int id, int clientId, int productId, int quantity) {

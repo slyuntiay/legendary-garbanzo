@@ -6,13 +6,13 @@ import marketplace.entity.Basket;
 
 @RequiredArgsConstructor
 @Getter
-public class CreateBasketResponseDto {
+public class BasketResponseDto {
     private final int id;
     private final int clientId;
     private final int productId;
     private final int quantity;
 
-    public CreateBasketResponseDto(Basket basket) {
+    public BasketResponseDto(Basket basket) {
         this.id = basket.getId();
         this.clientId = basket.getClientId();
         this.productId = basket.getProductId();

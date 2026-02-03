@@ -35,9 +35,11 @@ public class ProductService {
         });
     }
 
-    public void remove(int id) {
-        Product product = productRepo.find(id)
-                .orElseThrow(() -> new EntityNotFoundException("Product not found: " + id));
-        productRepo.remove(product);
+    @Transactional
+    public Optional<Boolean> remove(int id) {
+        return productRepo.find(id).map(product -> {
+            productRepo.remove(product);
+            return true;
+        });
     }
 }
