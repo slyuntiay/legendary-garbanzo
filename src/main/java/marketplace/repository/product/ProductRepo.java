@@ -21,7 +21,7 @@ public class ProductRepo {
         return product;
     }
 
-    public Optional<Product> find(Long id) {
+    public Optional<Product> find(int id) {
         return Optional.ofNullable(entityManager.find(Product.class, id));
     }
 

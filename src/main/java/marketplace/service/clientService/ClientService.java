@@ -20,12 +20,12 @@ public class ClientService{
         return clientRepo.save(client);
     }
 
-    public Optional<Client> find(Long id) {
+    public Optional<Client> find(int id) {
         return clientRepo.find(id);
     }
 
     @Transactional
-    public Optional<Client> merge(Long id, ClientRequestDto clientRequestDto) {
+    public Optional<Client> merge(int id, ClientRequestDto clientRequestDto) {
         return clientRepo.find(id).map(client -> {
             client.setSurname(clientRequestDto.getSurname());
             client.setName(clientRequestDto.getName());
@@ -34,7 +34,7 @@ public class ClientService{
     }
 
     @Transactional
-    public Optional<Boolean> remove(Long id) {
+    public Optional<Boolean> remove(int id) {
         return clientRepo.find(id).map(client -> {
             clientRepo.remove(client);
             return true;

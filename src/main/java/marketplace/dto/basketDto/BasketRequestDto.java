@@ -3,13 +3,16 @@ package marketplace.dto.basketDto;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import marketplace.entity.Client;
-import marketplace.entity.Product;
 
 @RequiredArgsConstructor
 @Getter
 public class BasketRequestDto {
-    private Client client;
-    private Product product;
-    private Integer quantity;
+    @NotBlank(message = "А кто покупатель, еблан?!")
+    private int clientId;
+
+    @NotBlank(message = "А что покупают, еблан?!")
+    private int productId;
+
+    @NotBlank(message = "А сколько покупают, еблан?!")
+    private int quantity;
 }

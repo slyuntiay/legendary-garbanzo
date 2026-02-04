@@ -5,8 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Objects;
-
 @NoArgsConstructor
 @MappedSuperclass
 @Getter
@@ -16,9 +14,9 @@ public class BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Access(AccessType.FIELD)
-    private Long id;
+    private int id;
 
-    public BaseEntity(Long id) {
+    public BaseEntity(int id) {
         this.id = id;
     }
 
@@ -33,6 +31,6 @@ public class BaseEntity {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return id;
     }
 }

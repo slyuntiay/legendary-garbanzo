@@ -2,8 +2,6 @@ package marketplace.controller.productContoller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import marketplace.dto.clientDto.ClientRequestDto;
-import marketplace.dto.clientDto.ClientResponseDto;
 import marketplace.dto.productDto.ProductRequestDto;
 import marketplace.dto.productDto.ProductResponseDto;
 import marketplace.entity.Product;
@@ -26,15 +24,15 @@ public class ProductController {
     }
 
     @GetMapping(path = "/find/{id}")
-    public ResponseEntity<ProductResponseDto> find(@PathVariable long id) {
+    public ResponseEntity<ProductResponseDto> find(@PathVariable int id) {
         return productService.find(id)
                 .map(product -> ResponseEntity.ok(new ProductResponseDto(product)))
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @PutMapping("/merge/{id}")
-    public ResponseEntity<ProductResponseDto> update(
-            @PathVariable long id,
+    public ResponseEntity<ProductResponseDto> merge(
+            @PathVariable int id,
             @Valid @RequestBody ProductRequestDto productRequestDto) {
         return productService.merge(id, productRequestDto)
                 .map(product -> ResponseEntity.ok(new ProductResponseDto(product)))
@@ -42,6 +40,6 @@ public class ProductController {
     }
 
     @DeleteMapping("/remove/{id}")
-    public void remove(@PathVariable long id) {productService.remove(id);
+    public void remove(@PathVariable int id) {productService.remove(id);
     }
 }

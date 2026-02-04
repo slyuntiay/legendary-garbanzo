@@ -7,7 +7,7 @@ import marketplace.entity.Product;
 @RequiredArgsConstructor
 @Getter
 public class ProductResponseDto {
-    private final Long id;
+    private final int id;
     private final String name;
     private final double price;
     private final int quantity;

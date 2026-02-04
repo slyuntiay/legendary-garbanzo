@@ -24,7 +24,7 @@ public class ClientController {
     }
 
     @GetMapping(path = "/find/{id}")
-    public ResponseEntity<ClientResponseDto> find(@PathVariable Long id) {
+    public ResponseEntity<ClientResponseDto> find(@PathVariable int id) {
         return clientService.find(id)
                 .map(client -> ResponseEntity.ok(new ClientResponseDto(client)))
                 .orElse(ResponseEntity.notFound().build());
@@ -32,7 +32,7 @@ public class ClientController {
 
     @PutMapping(path = "/merge/{id}")
     public ResponseEntity<ClientResponseDto> merge(
-            @PathVariable Long id,
+            @PathVariable int id,
             @Valid @RequestBody ClientRequestDto clientRequestDto) {
         return clientService.merge(id, clientRequestDto)
                 .map(client -> ResponseEntity.ok(new ClientResponseDto(client)))
@@ -40,7 +40,7 @@ public class ClientController {
     }
 
     @DeleteMapping(path = "/remove/{id}")
-    public ResponseEntity<Object> remove(@PathVariable Long id) {
+    public ResponseEntity<Object> remove(@PathVariable int id) {
         return clientService.remove(id)
                 .map(deleted -> ResponseEntity.noContent().build())
                 .orElse(ResponseEntity.notFound().build());

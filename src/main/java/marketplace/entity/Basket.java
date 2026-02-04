@@ -1,7 +1,9 @@
 package marketplace.entity;
 
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,20 +16,18 @@ import marketplace.dto.basketDto.BasketRequestDto;
 @Table
 public class Basket extends BaseEntity {
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "client_id", referencedColumnName = "id", nullable = false)
-    private Client client;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "product_id", referencedColumnName = "id", nullable = false)
-    private Product product;
+    @Column(nullable = false)
+    private int clientId;
 
     @Column(nullable = false)
-    private Integer quantity;
+    private int productId;
+
+    @Column(nullable = false)
+    private int quantity;
 
     public Basket(BasketRequestDto basketRequestDto){
-        this.client = basketRequestDto.getClient();
-        this.product = basketRequestDto.getProduct();
+        this.clientId = basketRequestDto.getClientId();
+        this.productId = basketRequestDto.getProductId();
         this.quantity = basketRequestDto.getQuantity();
     }
 }
