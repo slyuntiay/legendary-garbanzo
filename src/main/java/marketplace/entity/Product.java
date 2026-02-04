@@ -18,10 +18,10 @@ public class Product extends BaseEntity {
     private String name;
 
     @Column(nullable = false)
-    private double price;
+    private Double price;
 
     @Column(nullable = false)
-    private int quantity;
+    private Integer quantity;
 
     public Product(ProductRequestDto createProductRequestDto) {
         this.name = createProductRequestDto.getName();

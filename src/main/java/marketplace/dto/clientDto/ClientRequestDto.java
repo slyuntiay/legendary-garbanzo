@@ -8,11 +8,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Getter
 public class ClientRequestDto {
-    @NotBlank(message = "Фамилия обязательна, тварь!")
-    @Size(min = 2, max = 50)
     private String surname;
-
-    @NotBlank
-    @Size(min = 2, max = 30)
     private String name;
 }
