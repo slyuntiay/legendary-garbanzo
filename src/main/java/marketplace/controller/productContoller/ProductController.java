@@ -2,6 +2,8 @@ package marketplace.controller.productContoller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import marketplace.dto.clientDto.ClientRequestDto;
+import marketplace.dto.clientDto.ClientResponseDto;
 import marketplace.dto.productDto.ProductRequestDto;
 import marketplace.dto.productDto.ProductResponseDto;
 import marketplace.entity.Product;
@@ -31,7 +33,7 @@ public class ProductController {
     }
 
     @PutMapping("/merge/{id}")
-    public ResponseEntity<ProductResponseDto> merge(
+    public ResponseEntity<ProductResponseDto> update(
             @PathVariable int id,
             @Valid @RequestBody ProductRequestDto productRequestDto) {
         return productService.merge(id, productRequestDto)
