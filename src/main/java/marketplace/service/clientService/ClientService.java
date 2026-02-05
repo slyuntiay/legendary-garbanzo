@@ -20,6 +20,7 @@ public class ClientService{
         return clientRepo.save(client);
     }
 
+    @Transactional(readOnly = true)
     public Optional<Client> find(int id) {
         return clientRepo.find(id);
     }

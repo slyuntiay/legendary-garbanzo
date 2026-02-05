@@ -1,6 +1,5 @@
 package marketplace.service.productService;
 
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import marketplace.dto.productDto.ProductRequestDto;
 import marketplace.entity.Product;
@@ -21,6 +20,7 @@ public class ProductService {
         return productRepo.save(product);
     }
 
+    @Transactional(readOnly = true)
     public Optional<Product> find(int id) {
         return productRepo.find(id);
     }

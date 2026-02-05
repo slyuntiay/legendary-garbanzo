@@ -21,6 +21,7 @@ public class BasketService {
         return basketRepo.save(basket);
     }
 
+    @Transactional(readOnly = true)
     public Optional<Basket> find(int id) {
         return basketRepo.find(id);
     }
