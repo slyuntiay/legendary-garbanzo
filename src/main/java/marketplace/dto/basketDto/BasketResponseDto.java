@@ -6,7 +6,6 @@ import marketplace.entity.Basket;
 import marketplace.entity.Client;
 import marketplace.entity.Product;
 
-@RequiredArgsConstructor
 @Getter
 public class BasketResponseDto {
     private final Long id;

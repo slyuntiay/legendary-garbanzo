@@ -21,7 +21,7 @@ public class BasketRepo {
         return basket;
     }
 
-    public Optional<Basket> find(int id) {
+    public Optional<Basket> find(long id) {
         return Optional.ofNullable(entityManager.find(Basket.class, id));
     }
 

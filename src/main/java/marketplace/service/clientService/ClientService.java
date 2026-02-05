@@ -21,12 +21,12 @@ public class ClientService{
     }
 
     @Transactional(readOnly = true)
-    public Optional<Client> find(int id) {
+    public Optional<Client> find(long id) {
         return clientRepo.find(id);
     }
 
     @Transactional
-    public Optional<Client> merge(int id, ClientRequestDto clientRequestDto) {
+    public Optional<Client> merge(long id, ClientRequestDto clientRequestDto) {
         return clientRepo.find(id).map(client -> {
             client.setSurname(clientRequestDto.getSurname());
             client.setName(clientRequestDto.getName());
@@ -35,7 +35,7 @@ public class ClientService{
     }
 
     @Transactional
-    public Optional<Boolean> remove(int id) {
+    public Optional<Boolean> remove(long id) {
         return clientRepo.find(id).map(client -> {
             clientRepo.remove(client);
             return true;

@@ -4,14 +4,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import marketplace.dto.basketDto.BasketRequestDto;
 import marketplace.dto.basketDto.BasketResponseDto;
-import marketplace.dto.clientDto.ClientResponseDto;
 import marketplace.entity.Basket;
 import marketplace.service.basketService.BasketService;
-import marketplace.service.clientService.ClientService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.NoSuchElementException;
 
 @Slf4j
 @RestController
@@ -19,7 +15,6 @@ import java.util.NoSuchElementException;
 @RequiredArgsConstructor
 public class BasketController {
     private final BasketService basketService;
-    private final ClientService clientService;
 
     @PostMapping(path = "/save")
     public ResponseEntity<BasketResponseDto> save(
