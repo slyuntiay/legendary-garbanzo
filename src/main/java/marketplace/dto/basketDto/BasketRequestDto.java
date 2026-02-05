@@ -4,6 +4,7 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import marketplace.entity.Client;
+import marketplace.entity.Product;
 
 @RequiredArgsConstructor
 @Getter
@@ -12,8 +13,8 @@ public class BasketRequestDto {
     private Client client;
 
     @NotBlank(message = "А что покупают, еблан?!")
-    private Long productId;
+    private Product product;
 
     @NotBlank(message = "А сколько покупают, еблан?!")
-    private int quantity;
+    private Integer quantity;
 }
