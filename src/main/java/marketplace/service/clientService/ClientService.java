@@ -46,6 +46,7 @@ public class ClientService{
         return client;
     }
 
+
     @Transactional
     public Optional<Client> merge(long id, ClientRequestDto clientRequestDto) {
         log.info("MERGE client: id={}, surname={}, name={}",
