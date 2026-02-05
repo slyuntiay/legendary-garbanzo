@@ -10,14 +10,14 @@ import marketplace.entity.Product;
 @Getter
 public class BasketResponseDto {
     private final Long id;
-    private final Client client;
-    private final Product product;
+    private final Long clientId;
+    private final Long productId;
     private final Integer quantity;
 
     public BasketResponseDto(Basket basket) {
         this.id = basket.getId();
-        this.client = basket.getClient();
-        this.product = basket.getProduct();
+        this.clientId = basket.getClient().getId();
+        this.productId = basket.getProduct().getId();
         this.quantity = basket.getQuantity();
     }
 }

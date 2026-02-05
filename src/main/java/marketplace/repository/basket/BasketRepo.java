@@ -18,7 +18,6 @@ public class BasketRepo {
 
     public Basket save(Basket basket) {
         entityManager.persist(basket);
-        entityManager.flush();
         return basket;
     }
 

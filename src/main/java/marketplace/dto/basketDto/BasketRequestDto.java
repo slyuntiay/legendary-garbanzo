@@ -9,12 +9,12 @@ import marketplace.entity.Product;
 @RequiredArgsConstructor
 @Getter
 public class BasketRequestDto {
-    @NotBlank(message = "А кто покупатель, еблан?!")
+    @NotBlank(message = "Кто?")
     private Client client;
 
-    @NotBlank(message = "А что покупают, еблан?!")
+    @NotBlank(message = "Что?")
     private Product product;
 
-    @NotBlank(message = "А сколько покупают, еблан?!")
+    @NotBlank(message = "Сколько?")
     private Integer quantity;
 }
