@@ -19,32 +19,67 @@ public class BasketController {
     @PostMapping(path = "/save")
     public ResponseEntity<BasketResponseDto> save(
             @RequestBody BasketRequestDto basketRequestDto) {
+        log.info("SAVE basket: clientId={}, productId={}, quantity={}",
+                basketRequestDto.getClientId(),
+                basketRequestDto.getProductId(),
+                basketRequestDto.getQuantity());
+
         Basket basket = basketService.save(basketRequestDto);
         BasketResponseDto responseDto = new BasketResponseDto(basket);
+        log.info("SAVE OK: basketId={}", basket.getId());
+
         return ResponseEntity.ok(responseDto);
     }
 
     @GetMapping(path = "/find/{id}")
     public ResponseEntity<BasketResponseDto> find(@PathVariable int id) {
+        log.info("FIND basket by id={}", id);
+
         return basketService.find(id)
-                .map(basket -> ResponseEntity.ok(new BasketResponseDto(basket)))
-                .orElse(ResponseEntity.notFound().build());
+                .map(basket -> {
+                    log.info("FIND OK: basketId={}", basket.getId());
+                    return ResponseEntity.ok(new BasketResponseDto(basket));
+                })
+                .orElseGet(() -> {
+                    log.warn("FIND NOT FOUND: basketId={}", id);
+                    return ResponseEntity.notFound().build();
+                });
     }
 
     @PutMapping(path = "/merge/{id}")
     public ResponseEntity<BasketResponseDto> merge(
             @PathVariable int id,
             @RequestBody BasketRequestDto basketRequestDto) {
+        log.info("MERGE basket id={}, clientId={}, productId={}, quantity={}",
+                id,
+                basketRequestDto.getClientId(),
+                basketRequestDto.getProductId(),
+                basketRequestDto.getQuantity());
+
         return basketService.merge(id, basketRequestDto)
-                .map(basket -> ResponseEntity.ok(new BasketResponseDto(basket)))
-                .orElse(ResponseEntity.notFound().build());
+                .map(basket -> {
+                    log.info("MERGE OK: basketId={}", basket.getId());
+                    return ResponseEntity.ok(new BasketResponseDto(basket));
+                })
+                .orElseGet(() -> {
+                    log.warn("MERGE NOT FOUND: basketId={}", id);
+                    return ResponseEntity.notFound().build();
+                });
     }
 
     @DeleteMapping(path = "/remove/{id}")
     public ResponseEntity<Object> remove(@PathVariable int id) {
+        log.info("REMOVE basket id={}", id);
+
         return basketService.remove(id)
-                .map(deleted -> ResponseEntity.noContent().build())
-                .orElse(ResponseEntity.notFound().build());
+                .map(deleted -> {
+                    log.info("REMOVE OK: basketId={}", id);
+                    return ResponseEntity.noContent().build();
+                })
+                .orElseGet(() -> {
+                    log.warn("REMOVE NOT FOUND: basketId={}", id);
+                    return ResponseEntity.notFound().build();
+                });
     }
 }
 
