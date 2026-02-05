@@ -3,7 +3,6 @@ package marketplace.service.productService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import marketplace.dto.productDto.ProductRequestDto;
-import marketplace.entity.Client;
 import marketplace.entity.Product;
 import marketplace.repository.product.ProductRepo;
 import org.springframework.stereotype.Service;
@@ -55,7 +54,7 @@ public class ProductService {
                 id, productRequestDto.getName(), productRequestDto.getPrice(),productRequestDto.getQuantity());
 
         return productRepo.find(id).map(product -> {
-            log.debug("MERGE updating client: id={}", id);
+            log.debug("MERGE updating product: id={}", id);
             product.setName(productRequestDto.getName());
             product.setPrice(productRequestDto.getPrice());
             product.setQuantity(productRequestDto.getQuantity());
@@ -67,7 +66,7 @@ public class ProductService {
 
     @Transactional
     public Optional<Boolean> remove(long id) {
-        log.info("REMOVE client: id={}", id);
+        log.info("REMOVE product: id={}", id);
 
         return productRepo.find(id).map(product -> {
             log.debug("REMOVE deleting product: id={}", id);
