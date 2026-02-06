@@ -5,14 +5,12 @@ import lombok.extern.slf4j.Slf4j;
 import marketplace.dto.basketDto.BasketRequestDto;
 import marketplace.entity.Basket;
 import marketplace.repository.basket.BasketRepo;
-import marketplace.repository.client.ClientRepo;
-import marketplace.repository.product.ProductRepo;
 import marketplace.service.clientService.ClientService;
 import marketplace.service.productService.ProductService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.NoSuchElementException;
+;
 import java.util.Optional;
 
 @Slf4j

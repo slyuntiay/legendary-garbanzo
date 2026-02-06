@@ -1,10 +1,8 @@
 package marketplace.dto.basketDto;
 
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import marketplace.entity.Basket;
-import marketplace.entity.Client;
-import marketplace.entity.Product;
+
 
 @Getter
 public class BasketResponseDto {

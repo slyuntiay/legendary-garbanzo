@@ -18,9 +18,6 @@ public class BaseEntity {
     @Access(AccessType.FIELD)
     private Long id;
 
-    public BaseEntity(long id) {
-        this.id = id;
-    }
 
     @Override
     public boolean equals(Object o) {
