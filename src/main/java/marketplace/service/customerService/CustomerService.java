@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import marketplace.dto.customerDto.CustomerRequestDto;
 import marketplace.dto.customerDto.CustomerResponseDto;
-import marketplace.dto.mapper.CustomerMapper;
+import marketplace.dto.mapper.GeneralMapper;
 import marketplace.entity.Customer;
 import marketplace.repository.customer.CustomerRepo;
 import org.springframework.stereotype.Service;
@@ -17,7 +17,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class CustomerService {
     private final CustomerRepo customerRepo;
-    private final CustomerMapper customerMapper;
+    private final GeneralMapper generalMapper;
 
     @Transactional
     public Customer save(CustomerRequestDto dto) {
@@ -25,7 +25,7 @@ public class CustomerService {
                 dto.getLastName(), dto.getFirstName());
 
         try {
-            Customer customer = customerMapper.toEntity(dto);
+            Customer customer = generalMapper.toEntity(dto);
             Customer saved = customerRepo.save(customer);
             log.info("SAVE OK: customerId={}", saved.getId());
             return saved;
@@ -39,7 +39,7 @@ public class CustomerService {
     @Transactional(readOnly = true)
     public Optional<CustomerResponseDto> find(long id) {
         log.debug("FIND customer: id={}", id);
-        return customerRepo.find(id).map(customerMapper::toResponse);
+        return customerRepo.find(id).map(generalMapper::toResponse);
     }
 
     @Transactional
@@ -49,8 +49,7 @@ public class CustomerService {
 
         return customerRepo.find(id).map(customer -> {
             log.debug("MERGE updating customer: id={}", id);
-            customer.setFirstName(customerRequestDto.getFirstName());
-            customer.setLastName(customerRequestDto.getLastName());
+            generalMapper.updateFromDto(customerRequestDto, customer);
             Customer merged = customerRepo.merge(customer);
             log.info("MERGE OK: customerId={}", merged.getId());
             return merged;

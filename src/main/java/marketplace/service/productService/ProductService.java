@@ -2,7 +2,10 @@ package marketplace.service.productService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import marketplace.dto.customerDto.CustomerResponseDto;
+import marketplace.dto.mapper.GeneralMapper;
 import marketplace.dto.productDto.ProductRequestDto;
+import marketplace.dto.productDto.ProductResponseDto;
 import marketplace.entity.Product;
 import marketplace.repository.product.ProductRepo;
 import org.springframework.stereotype.Service;
@@ -15,6 +18,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ProductService {
     private final ProductRepo productRepo;
+    private final GeneralMapper generalMapper;
 
     @Transactional
     public Product save(ProductRequestDto productRequestDto) {
@@ -23,7 +27,7 @@ public class ProductService {
                         getPrice(),productRequestDto.getQuantity());
 
         try {
-            Product product = new Product(productRequestDto);
+            Product product = generalMapper.toEntity(productRequestDto);
             Product saved = productRepo.save(product);
             log.info("SAVE OK: productId={}", saved.getId());
             return saved;
@@ -36,16 +40,9 @@ public class ProductService {
     }
 
     @Transactional(readOnly = true)
-    public Optional<Product> find(long id) {
+    public Optional<ProductResponseDto> find(long id) {
         log.debug("FIND product: id={}", id);
-
-        Optional<Product> product = productRepo.find(id);
-        if (product.isPresent()) {
-            log.debug("FIND OK: productId={}", id);
-        } else {
-            log.warn("FIND NOT FOUND: id={}", id);
-        }
-        return product;
+        return productRepo.find(id).map(generalMapper::toResponse);
     }
 
     @Transactional

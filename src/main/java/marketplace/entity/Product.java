@@ -23,9 +23,4 @@ public class Product extends BaseEntity {
     @Column(nullable = false)
     private int quantity;
 
-    public Product(ProductRequestDto createProductRequestDto) {
-        this.name = createProductRequestDto.getName();
-        this.price = createProductRequestDto.getPrice();
-        this.quantity = createProductRequestDto.getQuantity();
-    }
 }

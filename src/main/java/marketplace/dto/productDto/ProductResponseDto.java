@@ -11,11 +11,4 @@ public class ProductResponseDto {
     private final String name;
     private final double price;
     private final int quantity;
-
-    public ProductResponseDto(Product product) {
-        this.id = product.getId();
-        this.name = product.getName();
-        this.price = product.getPrice();
-        this.quantity = product.getQuantity();
-    }
 }
