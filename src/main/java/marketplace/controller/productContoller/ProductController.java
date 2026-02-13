@@ -18,15 +18,14 @@ public class ProductController {
     @PostMapping(path = "/save")
     public ResponseEntity<ProductResponseDto> save(
             @RequestBody ProductRequestDto productRequestDto) {
-        Product product = productService.save(productRequestDto);
-        ProductResponseDto responseDto = new ProductResponseDto(product);
+        ProductResponseDto responseDto = productService.save(productRequestDto);
         return ResponseEntity.ok(responseDto);
     }
 
     @GetMapping(path = "/find/{id}")
     public ResponseEntity<ProductResponseDto> find(@PathVariable int id) {
         return productService.find(id)
-                .map(product -> ResponseEntity.ok(new ProductResponseDto(product)))
+                .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
@@ -35,11 +34,14 @@ public class ProductController {
             @PathVariable int id,
             @Valid @RequestBody ProductRequestDto productRequestDto) {
         return productService.merge(id, productRequestDto)
-                .map(product -> ResponseEntity.ok(new ProductResponseDto(product)))
+                .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/remove/{id}")
-    public void remove(@PathVariable int id) {productService.remove(id);
+    public ResponseEntity<Object> remove(@PathVariable int id) {
+        return productService.remove(id)
+                .map(deleted -> ResponseEntity.noContent().build())
+                .orElse(ResponseEntity.notFound().build());
     }
 }

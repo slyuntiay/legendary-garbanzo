@@ -20,17 +20,17 @@ public class CustomerService {
     private final GeneralMapper generalMapper;
 
     @Transactional
-    public CustomerResponseDto save(CustomerRequestDto dto) {
+    public CustomerResponseDto save(CustomerRequestDto customerRequestDto) {
         log.info("SAVE customer: lastname={}, name={}",
-                dto.getLastName(), dto.getFirstName());
+                customerRequestDto.getLastName(), customerRequestDto.getFirstName());
 
         try {
-            Customer customer = customerRepo.save(generalMapper.toEntity(dto));
+            Customer customer = customerRepo.save(generalMapper.toEntity(customerRequestDto));
             log.info("SAVE OK: customerId={}", customer.getId());
-            return generalMapper.toResponse();
+            return generalMapper.toResponse(customer);
         } catch (Exception e) {
             log.error("SAVE FAILED: lastname={}, name={}, error={}",
-                    dto.getLastName(), dto.getFirstName(), e.getMessage(), e);
+                    customerRequestDto.getLastName(), customerRequestDto.getFirstName(), e.getMessage(), e);
             throw e;
         }
     }
@@ -42,7 +42,7 @@ public class CustomerService {
     }
 
     @Transactional
-    public Optional<Customer> merge(long id, CustomerRequestDto customerRequestDto) {
+    public Optional<CustomerResponseDto> merge(long id, CustomerRequestDto customerRequestDto) {
         log.info("MERGE customer: id={}, lastname={}, name={}",
                 id, customerRequestDto.getLastName(), customerRequestDto.getFirstName());
 
@@ -51,7 +51,7 @@ public class CustomerService {
             generalMapper.updateFromDto(customerRequestDto, customer);
             Customer merged = customerRepo.merge(customer);
             log.info("MERGE OK: customerId={}", merged.getId());
-            return merged;
+            return generalMapper.toResponse(merged);
         });
     }
 

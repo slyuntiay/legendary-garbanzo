@@ -15,13 +15,12 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class CustomerController {
     private final CustomerService customerService;
-    private final GeneralMapper generalMapper;
 
     @PostMapping(path = "/save")
     public ResponseEntity<CustomerResponseDto> save(
             @RequestBody CustomerRequestDto customerRequestDto) {
-        Customer customer = customerService.save(customerRequestDto);
-        return ResponseEntity.ok(generalMapper.toResponse(customer));
+        CustomerResponseDto responseDto = customerService.save(customerRequestDto);
+        return ResponseEntity.ok(responseDto);
     }
 
     @GetMapping(path = "/find/{id}")
@@ -31,13 +30,12 @@ public class CustomerController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-
     @PutMapping(path = "/merge/{id}")
     public ResponseEntity<CustomerResponseDto> merge(
             @PathVariable int id,
             @Valid @RequestBody CustomerRequestDto customerRequestDto) {
         return customerService.merge(id, customerRequestDto)
-                .map(customer -> ResponseEntity.ok(generalMapper.toResponse(customer)))
+                .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 

@@ -2,7 +2,6 @@ package marketplace.service.productService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import marketplace.dto.customerDto.CustomerResponseDto;
 import marketplace.dto.mapper.GeneralMapper;
 import marketplace.dto.productDto.ProductRequestDto;
 import marketplace.dto.productDto.ProductResponseDto;
@@ -21,16 +20,15 @@ public class ProductService {
     private final GeneralMapper generalMapper;
 
     @Transactional
-    public Product save(ProductRequestDto productRequestDto) {
+    public ProductResponseDto save(ProductRequestDto productRequestDto) {
         log.info("SAVE product: name={}, price={}, quantity={}",
                 productRequestDto.getName(), productRequestDto.
                         getPrice(),productRequestDto.getQuantity());
 
         try {
-            Product product = generalMapper.toEntity(productRequestDto);
-            Product saved = productRepo.save(product);
-            log.info("SAVE OK: productId={}", saved.getId());
-            return saved;
+            Product product = productRepo.save(generalMapper.toEntity(productRequestDto));
+            log.info("SAVE OK: productId={}", product.getId());
+            return generalMapper.toResponse(product);
         } catch (Exception e) {
             log.error("SAVE FAILED: name={}, price={}, quantity={}, error{}",
                     productRequestDto.getName(), productRequestDto.getPrice(),
@@ -46,18 +44,16 @@ public class ProductService {
     }
 
     @Transactional
-    public Optional<Product> merge(long id, ProductRequestDto productRequestDto) {
+    public Optional<ProductResponseDto> merge(long id, ProductRequestDto productRequestDto) {
         log.info("MERGE product: id={}, name={}, price={}, quantity={}",
                 id, productRequestDto.getName(), productRequestDto.getPrice(),productRequestDto.getQuantity());
 
         return productRepo.find(id).map(product -> {
             log.debug("MERGE updating product: id={}", id);
-            product.setName(productRequestDto.getName());
-            product.setPrice(productRequestDto.getPrice());
-            product.setQuantity(productRequestDto.getQuantity());
+            generalMapper.updateFromDto(productRequestDto, product);
             Product merged = productRepo.merge(product);
             log.info("MERGE OK: productId={}", merged.getId());
-            return merged;
+            return generalMapper.toResponse(merged);
         });
     }
 
