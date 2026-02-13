@@ -14,19 +14,19 @@ import java.util.List;
 @Setter
 @Entity
 @Table
-public class Client extends BaseEntity {
+public class Customer extends BaseEntity {
 
     @Column(nullable = false)
-    private String surname;
+    private String firstName;
 
     @Column(nullable = false)
-    private String name;
+    private String lastName;
 
     @OneToMany(mappedBy = "client")
     private List<Basket> basketList = new ArrayList<>();
 
-    public Client(ClientRequestDto clientRequestDto) {
-        this.surname = clientRequestDto.getSurname();
-        this.name = clientRequestDto.getName();
+    public Customer(ClientRequestDto clientRequestDto) {
+        this.firstName = clientRequestDto.getSurname();
+        this.lastName = clientRequestDto.getName();
     }
 }

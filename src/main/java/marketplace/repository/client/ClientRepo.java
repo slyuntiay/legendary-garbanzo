@@ -4,7 +4,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import marketplace.entity.Client;
+import marketplace.entity.Customer;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,21 +19,21 @@ public class ClientRepo {
     @PersistenceContext
     private EntityManager entityManager;
 
-    public Client save(Client client) {
-        entityManager.persist(client);
-        return client;
+    public Customer save(Customer customer) {
+        entityManager.persist(customer);
+        return customer;
     }
 
-    public Optional<Client> find(long id) {
-        return Optional.ofNullable(entityManager.find(Client.class, id));
+    public Optional<Customer> find(long id) {
+        return Optional.ofNullable(entityManager.find(Customer.class, id));
     }
 
-    public Client merge(Client client) {
-        return entityManager.merge(client);
+    public Customer merge(Customer customer) {
+        return entityManager.merge(customer);
     }
 
     @Transactional
-    public void remove(Client client) {
-        entityManager.remove(client);
+    public void remove(Customer customer) {
+        entityManager.remove(customer);
     }
 }

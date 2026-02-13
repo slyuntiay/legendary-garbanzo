@@ -7,8 +7,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import marketplace.dto.basketDto.BasketRequestDto;
-import marketplace.repository.client.ClientRepo;
-import marketplace.repository.product.ProductRepo;
 import marketplace.service.clientService.ClientService;
 import marketplace.service.productService.ProductService;
 
@@ -22,7 +20,7 @@ public class Basket extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "client_id", referencedColumnName = "id", nullable = false)
-    private Client client;
+    private Customer customer;
 
     @ManyToOne
     @JoinColumn(name = "product_id", referencedColumnName = "id", nullable = false)
@@ -32,7 +30,7 @@ public class Basket extends BaseEntity {
     private int quantity;
 
     public Basket(BasketRequestDto basketRequestDto, ClientService clientService, ProductService productService) {
-        this.client = clientService.find(basketRequestDto.getClientId()).orElseThrow();
+        this.customer = clientService.find(basketRequestDto.getClientId()).orElseThrow();
         this.product = productService.find(basketRequestDto.getProductId()).orElseThrow();
         this.quantity = basketRequestDto.getQuantity();
     }

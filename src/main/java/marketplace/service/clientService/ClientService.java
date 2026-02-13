@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import marketplace.dto.clientDto.ClientRequestDto;
 import marketplace.dto.mapper.ClientMapper;
-import marketplace.entity.Client;
+import marketplace.entity.Customer;
 import marketplace.repository.client.ClientRepo;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,13 +19,13 @@ public class ClientService{
     private final ClientMapper clientMapper;
 
     @Transactional
-    public Client save(ClientRequestDto dto) {
+    public Customer save(ClientRequestDto dto) {
         log.info("SAVE client: surname={}, name={}",
                 dto.getSurname(), dto.getName());
 
         try {
-            Client client = clientMapper.toEntity(dto);
-            Client saved = clientRepo.save(client);
+            Customer customer = clientMapper.toEntity(dto);
+            Customer saved = clientRepo.save(customer);
             log.info("SAVE OK: clientId={}", saved.getId());
             return saved;
         } catch (Exception e) {
@@ -36,10 +36,10 @@ public class ClientService{
     }
 
     @Transactional(readOnly = true)
-    public Optional<Client> find(long id) {
+    public Optional<Customer> find(long id) {
         log.debug("FIND client: id={}", id);
 
-        Optional<Client> client = clientRepo.find(id);
+        Optional<Customer> client = clientRepo.find(id);
         if (client.isPresent()) {
             log.debug("FIND OK: clientId={}", id);
         } else {
@@ -49,15 +49,15 @@ public class ClientService{
     }
 
     @Transactional
-    public Optional<Client> merge(long id, ClientRequestDto clientRequestDto) {
+    public Optional<Customer> merge(long id, ClientRequestDto clientRequestDto) {
         log.info("MERGE client: id={}, surname={}, name={}",
                 id, clientRequestDto.getSurname(), clientRequestDto.getName());
 
         return clientRepo.find(id).map(client -> {
             log.debug("MERGE updating client: id={}", id);
-            client.setSurname(clientRequestDto.getSurname());
-            client.setName(clientRequestDto.getName());
-            Client merged = clientRepo.merge(client);
+            client.setFirstName(clientRequestDto.getSurname());
+            client.setLastName(clientRequestDto.getName());
+            Customer merged = clientRepo.merge(client);
             log.info("MERGE OK: clientId={}", merged.getId());
             return merged;
         });

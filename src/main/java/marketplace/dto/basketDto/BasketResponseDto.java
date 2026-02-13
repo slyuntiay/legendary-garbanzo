@@ -13,7 +13,7 @@ public class BasketResponseDto {
 
     public BasketResponseDto(Basket basket) {
         this.id = basket.getId();
-        this.clientId = basket.getClient().getId();
+        this.clientId = basket.getCustomer().getId();
         this.productId = basket.getProduct().getId();
         this.quantity = basket.getQuantity();
     }

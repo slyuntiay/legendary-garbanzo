@@ -2,7 +2,7 @@ package marketplace.dto.clientDto;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import marketplace.entity.Client;
+import marketplace.entity.Customer;
 
 @RequiredArgsConstructor
 @Getter
@@ -11,9 +11,9 @@ public class ClientResponseDto {
     private final String surname;
     private final String name;
 
-    public ClientResponseDto(Client client) {
-        this.id = client.getId();
-        this.surname = client.getSurname();
-        this.name = client.getName();
+    public ClientResponseDto(Customer customer) {
+        this.id = customer.getId();
+        this.surname = customer.getFirstName();
+        this.name = customer.getLastName();
     }
 }

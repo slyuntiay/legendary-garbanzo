@@ -4,7 +4,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import marketplace.dto.clientDto.ClientRequestDto;
 import marketplace.dto.clientDto.ClientResponseDto;
-import marketplace.entity.Client;
+import marketplace.entity.Customer;
 import marketplace.service.clientService.ClientService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,8 +18,8 @@ public class ClientController {
     @PostMapping(path = "/save")
     public ResponseEntity<ClientResponseDto> save(
             @RequestBody ClientRequestDto clientRequestDto) {
-        Client client = clientService.save(clientRequestDto);
-        ClientResponseDto responseDto = new ClientResponseDto(client);
+        Customer customer = clientService.save(clientRequestDto);
+        ClientResponseDto responseDto = new ClientResponseDto(customer);
         return ResponseEntity.ok(responseDto);
     }
 
