@@ -3,6 +3,7 @@ package marketplace.service.clientService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import marketplace.dto.clientDto.ClientRequestDto;
+import marketplace.dto.mapper.ClientMapper;
 import marketplace.entity.Client;
 import marketplace.repository.client.ClientRepo;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ClientService{
     private final ClientRepo clientRepo;
+    private final ClientMapper clientMapper;
 
     @Transactional
     public Client save(ClientRequestDto dto) {
@@ -22,7 +24,7 @@ public class ClientService{
                 dto.getSurname(), dto.getName());
 
         try {
-            Client client = new Client(dto);
+            Client client = clientMapper.toEntity(dto);
             Client saved = clientRepo.save(client);
             log.info("SAVE OK: clientId={}", saved.getId());
             return saved;

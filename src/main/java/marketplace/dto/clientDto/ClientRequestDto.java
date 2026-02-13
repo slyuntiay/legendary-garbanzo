@@ -2,11 +2,11 @@ package marketplace.dto.clientDto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
-
-@RequiredArgsConstructor
-@Getter
+@Data
 public class ClientRequestDto {
     @NotBlank(message = "")
     @Size(min = 2, max = 50)
