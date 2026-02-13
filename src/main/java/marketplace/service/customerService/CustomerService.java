@@ -20,15 +20,14 @@ public class CustomerService {
     private final GeneralMapper generalMapper;
 
     @Transactional
-    public Customer save(CustomerRequestDto dto) {
+    public CustomerResponseDto save(CustomerRequestDto dto) {
         log.info("SAVE customer: lastname={}, name={}",
                 dto.getLastName(), dto.getFirstName());
 
         try {
-            Customer customer = generalMapper.toEntity(dto);
-            Customer saved = customerRepo.save(customer);
-            log.info("SAVE OK: customerId={}", saved.getId());
-            return saved;
+            Customer customer = customerRepo.save(generalMapper.toEntity(dto));
+            log.info("SAVE OK: customerId={}", customer.getId());
+            return generalMapper.toResponse();
         } catch (Exception e) {
             log.error("SAVE FAILED: lastname={}, name={}, error={}",
                     dto.getLastName(), dto.getFirstName(), e.getMessage(), e);
