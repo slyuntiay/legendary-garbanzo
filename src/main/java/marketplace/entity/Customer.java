@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import marketplace.dto.clientDto.ClientRequestDto;
+import marketplace.dto.customerDto.CustomerRequestDto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,11 +22,7 @@ public class Customer extends BaseEntity {
     @Column(nullable = false)
     private String lastName;
 
-    @OneToMany(mappedBy = "client")
-    private List<Basket> basketList = new ArrayList<>();
+//    @OneToMany(mappedBy = "customer")
+//    private List<Basket> basketList = new ArrayList<>();
 
-    public Customer(ClientRequestDto clientRequestDto) {
-        this.firstName = clientRequestDto.getSurname();
-        this.lastName = clientRequestDto.getName();
-    }
 }

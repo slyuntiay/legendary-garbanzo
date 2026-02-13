@@ -1,4 +1,4 @@
-package marketplace.repository.client;
+package marketplace.repository.customer;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -14,7 +14,7 @@ import java.util.Optional;
 @Slf4j
 @Repository
 @RequiredArgsConstructor
-public class ClientRepo {
+public class CustomerRepo {
 
     @PersistenceContext
     private EntityManager entityManager;
