@@ -1,11 +1,8 @@
 package marketplace.dto.productDto;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import marketplace.entity.Product;
+import lombok.Data;
 
-@RequiredArgsConstructor
-@Getter
+@Data
 public class ProductResponseDto {
     private final Long id;
     private final String name;

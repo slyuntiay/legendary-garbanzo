@@ -1,9 +1,12 @@
 package marketplace.dto.mapper;
 
+import marketplace.dto.basketDto.BasketRequestDto;
+import marketplace.dto.basketDto.BasketResponseDto;
 import marketplace.dto.customerDto.CustomerRequestDto;
 import marketplace.dto.customerDto.CustomerResponseDto;
 import marketplace.dto.productDto.ProductRequestDto;
 import marketplace.dto.productDto.ProductResponseDto;
+import marketplace.entity.Basket;
 import marketplace.entity.Customer;
 import marketplace.entity.Product;
 import org.mapstruct.Mapper;
@@ -24,5 +27,9 @@ public interface GeneralMapper {
 
     void updateFromDto(ProductRequestDto requestDto, @MappingTarget() Product product);
 
+    BasketResponseDto toResponse(Basket basket);
 
+    Basket toEntity(BasketRequestDto requestDto);
+
+    void updateFromDto(BasketRequestDto requestDto, @MappingTarget() Basket basket);
 }

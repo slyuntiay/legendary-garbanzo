@@ -1,10 +1,8 @@
 package marketplace.dto.basketDto;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.Data;
 
-@RequiredArgsConstructor
-@Getter
+@Data
 public class BasketRequestDto {
     private Long clientId;
     private Long productId;

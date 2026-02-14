@@ -1,10 +1,9 @@
 package marketplace.dto.productDto;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.Data;
 
-@RequiredArgsConstructor
-@Getter
+
+@Data
 public class ProductRequestDto {
     private final String name;
     private final double price;

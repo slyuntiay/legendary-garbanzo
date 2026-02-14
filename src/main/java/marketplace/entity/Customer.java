@@ -22,7 +22,6 @@ public class Customer extends BaseEntity {
     @Column(nullable = false)
     private String lastName;
 
-//    @OneToMany(mappedBy = "customer")
-//    private List<Basket> basketList = new ArrayList<>();
-
+    @OneToMany(mappedBy = "customer")
+    private List<Basket> basketList = new ArrayList<>();
 }

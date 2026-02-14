@@ -1,10 +1,8 @@
 package marketplace.dto.customerDto;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.Data;
 
-@RequiredArgsConstructor
-@Getter
+@Data
 public class CustomerResponseDto {
     private final Long id;
     private final String firstName;

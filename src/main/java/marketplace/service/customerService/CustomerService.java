@@ -41,6 +41,11 @@ public class CustomerService {
         return customerRepo.find(id).map(generalMapper::toResponse);
     }
 
+    @Transactional(readOnly = true)
+    public Optional<Customer> findEntity(long id) {
+        return customerRepo.find(id);
+    }
+
     @Transactional
     public Optional<CustomerResponseDto> merge(long id, CustomerRequestDto customerRequestDto) {
         log.info("MERGE customer: id={}, lastname={}, name={}",

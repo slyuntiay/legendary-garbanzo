@@ -4,8 +4,6 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import marketplace.dto.customerDto.CustomerRequestDto;
 import marketplace.dto.customerDto.CustomerResponseDto;
-import marketplace.dto.mapper.GeneralMapper;
-import marketplace.entity.Customer;
 import marketplace.service.customerService.CustomerService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -38,7 +36,6 @@ public class CustomerController {
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
-
 
     @DeleteMapping(path = "/remove/{id}")
     public ResponseEntity<Object> remove(@PathVariable int id) {
