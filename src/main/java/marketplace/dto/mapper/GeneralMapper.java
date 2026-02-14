@@ -10,7 +10,9 @@ import marketplace.entity.Basket;
 import marketplace.entity.Customer;
 import marketplace.entity.Product;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
+
 
 @Mapper(componentModel = "spring")
 public interface GeneralMapper {
@@ -27,8 +29,12 @@ public interface GeneralMapper {
 
     void updateFromDto(ProductRequestDto requestDto, @MappingTarget() Product product);
 
+    @Mapping(target = "customerId", expression = "java(basket.getCustomer().getId())")
+    @Mapping(target = "productId", expression = "java(basket.getProduct().getId())")
     BasketResponseDto toResponse(Basket basket);
 
+    @Mapping(source = "customerId", target = "customer.id")
+    @Mapping(source = "productId", target = "product.id")
     Basket toEntity(BasketRequestDto requestDto);
 
     void updateFromDto(BasketRequestDto requestDto, @MappingTarget() Basket basket);

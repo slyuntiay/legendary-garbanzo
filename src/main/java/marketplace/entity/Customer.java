@@ -19,6 +19,6 @@ public class Customer extends BaseEntity {
     @Column(nullable = false)
     private String lastName;
 
-    @OneToMany(mappedBy = "customer")
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
     private List<Basket> basketList = new ArrayList<>();
 }
