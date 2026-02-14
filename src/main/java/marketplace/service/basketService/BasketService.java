@@ -3,6 +3,8 @@ package marketplace.service.basketService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import marketplace.dto.basketDto.BasketRequestDto;
+import marketplace.dto.basketDto.BasketResponseDto;
+import marketplace.dto.mapper.GeneralMapper;
 import marketplace.entity.Basket;
 import marketplace.repository.basket.BasketRepo;
 import marketplace.service.customerService.CustomerService;
@@ -17,49 +19,40 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class BasketService {
     private final BasketRepo basketRepo;
-    private final CustomerService customerService;
-    private final ProductService productService;
+    private final GeneralMapper generalMapper;
 
     @Transactional
-    public Basket save(BasketRequestDto basketRequestDto) {
+    public BasketResponseDto save(BasketRequestDto basketRequestDto) {
         log.info("SAVE basket: clientId={}, productId={}, quantity={}",
-                basketRequestDto.getClientId(), basketRequestDto.getProductId(), basketRequestDto.getQuantity());
+                basketRequestDto.getCustomerId(), basketRequestDto.getProductId(), basketRequestDto.getQuantity());
 
         try {
-            Basket basket = new Basket(basketRequestDto, customerService, productService);
-            Basket saved = basketRepo.save(basket);
-            log.info("SAVE OK: basketId={}", saved.getId());
-            return saved;
+            Basket basket = basketRepo.save(generalMapper.toEntity(basketRequestDto));
+            log.info("SAVE OK: basketId={}", basket.getId());
+            return generalMapper.toResponse(basket);
         } catch (Exception e) {
             log.error("SAVE FAILED: clientId={}, productId={}, error={}",
-                    basketRequestDto.getClientId(), basketRequestDto.getProductId(), e.getMessage(), e);
+                    basketRequestDto.getCustomerId(), basketRequestDto.getProductId(), e.getMessage(), e);
             throw e;
         }
     }
 
     @Transactional(readOnly = true)
-    public Optional<Basket> find(long id) {
+    public Optional<BasketResponseDto> find(long id) {
         log.debug("FIND basket: id={}", id);
-
-        Optional<Basket> basket = basketRepo.find(id);
-        if (basket.isPresent()) {
-            log.debug("FIND OK: basketId={}", id);
-        } else {
-            log.warn("FIND NOT FOUND: id={}", id);
-        }
-        return basket;
+        return basketRepo.find(id).map(generalMapper::toResponse);
     }
 
     @Transactional
-    public Optional<Basket> merge(long id, BasketRequestDto basketRequestDto) {
+    public Optional<BasketResponseDto> merge(long id, BasketRequestDto basketRequestDto) {
         log.info("MERGE basket: id={}, quantity={}", id, basketRequestDto.getQuantity());
 
         return basketRepo.find(id).map(basket -> {
             log.debug("MERGE updating basket: id={}", id);
-            basket.setQuantity(basketRequestDto.getQuantity());
+            generalMapper.updateFromDto(basketRequestDto, basket);
             Basket merged = basketRepo.merge(basket);
             log.info("MERGE OK: basketId={}", merged.getId());
-            return merged;
+            return generalMapper.toResponse(merged);
         });
     }
 

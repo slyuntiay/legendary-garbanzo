@@ -1,16 +1,12 @@
 package marketplace.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.Data;
 
 import java.util.Objects;
 
-@NoArgsConstructor
+@Data
 @MappedSuperclass
-@Getter
-@Setter
 public class BaseEntity {
 
     @Id

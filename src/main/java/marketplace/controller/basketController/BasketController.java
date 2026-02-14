@@ -19,29 +19,28 @@ public class BasketController {
     @PostMapping(path = "/save")
     public ResponseEntity<BasketResponseDto> save(
             @RequestBody BasketRequestDto basketRequestDto) {
-        Basket basket = basketService.save(basketRequestDto);
-        BasketResponseDto responseDto = new BasketResponseDto(basket);
+        BasketResponseDto responseDto = basketService.save(basketRequestDto);
         return ResponseEntity.ok(responseDto);
     }
 
     @GetMapping(path = "/find/{id}")
-    public ResponseEntity<BasketResponseDto> find(@PathVariable int id) {
+    public ResponseEntity<BasketResponseDto> find(@PathVariable long id) {
         return basketService.find(id)
-                .map(basket -> ResponseEntity.ok(new BasketResponseDto(basket)))
+                .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @PutMapping(path = "/merge/{id}")
     public ResponseEntity<BasketResponseDto> merge(
-            @PathVariable int id,
+            @PathVariable long id,
             @RequestBody BasketRequestDto basketRequestDto) {
         return basketService.merge(id, basketRequestDto)
-                .map(basket -> ResponseEntity.ok(new BasketResponseDto(basket)))
+                .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @DeleteMapping(path = "/remove/{id}")
-    public ResponseEntity<Object> remove(@PathVariable int id) {
+    public ResponseEntity<Object> remove(@PathVariable long id) {
         return basketService.remove(id)
                 .map(deleted -> ResponseEntity.noContent().build())
                 .orElse(ResponseEntity.notFound().build());
