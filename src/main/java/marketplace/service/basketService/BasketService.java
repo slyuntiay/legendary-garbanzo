@@ -22,37 +22,35 @@ public class BasketService {
     private final GeneralMapper generalMapper;
 
     @Transactional
-    public BasketResponseDto save(BasketRequestDto basketRequestDto) {
+    public Basket save(Basket basket) {
         log.info("SAVE basket: clientId={}, productId={}, quantity={}",
-                basketRequestDto.getCustomerId(), basketRequestDto.getProductId(), basketRequestDto.getQuantity());
+                basket.getCustomer().getId(), basket.getProduct().getId(), basket.getQuantity());
 
         try {
-            Basket basket = basketRepo.save(generalMapper.toEntity(basketRequestDto));
             log.info("SAVE OK: basketId={}", basket.getId());
-            return generalMapper.toResponse(basket);
+            return basketRepo.save(basket);
         } catch (Exception e) {
             log.error("SAVE FAILED: clientId={}, productId={}, error={}",
-                    basketRequestDto.getCustomerId(), basketRequestDto.getProductId(), e.getMessage(), e);
+                    basket.getCustomer().getId(), basket.getProduct().getId(), e.getMessage(), e);
             throw e;
         }
     }
 
     @Transactional(readOnly = true)
-    public Optional<BasketResponseDto> find(long id) {
+    public Optional<Basket> find(long id) {
         log.debug("FIND basket: id={}", id);
-        return basketRepo.find(id).map(generalMapper::toResponse);
+        return basketRepo.find(id);
     }
 
     @Transactional
-    public Optional<BasketResponseDto> merge(long id, BasketRequestDto basketRequestDto) {
-        log.info("MERGE basket: id={}, quantity={}", id, basketRequestDto.getQuantity());
+    public Optional<Basket> merge(long id, Basket basket) {
+        log.info("MERGE basket: id={}, quantity={}", id, basket.getQuantity());
 
-        return basketRepo.find(id).map(basket -> {
+        return basketRepo.find(id).map(b -> {
             log.debug("MERGE updating basket: id={}", id);
-            generalMapper.updateFromDto(basketRequestDto, basket);
-            Basket merged = basketRepo.merge(basket);
+            Basket merged = basketRepo.merge(b);
             log.info("MERGE OK: basketId={}", merged.getId());
-            return generalMapper.toResponse(merged);
+            return merged;
         });
     }
 

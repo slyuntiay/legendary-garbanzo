@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import marketplace.dto.basketDto.BasketRequestDto;
 import marketplace.dto.basketDto.BasketResponseDto;
+import marketplace.dto.mapper.BasketMapper;
 import marketplace.entity.Basket;
 import marketplace.service.basketService.BasketService;
 import org.springframework.http.ResponseEntity;
@@ -15,18 +16,20 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class BasketController {
     private final BasketService basketService;
+    private final BasketMapper basketMapper;
 
     @PostMapping(path = "/save")
     public ResponseEntity<BasketResponseDto> save(
             @RequestBody BasketRequestDto basketRequestDto) {
-        BasketResponseDto responseDto = basketService.save(basketRequestDto);
+        Basket saved = basketService.save(basketMapper.toEntity(basketRequestDto));
+        BasketResponseDto responseDto = basketMapper.toResponse(saved);
         return ResponseEntity.ok(responseDto);
     }
 
     @GetMapping(path = "/find/{id}")
     public ResponseEntity<BasketResponseDto> find(@PathVariable long id) {
         return basketService.find(id)
-                .map(ResponseEntity::ok)
+                .map(basket -> )
                 .orElse(ResponseEntity.notFound().build());
     }
 

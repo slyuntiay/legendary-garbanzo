@@ -2,9 +2,6 @@ package marketplace.service.customerService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import marketplace.dto.customerDto.CustomerRequestDto;
-import marketplace.dto.customerDto.CustomerResponseDto;
-import marketplace.dto.mapper.GeneralMapper;
 import marketplace.entity.Customer;
 import marketplace.repository.customer.CustomerRepo;
 import org.springframework.stereotype.Service;
@@ -17,46 +14,38 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class CustomerService {
     private final CustomerRepo customerRepo;
-    private final GeneralMapper generalMapper;
 
     @Transactional
-    public CustomerResponseDto save(CustomerRequestDto customerRequestDto) {
+    public Customer save(Customer customer) {
         log.info("SAVE customer: lastname={}, name={}",
-                customerRequestDto.getLastName(), customerRequestDto.getFirstName());
+                customer.getLastName(), customer.getFirstName());
 
         try {
-            Customer customer = customerRepo.save(generalMapper.toEntity(customerRequestDto));
             log.info("SAVE OK: customerId={}", customer.getId());
-            return generalMapper.toResponse(customer);
+            return customerRepo.save(customer);
         } catch (Exception e) {
             log.error("SAVE FAILED: lastname={}, name={}, error={}",
-                    customerRequestDto.getLastName(), customerRequestDto.getFirstName(), e.getMessage(), e);
+                    customer.getLastName(), customer.getFirstName(), e.getMessage(), e);
             throw e;
         }
     }
 
     @Transactional(readOnly = true)
-    public Optional<CustomerResponseDto> find(long id) {
+    public Optional<Customer> find(long id) {
         log.debug("FIND customer: id={}", id);
-        return customerRepo.find(id).map(generalMapper::toResponse);
-    }
-
-    @Transactional(readOnly = true)
-    public Optional<Customer> findEntity(long id) {
         return customerRepo.find(id);
     }
 
     @Transactional
-    public Optional<CustomerResponseDto> merge(long id, CustomerRequestDto customerRequestDto) {
+    public Optional<Customer> merge(long id, Customer customer) {
         log.info("MERGE customer: id={}, lastname={}, name={}",
-                id, customerRequestDto.getLastName(), customerRequestDto.getFirstName());
+                id, customer.getLastName(), customer.getFirstName());
 
-        return customerRepo.find(id).map(customer -> {
+        return customerRepo.find(id).map(c -> {
             log.debug("MERGE updating customer: id={}", id);
-            generalMapper.updateFromDto(customerRequestDto, customer);
-            Customer merged = customerRepo.merge(customer);
+            Customer merged = customerRepo.merge(c);
             log.info("MERGE OK: customerId={}", merged.getId());
-            return generalMapper.toResponse(merged);
+            return merged;
         });
     }
 

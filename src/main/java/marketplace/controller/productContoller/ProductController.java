@@ -2,6 +2,8 @@ package marketplace.controller.productContoller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import marketplace.dto.mapper.GeneralMapper;
+import marketplace.dto.mapper.ProductMapper;
 import marketplace.dto.productDto.ProductRequestDto;
 import marketplace.dto.productDto.ProductResponseDto;
 import marketplace.entity.Product;
@@ -14,27 +16,33 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class ProductController {
     private final ProductService productService;
+    private final ProductMapper productMapper;
 
     @PostMapping(path = "/save")
     public ResponseEntity<ProductResponseDto> save(
             @RequestBody ProductRequestDto productRequestDto) {
-        ProductResponseDto responseDto = productService.save(productRequestDto);
+        Product saved = productService.save(productMapper.toEntity(productRequestDto));
+        ProductResponseDto responseDto = productMapper.toResponse(saved);
         return ResponseEntity.ok(responseDto);
     }
 
     @GetMapping(path = "/find/{id}")
     public ResponseEntity<ProductResponseDto> find(@PathVariable long id) {
         return productService.find(id)
-                .map(ResponseEntity::ok)
+                .map(product -> ResponseEntity.ok(productMapper.toResponse(product)))
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @PutMapping("/merge/{id}")
-    public ResponseEntity<ProductResponseDto> update(
+    @PutMapping(path = "/merge/{id}")
+    public ResponseEntity<ProductResponseDto> merge(
             @PathVariable long id,
             @Valid @RequestBody ProductRequestDto productRequestDto) {
-        return productService.merge(id, productRequestDto)
-                .map(ResponseEntity::ok)
+        return productService.merge(id, productMapper.toEntity(productRequestDto))
+                .map(product -> {
+                    productMapper.updateFromDto(productRequestDto, product);
+                    Product merged = productService.save(product);
+                    return ResponseEntity.ok(productMapper.toResponse(merged));
+                })
                 .orElse(ResponseEntity.notFound().build());
     }
 
