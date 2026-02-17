@@ -5,7 +5,6 @@ import lombok.RequiredArgsConstructor;
 import marketplace.dto.customerDto.CustomerRequestDto;
 import marketplace.dto.customerDto.CustomerResponseDto;
 import marketplace.dto.mapper.CustomerMapper;
-import marketplace.dto.mapper.GeneralMapper;
 import marketplace.entity.Customer;
 import marketplace.service.customerService.CustomerService;
 import org.springframework.http.ResponseEntity;

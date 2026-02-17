@@ -2,13 +2,8 @@ package marketplace.service.basketService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import marketplace.dto.basketDto.BasketRequestDto;
-import marketplace.dto.basketDto.BasketResponseDto;
-import marketplace.dto.mapper.GeneralMapper;
 import marketplace.entity.Basket;
 import marketplace.repository.basket.BasketRepo;
-import marketplace.service.customerService.CustomerService;
-import marketplace.service.productService.ProductService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,7 +14,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class BasketService {
     private final BasketRepo basketRepo;
-    private final GeneralMapper generalMapper;
+
 
     @Transactional
     public Basket save(Basket basket) {

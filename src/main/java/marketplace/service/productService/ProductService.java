@@ -2,9 +2,6 @@ package marketplace.service.productService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import marketplace.dto.mapper.GeneralMapper;
-import marketplace.dto.productDto.ProductRequestDto;
-import marketplace.dto.productDto.ProductResponseDto;
 import marketplace.entity.Product;
 import marketplace.repository.product.ProductRepo;
 import org.springframework.stereotype.Service;

@@ -29,7 +29,7 @@ public class BasketController {
     @GetMapping(path = "/find/{id}")
     public ResponseEntity<BasketResponseDto> find(@PathVariable long id) {
         return basketService.find(id)
-                .map(basket -> )
+                .map(basket -> ResponseEntity.ok(basketMapper.toResponse(basket)))
                 .orElse(ResponseEntity.notFound().build());
     }
 
@@ -37,8 +37,9 @@ public class BasketController {
     public ResponseEntity<BasketResponseDto> merge(
             @PathVariable long id,
             @RequestBody BasketRequestDto basketRequestDto) {
-        return basketService.merge(id, basketRequestDto)
-                .map(ResponseEntity::ok)
+        return basketService.merge(id, basketMapper.toEntity(basketRequestDto))
+                .map(basket -> {basketMapper.updateFromDto(basketRequestDto,basket);
+                return ResponseEntity.ok(basketMapper.toResponse(basket));})
                 .orElse(ResponseEntity.notFound().build());
     }
 

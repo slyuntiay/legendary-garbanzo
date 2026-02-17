@@ -2,7 +2,6 @@ package marketplace.controller.productContoller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import marketplace.dto.mapper.GeneralMapper;
 import marketplace.dto.mapper.ProductMapper;
 import marketplace.dto.productDto.ProductRequestDto;
 import marketplace.dto.productDto.ProductResponseDto;
