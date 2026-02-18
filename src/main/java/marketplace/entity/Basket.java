@@ -19,6 +19,6 @@ public class Basket extends BaseEntity {
     private Product product;
 
     @Column(nullable = false)
-    private int quantity;
+    private Integer quantity;
 
 }
