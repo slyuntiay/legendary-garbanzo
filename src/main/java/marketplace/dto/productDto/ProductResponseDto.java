@@ -6,6 +6,6 @@ import lombok.Data;
 public class ProductResponseDto {
     private final Long id;
     private final String name;
-    private final double price;
-    private final int quantity;
+    private final Double price;
+    private final Integer quantity;
 }
