@@ -9,5 +9,6 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 public class ProductListUpdate {
+    private Long orderId;
     private List<ProductResponseDto> productList;
 }

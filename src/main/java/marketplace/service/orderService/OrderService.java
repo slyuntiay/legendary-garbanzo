@@ -1,10 +1,12 @@
 package marketplace.service.orderService;
 
 import lombok.RequiredArgsConstructor;
-import marketplace.controller.client.ContractorClient;
+import marketplace.client.ContractorClient;
+import marketplace.dto.contractor.contractorDto.ContractorResponse;
 import marketplace.dto.contractor.orderRequestDto.OrderRequest;
-import marketplace.dto.productDto.ProductRequestDto;
-import marketplace.dto.productDto.ProductResponseDto;
+import marketplace.dto.contractor.orderStatus.OrderStatus;
+import marketplace.dto.contractor.productListUpdate.ProductListUpdate;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -12,8 +14,19 @@ import org.springframework.stereotype.Service;
 public class OrderService {
 
     private final ContractorClient contractorClient;
+    private final RabbitTemplate rabbitTemplate;
 
-    public OrderRequest send(OrderRequest orderRequest) {
-        return contractorClient.send(orderRequest);
+    public String createOrder(OrderRequest request) {
+
+        ContractorResponse response = contractorClient.sendOrder(request);
+
+        ProductListUpdate update = new ProductListUpdate(request.getId(), request.getProductList());
+        rabbitTemplate.convertAndSend("stock-requests", update);
+
+        return response.getMessage();
+    }
+
+    public OrderStatus checkOrderStatus(Long id) {
+        return contractorClient.findOrder(id);
     }
 }
