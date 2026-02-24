@@ -1,9 +1,9 @@
 package marketplace.client;
 
-import marketplace.dto.contractor.contractorDto.ContractorResponse;
-import marketplace.dto.contractor.orderRequestDto.OrderRequest;
-import marketplace.dto.contractor.orderStatus.OrderStatus;
-import marketplace.dto.contractor.productListUpdate.ProductListUpdate;
+import marketplace.dto.contractor.ContractorResponse;
+import marketplace.dto.contractor.OrderRequest;
+import marketplace.dto.contractor.OrderStatus;
+import marketplace.dto.contractor.ProductListUpdate;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
         name = "contractor",
         url = "${feign.client.config.contractor.url:http://localhost:8081}"
 )
-@RequestMapping(name = "contractor")
 public interface ContractorClient {
 
     @PostMapping("/send")

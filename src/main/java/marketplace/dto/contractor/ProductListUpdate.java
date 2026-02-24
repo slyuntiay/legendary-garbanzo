@@ -1,4 +1,4 @@
-package marketplace.dto.contractor.contractorDto;
+package marketplace.dto.contractor;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -8,7 +8,7 @@ import java.util.List;
 
 @Data
 @AllArgsConstructor
-public class ContractorResponse {
-    private String message;
+public class ProductListUpdate {
+    private Long orderId;
     private List<ProductResponseDto> productList;
 }

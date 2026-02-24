@@ -2,10 +2,10 @@ package marketplace.service.orderService;
 
 import lombok.RequiredArgsConstructor;
 import marketplace.client.ContractorClient;
-import marketplace.dto.contractor.contractorDto.ContractorResponse;
-import marketplace.dto.contractor.orderRequestDto.OrderRequest;
-import marketplace.dto.contractor.orderStatus.OrderStatus;
-import marketplace.dto.contractor.productListUpdate.ProductListUpdate;
+import marketplace.dto.contractor.ContractorResponse;
+import marketplace.dto.contractor.OrderRequest;
+import marketplace.dto.contractor.OrderStatus;
+import marketplace.dto.contractor.ProductListUpdate;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
 
