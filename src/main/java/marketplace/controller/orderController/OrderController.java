@@ -14,7 +14,7 @@ public class OrderController {
 
     private final OrderService orderService;  // твой сервис с Feign
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<String> createOrder(@RequestBody OrderRequest request) {
         String result = orderService.createOrder(request);
         return ResponseEntity.ok(result);

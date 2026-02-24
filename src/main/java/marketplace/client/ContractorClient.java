@@ -13,12 +13,12 @@ import org.springframework.web.bind.annotation.*;
 )
 public interface ContractorClient {
 
-    @PostMapping("/send")
+    @PostMapping("contractor/send")
     ContractorResponse sendOrder(@RequestBody OrderRequest request);
 
-    @GetMapping("/find/{id}")
+    @GetMapping("contractor/find/{id}")
     OrderStatus findOrder(@PathVariable("id") Long id);
 
-    @PostMapping("/merge")
+    @PostMapping("contractor/merge")
     String mergeStock(@RequestBody ProductListUpdate update);
 }
