@@ -10,5 +10,5 @@ import java.util.List;
 @AllArgsConstructor
 public class ContractorResponse {
     private String message;
-    private List<ProductResponseDto> productList;
+    private List<ProductDto> productList;
 }

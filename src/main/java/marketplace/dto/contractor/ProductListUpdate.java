@@ -2,7 +2,6 @@ package marketplace.dto.contractor;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import marketplace.dto.productDto.ProductResponseDto;
 
 import java.util.List;
 
@@ -10,5 +9,5 @@ import java.util.List;
 @AllArgsConstructor
 public class ProductListUpdate {
     private Long orderId;
-    private List<ProductResponseDto> productList;
+    private List<ProductDto> productList;
 }
