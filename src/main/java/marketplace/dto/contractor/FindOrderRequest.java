@@ -7,7 +7,7 @@ import java.util.List;
 
 @Data
 @AllArgsConstructor
-public class OrderRequest {
+public class FindOrderRequest {
     private Long id;
     private List<ProductDto> productList;
 }

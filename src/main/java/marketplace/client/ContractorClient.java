@@ -1,7 +1,7 @@
 package marketplace.client;
 
 import marketplace.dto.contractor.ContractorResponse;
-import marketplace.dto.contractor.OrderRequest;
+import marketplace.dto.contractor.CreateOrderRequest;
 import marketplace.dto.contractor.OrderStatus;
 import marketplace.dto.contractor.ProductListUpdate;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.*;
 )
 public interface ContractorClient {
 
-    @PostMapping("contractor/send")
-    ContractorResponse sendOrder(@RequestBody OrderRequest request);
+    @PostMapping("order/save")
+    ContractorResponse createOrder(@RequestBody CreateOrderRequest request);
 
     @GetMapping("contractor/find/{id}")
     OrderStatus findOrder(@PathVariable("id") Long id);
