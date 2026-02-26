@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class RabbitReceiver {
 
-    @RabbitListener(queuesToDeclare = @Queue("${queue.name}"))
+    @RabbitListener(queues = "${queue.name}")
     public void receive(String message,
                         @Header(AmqpHeaders.CONSUMER_QUEUE) String queueName) {
         log.info("{} received from {}", message, queueName);

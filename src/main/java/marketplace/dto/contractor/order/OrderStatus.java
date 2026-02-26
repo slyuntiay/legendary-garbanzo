@@ -1,4 +1,4 @@
-package marketplace.dto.contractor;
+package marketplace.dto.contractor.order;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

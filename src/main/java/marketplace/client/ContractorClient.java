@@ -1,9 +1,9 @@
 package marketplace.client;
 
 import marketplace.dto.contractor.ContractorResponse;
-import marketplace.dto.contractor.CreateOrderRequest;
-import marketplace.dto.contractor.OrderStatus;
-import marketplace.dto.contractor.ProductListUpdate;
+import marketplace.dto.contractor.order.CreateOrderRequest;
+import marketplace.dto.contractor.order.OrderStatus;
+import marketplace.dto.contractor.product.ProductSetUpdate;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,5 +20,5 @@ public interface ContractorClient {
     OrderStatus findOrder(@PathVariable("id") Long id);
 
     @PostMapping("contractor/merge")
-    String mergeStock(@RequestBody ProductListUpdate update);
+    String mergeStock(@RequestBody ProductSetUpdate update);
 }

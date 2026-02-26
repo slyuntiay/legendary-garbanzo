@@ -1,8 +1,8 @@
 package marketplace.controller.orderController;
 
 import lombok.RequiredArgsConstructor;
-import marketplace.dto.contractor.CreateOrderRequest;
-import marketplace.dto.contractor.OrderStatus;
+import marketplace.dto.contractor.order.CreateOrderRequest;
+import marketplace.dto.contractor.order.OrderStatus;
 import marketplace.service.orderService.OrderService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

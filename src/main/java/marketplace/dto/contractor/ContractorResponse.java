@@ -2,7 +2,7 @@ package marketplace.dto.contractor;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import marketplace.dto.productDto.ProductResponseDto;
+import marketplace.dto.contractor.product.ProductDto;
 
 import java.util.List;
 

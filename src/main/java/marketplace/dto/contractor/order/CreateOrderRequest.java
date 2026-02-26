@@ -1,14 +1,15 @@
-package marketplace.dto.contractor;
+package marketplace.dto.contractor.order;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import marketplace.dto.contractor.product.ProductDto;
 
-import java.util.List;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class CreateOrderRequest {
-    private List<ProductDto> productList;
+    private Set<ProductDto> products;
 }
