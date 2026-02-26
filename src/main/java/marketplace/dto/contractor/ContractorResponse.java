@@ -5,10 +5,11 @@ import lombok.Data;
 import marketplace.dto.contractor.product.ProductDto;
 
 import java.util.List;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
 public class ContractorResponse {
     private String message;
-    private List<ProductDto> productList;
+    private Set<ProductDto> products;
 }

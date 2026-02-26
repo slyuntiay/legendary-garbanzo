@@ -4,11 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import marketplace.dto.contractor.product.ProductDto;
 
-import java.util.List;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
 public class FindOrderRequest {
     private Long id;
-    private List<ProductDto> productList;
+    private Set<ProductDto> products;
 }
