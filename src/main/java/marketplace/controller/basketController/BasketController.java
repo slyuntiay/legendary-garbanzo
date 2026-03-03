@@ -1,5 +1,6 @@
 package marketplace.controller.basketController;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import marketplace.dto.basketDto.BasketRequestDto;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
+@Tag(name = "Baskets")
 @RequestMapping(path = "basket")
 @RequiredArgsConstructor
 public class BasketController {
@@ -39,7 +41,7 @@ public class BasketController {
             @RequestBody BasketRequestDto basketRequestDto) {
         return basketService.merge(id, basketMapper.toEntity(basketRequestDto))
                 .map(basket -> {basketMapper.updateFromDto(basketRequestDto,basket);
-                return ResponseEntity.ok(basketMapper.toResponse(basket));})
+                    return ResponseEntity.ok(basketMapper.toResponse(basket));})
                 .orElse(ResponseEntity.notFound().build());
     }
 

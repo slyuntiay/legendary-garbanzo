@@ -1,5 +1,6 @@
 package marketplace.controller.customerController;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import marketplace.dto.customerDto.CustomerRequestDto;
@@ -11,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@Tag(name = "Customers")
 @RequestMapping(path = "customer")
 @RequiredArgsConstructor
 public class CustomerController {

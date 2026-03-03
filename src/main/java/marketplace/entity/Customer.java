@@ -21,4 +21,8 @@ public class Customer extends BaseEntity {
 
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
     private List<Basket> basketList = new ArrayList<>();
+
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 }

@@ -1,5 +1,6 @@
 package marketplace.controller.orderController;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import marketplace.dto.contractor.order.CreateOrderRequest;
 import marketplace.dto.contractor.order.OrderStatus;
@@ -8,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@Tag(name = "Orders")
 @RequestMapping("/orders")
 @RequiredArgsConstructor
 public class OrderController {
