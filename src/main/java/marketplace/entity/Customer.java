@@ -24,6 +24,6 @@ public class Customer extends BaseEntity {
     private List<Basket> basketList = new ArrayList<>();
 
     @OneToOne
-    @JoinColumn(name = "username")
+    @JoinColumn(name = "user_id")
     private User user;
 }
