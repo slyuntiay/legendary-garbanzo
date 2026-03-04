@@ -9,6 +9,7 @@ import marketplace.mapper.CustomerMapper;
 import marketplace.entity.Customer;
 import marketplace.service.customerService.CustomerService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -47,7 +48,8 @@ public class CustomerController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @DeleteMapping(path = "/remove/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    @DeleteMapping(path = "/ADMIN/remove/{id}")
     public ResponseEntity<Object> remove(@PathVariable long id) {
         return customerService.remove(id)
                 .map(deleted -> ResponseEntity.noContent().build())

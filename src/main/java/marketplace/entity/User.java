@@ -12,7 +12,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "marketpace_user")
+@Table(name = "marketplace_user")
 @EqualsAndHashCode(callSuper = true)
 public class User extends BaseEntity {
 
@@ -23,7 +23,8 @@ public class User extends BaseEntity {
     private String password;
 
     @Column(name = "role")
-    private String role;
+    @Enumerated(EnumType.STRING)
+    private Role role = Role.ADMIN;
 
     @Column(nullable = false)
     private boolean enabled = true;
@@ -39,5 +40,9 @@ public class User extends BaseEntity {
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Customer customer;
+
+    public enum Role{
+        USER, ADMIN, GUEST
+    }
 }
 

@@ -9,6 +9,7 @@ import marketplace.dto.productDto.ProductResponse;
 import marketplace.entity.Product;
 import marketplace.service.productService.ProductService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController

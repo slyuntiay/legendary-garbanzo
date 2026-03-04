@@ -8,6 +8,8 @@ import marketplace.repository.user.UserRepo;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -23,6 +25,10 @@ public class UserService {
     @Transactional
     public Customer save(Customer customer) {
         return customerRepo.save(customer);
+    }
+    @Transactional
+    public Optional<User> findByUsername(String username) {
+        return userRepo.findByUsername(username);
     }
 }
 
