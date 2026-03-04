@@ -2,9 +2,9 @@ package marketplace.service.orderService;
 
 import lombok.RequiredArgsConstructor;
 import marketplace.client.ContractorClient;
-import marketplace.dto.contractor.ContractorResponse;
-import marketplace.dto.contractor.order.CreateOrderRequest;
-import marketplace.dto.contractor.order.OrderStatus;
+import marketplace.dto.contractorDto.ContractorResponse;
+import marketplace.dto.contractorDto.order.CreateOrderRequest;
+import marketplace.dto.contractorDto.order.OrderStatus;
 import org.springframework.stereotype.Service;
 
 @Service

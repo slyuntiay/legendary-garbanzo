@@ -3,9 +3,9 @@ package marketplace.controller.basketController;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import marketplace.dto.basketDto.BasketRequestDto;
-import marketplace.dto.basketDto.BasketResponseDto;
-import marketplace.dto.mapper.BasketMapper;
+import marketplace.dto.basketDto.BasketRequest;
+import marketplace.dto.basketDto.BasketResponse;
+import marketplace.mapper.BasketMapper;
 import marketplace.entity.Basket;
 import marketplace.service.basketService.BasketService;
 import org.springframework.http.ResponseEntity;
@@ -21,26 +21,26 @@ public class BasketController {
     private final BasketMapper basketMapper;
 
     @PostMapping(path = "/save")
-    public ResponseEntity<BasketResponseDto> save(
-            @RequestBody BasketRequestDto basketRequestDto) {
-        Basket saved = basketService.save(basketMapper.toEntity(basketRequestDto));
-        BasketResponseDto responseDto = basketMapper.toResponse(saved);
+    public ResponseEntity<BasketResponse> save(
+            @RequestBody BasketRequest basketRequest) {
+        Basket saved = basketService.save(basketMapper.toEntity(basketRequest));
+        BasketResponse responseDto = basketMapper.toResponse(saved);
         return ResponseEntity.ok(responseDto);
     }
 
     @GetMapping(path = "/find/{id}")
-    public ResponseEntity<BasketResponseDto> find(@PathVariable long id) {
+    public ResponseEntity<BasketResponse> find(@PathVariable long id) {
         return basketService.find(id)
                 .map(basket -> ResponseEntity.ok(basketMapper.toResponse(basket)))
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @PutMapping(path = "/merge/{id}")
-    public ResponseEntity<BasketResponseDto> merge(
+    public ResponseEntity<BasketResponse> merge(
             @PathVariable long id,
-            @RequestBody BasketRequestDto basketRequestDto) {
-        return basketService.merge(id, basketMapper.toEntity(basketRequestDto))
-                .map(basket -> {basketMapper.updateFromDto(basketRequestDto,basket);
+            @RequestBody BasketRequest basketRequest) {
+        return basketService.merge(id, basketMapper.toEntity(basketRequest))
+                .map(basket -> {basketMapper.updateFromDto(basketRequest,basket);
                     return ResponseEntity.ok(basketMapper.toResponse(basket));})
                 .orElse(ResponseEntity.notFound().build());
     }

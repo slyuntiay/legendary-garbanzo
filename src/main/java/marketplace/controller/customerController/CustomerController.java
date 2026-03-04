@@ -3,9 +3,9 @@ package marketplace.controller.customerController;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import marketplace.dto.customerDto.CustomerRequestDto;
-import marketplace.dto.customerDto.CustomerResponseDto;
-import marketplace.dto.mapper.CustomerMapper;
+import marketplace.dto.customerDto.CustomerRequest;
+import marketplace.dto.customerDto.CustomerResponse;
+import marketplace.mapper.CustomerMapper;
 import marketplace.entity.Customer;
 import marketplace.service.customerService.CustomerService;
 import org.springframework.http.ResponseEntity;
@@ -20,27 +20,27 @@ public class CustomerController {
     private final CustomerMapper customerMapper;
 
     @PostMapping(path = "/save")
-    public ResponseEntity<CustomerResponseDto> save(
-            @RequestBody CustomerRequestDto customerRequestDto) {
-        Customer saved = customerService.save(customerMapper.toEntity(customerRequestDto));
-        CustomerResponseDto responseDto = customerMapper.toResponse(saved);
+    public ResponseEntity<CustomerResponse> save(
+            @RequestBody CustomerRequest customerRequest) {
+        Customer saved = customerService.save(customerMapper.toEntity(customerRequest));
+        CustomerResponse responseDto = customerMapper.toResponse(saved);
         return ResponseEntity.ok(responseDto);
     }
 
     @GetMapping(path = "/find/{id}")
-    public ResponseEntity<CustomerResponseDto> find(@PathVariable long id) {
+    public ResponseEntity<CustomerResponse> find(@PathVariable long id) {
         return customerService.find(id)
                 .map(customer -> ResponseEntity.ok(customerMapper.toResponse(customer)))
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @PutMapping(path = "/merge/{id}")
-    public ResponseEntity<CustomerResponseDto> merge(
+    public ResponseEntity<CustomerResponse> merge(
             @PathVariable long id,
-            @Valid @RequestBody CustomerRequestDto customerRequestDto) {
-        return customerService.merge(id, customerMapper.toEntity(customerRequestDto))
+            @Valid @RequestBody CustomerRequest customerRequest) {
+        return customerService.merge(id, customerMapper.toEntity(customerRequest))
                 .map(customer -> {
-                    customerMapper.updateFromDto(customerRequestDto, customer);
+                    customerMapper.updateFromDto(customerRequest, customer);
                     Customer merged = customerService.save(customer);
                     return ResponseEntity.ok(customerMapper.toResponse(merged));
                 })

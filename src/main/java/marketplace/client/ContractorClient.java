@@ -1,9 +1,9 @@
 package marketplace.client;
 
-import marketplace.dto.contractor.ContractorResponse;
-import marketplace.dto.contractor.order.CreateOrderRequest;
-import marketplace.dto.contractor.order.OrderStatus;
-import marketplace.dto.contractor.product.ProductSetUpdate;
+import marketplace.dto.contractorDto.ContractorResponse;
+import marketplace.dto.contractorDto.order.CreateOrderRequest;
+import marketplace.dto.contractorDto.order.OrderStatus;
+import marketplace.dto.contractorDto.product.ProductSetUpdate;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 

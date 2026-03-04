@@ -1,13 +1,14 @@
-package marketplace.dto.contractor;
+package marketplace.dto.contractorDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import marketplace.dto.contractor.product.ProductDto;
+import lombok.NoArgsConstructor;
+import marketplace.dto.contractorDto.product.ProductDto;
 
-import java.util.List;
 import java.util.Set;
 
 @Data
+@NoArgsConstructor
 @AllArgsConstructor
 public class ContractorResponse {
     private String message;

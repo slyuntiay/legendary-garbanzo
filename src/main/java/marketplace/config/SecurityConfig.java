@@ -1,9 +1,8 @@
 package marketplace.config;
 
-
-import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -26,12 +25,17 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/public/**").permitAll()  // Публичные эндпоинты
-                        .requestMatchers("/admin/**").hasRole("ADMIN")  // Только админы
-                        .anyRequest().authenticated()  // Всё остальное — только залогиненные
+                        // ✅ 1. ТОЧНЫЙ матч для POST
+                        .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
+                        // ✅ 2. Антиматч для GET (форма логина)
+                        .requestMatchers(HttpMethod.GET, "/auth/register").permitAll()
+                        .requestMatchers("/public/**").permitAll()
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .anyRequest().authenticated()
                 )
-                .formLogin(Customizer.withDefaults())  // Форма логина по умолчанию
-                .logout(Customizer.withDefaults());    // Логаут на /logout
+                .formLogin(Customizer.withDefaults())
+                .logout(Customizer.withDefaults());
         return http.build();
     }
+
 }

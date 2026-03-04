@@ -2,8 +2,8 @@ package marketplace.controller.orderController;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import marketplace.dto.contractor.order.CreateOrderRequest;
-import marketplace.dto.contractor.order.OrderStatus;
+import marketplace.dto.contractorDto.order.CreateOrderRequest;
+import marketplace.dto.contractorDto.order.OrderStatus;
 import marketplace.service.orderService.OrderService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

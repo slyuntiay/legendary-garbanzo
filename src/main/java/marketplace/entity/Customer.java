@@ -1,13 +1,14 @@
 package marketplace.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Data
+@NoArgsConstructor  // ← JPA требует ЭТО
+@AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @Table
@@ -23,6 +24,6 @@ public class Customer extends BaseEntity {
     private List<Basket> basketList = new ArrayList<>();
 
     @OneToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "username")
     private User user;
 }
