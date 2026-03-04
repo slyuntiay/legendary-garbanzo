@@ -44,11 +44,11 @@ public class UserService {
 
     public UserProfileResponse getProfile(String username) {
         User user = userRepo.findByUsername(username).orElseThrow();
-        return userMapper.toResponse(user);  // 1 строка!
+        return userMapper.toResponse(user);
     }
 
     public void updateProfile(UserRegisterRequest request, User user) {
-        userMapper.updateFromDto(request, user);  // 1 строка!
+        userMapper.updateFromDto(request, user);
     }
 }
 

@@ -7,35 +7,38 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
-@EnableMethodSecurity  // Для аннотаций @PreAuthorize в контроллерах
+@EnableMethodSecurity
 public class SecurityConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();  // Шифрует пароли (ВАЖНО!)
+        return new BCryptPasswordEncoder();
     }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .authorizeHttpRequests(auth -> auth
-                        // ✅ 1. ТОЧНЫЙ матч для POST
-                        .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
-                        // ✅ 2. Антиматч для GET (форма логина)
-                        .requestMatchers(HttpMethod.GET, "/auth/register").permitAll()
+                .authorizeHttpRequests(authz -> authz
+                        //ПЕРВЫЕ ПРАВИЛА ИМЕЮТ ПРИОРИТЕТ!
+                        .requestMatchers("/auth/**").permitAll()
                         .requestMatchers("/public/**").permitAll()
+                        .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                        .requestMatchers("/css/**", "/js/**").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .formLogin(Customizer.withDefaults())
-                .logout(Customizer.withDefaults());
+                .logout(Customizer.withDefaults())
+                .csrf(AbstractHttpConfigurer::disable);
+
         return http.build();
     }
-
 }
+

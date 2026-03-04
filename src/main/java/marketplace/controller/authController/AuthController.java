@@ -20,9 +20,10 @@ public class AuthController {
     private final UserService userService;
 
     @PostMapping("/register")
-    @ResponseStatus(HttpStatus.CREATED)  // 201 Created
+    @ResponseStatus(HttpStatus.CREATED)
     public CustomerResponse register(@Valid @RequestBody UserRegisterRequest request) {
-        return userService.register(request);
+        CustomerResponse response = userService.register(request);
+        return response;
     }
 }
 
