@@ -1,20 +1,16 @@
 package marketplace.controller.authController;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import marketplace.dto.customerDto.CustomerResponse;
 import marketplace.dto.userDto.UserLoginRequest;
-import marketplace.dto.userDto.UserLoginResponse;
 import marketplace.dto.userDto.UserRegisterRequest;
 import marketplace.entity.Customer;
 import marketplace.entity.User;
 import marketplace.mapper.CustomerMapper;
 import marketplace.mapper.UserMapper;
+import marketplace.service.JwtTokenService.JwtTokenService;
 import marketplace.service.userService.UserService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -22,7 +18,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,6 +34,7 @@ public class AuthController {
     private final UserMapper userMapper;
     private final CustomerMapper customerMapper;
     private final PasswordEncoder passwordEncoder;
+    private final JwtTokenService jwtTokenService;
 
     @PostMapping("/register")
     public ResponseEntity<CustomerResponse> register(@RequestBody UserRegisterRequest request) {
@@ -56,9 +52,7 @@ public class AuthController {
         return ResponseEntity.ok(customerMapper.toResponse(savedCustomer));
     }
     @PostMapping("/login")
-    public ResponseEntity<Map<String, Object>> login(HttpServletRequest req,
-                                                     HttpServletResponse resp,  // ← Добавляем response как параметр
-                                                     @RequestBody UserLoginRequest request) {
+    public ResponseEntity<Map<String, Object>> login(@RequestBody UserLoginRequest request) {
 
         User user = userService.findByUsername(request.getUsername())
                 .orElseThrow(() -> new UsernameNotFoundException("Пользователь не найден"));
@@ -79,12 +73,12 @@ public class AuthController {
 
         SecurityContextHolder.getContext().setAuthentication(auth);
 
+        String token = jwtTokenService.generateToken(user.getUsername(), user.getRole().name());
+
         Map<String, Object> response = new HashMap<>();
+        response.put("token", token);
         response.put("username", user.getUsername());
         response.put("role", user.getRole().name());
-
-        HttpSessionSecurityContextRepository repo = new HttpSessionSecurityContextRepository();
-        repo.saveContext(SecurityContextHolder.getContext(), req, resp);
 
         return ResponseEntity.ok(response);
     }
