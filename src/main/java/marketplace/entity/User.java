@@ -22,7 +22,6 @@ public class User extends BaseEntity {
     @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false)
     private String token;
 
     @Column(name = "role")
@@ -31,15 +30,6 @@ public class User extends BaseEntity {
 
     @Column(nullable = false)
     private boolean enabled = true;
-
-    @Column(nullable = false)
-    private boolean accountNonExpired = true;
-
-    @Column(nullable = false)
-    private boolean credentialsNonExpired = true;
-
-    @Column(nullable = false)
-    private boolean accountNonLocked = true;
 
     public enum Role{
         USER, ADMIN, GUEST
