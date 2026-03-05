@@ -27,16 +27,13 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .authorizeHttpRequests(authz -> authz
-                        // 🔥 ТОЛЬКО ЭТИ 3 СТРОКИ ПЕРВЫМИ!
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/register").permitAll()
                         .requestMatchers("/auth/**").permitAll()
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
-                // ❌ УДАЛИ ЭТИ СТРОКИ! Они мешают!
-                // .formLogin(Customizer.withDefaults())
-                // .logout(Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable);
 
         return http.build();

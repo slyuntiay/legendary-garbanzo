@@ -28,6 +28,7 @@ public class CustomerController {
         return ResponseEntity.ok(responseDto);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping(path = "/find/{id}")
     public ResponseEntity<CustomerResponse> find(@PathVariable long id) {
         return customerService.find(id)
@@ -48,8 +49,7 @@ public class CustomerController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
-    @DeleteMapping(path = "/ADMIN/remove/{id}")
+    @DeleteMapping(path = "/remove/{id}")
     public ResponseEntity<Object> remove(@PathVariable long id) {
         return customerService.remove(id)
                 .map(deleted -> ResponseEntity.noContent().build())

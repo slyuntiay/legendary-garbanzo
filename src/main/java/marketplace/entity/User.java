@@ -22,9 +22,12 @@ public class User extends BaseEntity {
     @Column(nullable = false)
     private String password;
 
+    @Column(nullable = false)
+    private String token;
+
     @Column(name = "role")
     @Enumerated(EnumType.STRING)
-    private Role role = Role.ADMIN;
+    private Role role = Role.USER;
 
     @Column(nullable = false)
     private boolean enabled = true;
@@ -37,9 +40,6 @@ public class User extends BaseEntity {
 
     @Column(nullable = false)
     private boolean accountNonLocked = true;
-
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-    private Customer customer;
 
     public enum Role{
         USER, ADMIN, GUEST

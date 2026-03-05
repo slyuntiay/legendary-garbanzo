@@ -26,7 +26,8 @@ public class UserService {
     public Customer save(Customer customer) {
         return customerRepo.save(customer);
     }
-    @Transactional
+
+    @Transactional(readOnly = true)
     public Optional<User> findByUsername(String username) {
         return userRepo.findByUsername(username);
     }

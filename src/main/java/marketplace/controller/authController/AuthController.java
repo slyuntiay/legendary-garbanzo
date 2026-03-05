@@ -1,5 +1,7 @@
 package marketplace.controller.authController;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import marketplace.dto.customerDto.CustomerResponse;
 import marketplace.dto.userDto.UserLoginRequest;
@@ -20,6 +22,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,7 +45,7 @@ public class AuthController {
 
         User user = userMapper.toEntity(request);
         user.setPassword(passwordEncoder.encode(request.getPassword()));
-        user.setRole(User.Role.ADMIN);
+        user.setRole(User.Role.USER);
         user.setEnabled(true);
         User savedUser = userService.save(user);
 
@@ -53,17 +56,17 @@ public class AuthController {
         return ResponseEntity.ok(customerMapper.toResponse(savedCustomer));
     }
     @PostMapping("/login")
-    public ResponseEntity<Map<String, Object>> login(@RequestBody UserLoginRequest request) {
-        // 1. НАЙДИ ПОЛЬЗОВАТЕЛЯ
+    public ResponseEntity<Map<String, Object>> login(HttpServletRequest req,
+                                                     HttpServletResponse resp,  // ← Добавляем response как параметр
+                                                     @RequestBody UserLoginRequest request) {
+
         User user = userService.findByUsername(request.getUsername())
                 .orElseThrow(() -> new UsernameNotFoundException("Пользователь не найден"));
 
-        // 2. ПРОВЕРЬ ПАРОЛЬ
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
             throw new BadCredentialsException("Неверный пароль");
         }
 
-        // 3. МАНУАЛЬНАЯ АУТЕНТИФИКАЦИЯ (БЕЗ AuthenticationManager!)
         UserDetails userDetails = org.springframework.security.core.userdetails.User.builder()
                 .username(user.getUsername())
                 .password(user.getPassword())
@@ -76,11 +79,28 @@ public class AuthController {
 
         SecurityContextHolder.getContext().setAuthentication(auth);
 
-        // 4. ОТВЕТ
         Map<String, Object> response = new HashMap<>();
-        response.put("message", "✅ Логин успешен: " + user.getUsername());
         response.put("username", user.getUsername());
         response.put("role", user.getRole().name());
+
+        HttpSessionSecurityContextRepository repo = new HttpSessionSecurityContextRepository();
+        repo.saveContext(SecurityContextHolder.getContext(), req, resp);
+
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/current-role")
+    public ResponseEntity<Map<String, String>> getCurrentRole() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        if (auth == null || !auth.isAuthenticated()) {
+            throw new IllegalStateException("Пользователь не аутентифицирован");
+        }
+
+        String role = auth.getAuthorities().iterator().next().getAuthority();
+
+        Map<String, String> response = new HashMap<>();
+        response.put("role", role);
 
         return ResponseEntity.ok(response);
     }
