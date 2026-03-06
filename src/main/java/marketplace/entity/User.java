@@ -22,14 +22,12 @@ public class User extends BaseEntity {
     @Column(nullable = false)
     private String password;
 
+    @Transient
     private String token;
 
     @Column(name = "role")
     @Enumerated(EnumType.STRING)
     private Role role = Role.USER;
-
-    @Column(nullable = false)
-    private boolean enabled = true;
 
     public enum Role{
         USER, ADMIN, GUEST

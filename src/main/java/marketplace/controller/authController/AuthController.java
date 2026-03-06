@@ -9,6 +9,7 @@ import marketplace.entity.User;
 import marketplace.mapper.CustomerMapper;
 import marketplace.mapper.UserMapper;
 import marketplace.service.JwtTokenService.JwtTokenService;
+import marketplace.service.customerService.CustomerService;
 import marketplace.service.userService.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -31,6 +32,7 @@ import java.util.Map;
 public class AuthController {
 
     private final UserService userService;
+    private final CustomerService customerService;
     private final UserMapper userMapper;
     private final CustomerMapper customerMapper;
     private final PasswordEncoder passwordEncoder;
@@ -42,12 +44,11 @@ public class AuthController {
         User user = userMapper.toEntity(request);
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setRole(User.Role.USER);
-        user.setEnabled(true);
         User savedUser = userService.save(user);
 
         Customer customer = customerMapper.toEntity(request);
         customer.setUser(savedUser);
-        Customer savedCustomer = userService.save(customer);
+        Customer savedCustomer = customerService.save(customer);
 
         return ResponseEntity.ok(customerMapper.toResponse(savedCustomer));
     }

@@ -1,13 +1,14 @@
 package marketplace.controller.authController;
 
-import lombok.NoArgsConstructor;
 import marketplace.dto.customerDto.CustomerResponse;
+import marketplace.dto.userDto.UserLoginRequest;
 import marketplace.dto.userDto.UserRegisterRequest;
 import marketplace.entity.Customer;
 import marketplace.entity.User;
 import marketplace.mapper.CustomerMapper;
 import marketplace.mapper.UserMapper;
 import marketplace.service.JwtTokenService.JwtTokenService;
+import marketplace.service.customerService.CustomerService;
 import marketplace.service.userService.UserService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -28,6 +29,9 @@ public class AuthControllerTest {
 
     @Mock
     private UserService userService;
+
+    @Mock
+    private CustomerService customerService;
 
     @Mock
     private UserMapper userMapper;
@@ -59,7 +63,7 @@ public class AuthControllerTest {
         when(passwordEncoder.encode(any(String.class))).thenReturn("encoded");
         when(userService.save(any(User.class))).thenReturn(user);
         when(customerMapper.toEntity(any(UserRegisterRequest.class))).thenReturn(customer);
-        when(userService.save(any(Customer.class))).thenReturn(savedCustomer);
+        when(customerService.save(any(Customer.class))).thenReturn(savedCustomer);
         when(customerMapper.toResponse(any(Customer.class))).thenReturn(customerResponse);
 
         ResponseEntity<CustomerResponse> response = authController.register(request);
@@ -72,8 +76,22 @@ public class AuthControllerTest {
         verify(passwordEncoder).encode(any(String.class));
         verify(userService).save(any(User.class));
         verify(customerMapper).toEntity(any(UserRegisterRequest.class));
-        verify(userService).save(any(Customer.class));
+        verify(customerService).save(any(Customer.class));
         verify(customerMapper).toResponse(any(Customer.class));
+    }
+
+    @Test
+    void login_ReturnsTokenUsernameRoleMap() {
+        UserLoginRequest request = new UserLoginRequest();
+        request.setUsername("username");
+        request.setPassword("password");
+
+        User user = new User();
+        user.setUsername("username");
+        user.setPassword(passwordEncoder.encode("password"));
+        user.setRole(User.Role.USER);
+
+
     }
 }
 

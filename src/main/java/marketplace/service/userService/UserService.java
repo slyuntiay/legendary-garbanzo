@@ -15,16 +15,10 @@ import java.util.Optional;
 public class UserService {
 
     private final UserRepo userRepo;
-    private final CustomerRepo customerRepo;
 
     @Transactional
     public User save(User user) {
         return userRepo.save(user);
-    }
-
-    @Transactional
-    public Customer save(Customer customer) {
-        return customerRepo.save(customer);
     }
 
     @Transactional(readOnly = true)
