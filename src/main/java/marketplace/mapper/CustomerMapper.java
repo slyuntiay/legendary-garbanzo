@@ -1,8 +1,8 @@
 package marketplace.mapper;
 
-import marketplace.dto.customerDto.CustomerRequest;
-import marketplace.dto.customerDto.CustomerResponse;
-import marketplace.dto.userDto.UserRegisterRequest;
+import marketplace.dto.customer.CustomerRequest;
+import marketplace.dto.customer.CustomerResponse;
+import marketplace.dto.user.UserRegisterRequest;
 import marketplace.entity.Customer;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

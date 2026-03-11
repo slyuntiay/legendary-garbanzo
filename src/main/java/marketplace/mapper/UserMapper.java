@@ -1,7 +1,7 @@
 package marketplace.mapper;
 
-import marketplace.dto.userDto.UserProfileResponse;
-import marketplace.dto.userDto.UserRegisterRequest;
+import marketplace.dto.user.UserProfileResponse;
+import marketplace.dto.user.UserRegisterRequest;
 import marketplace.entity.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;

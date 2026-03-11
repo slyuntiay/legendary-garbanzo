@@ -1,7 +1,7 @@
 package marketplace.mapper;
 
-import marketplace.dto.basketDto.BasketRequest;
-import marketplace.dto.basketDto.BasketResponse;
+import marketplace.dto.basket.BasketRequest;
+import marketplace.dto.basket.BasketResponse;
 import marketplace.entity.Basket;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
