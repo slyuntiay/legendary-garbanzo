@@ -22,6 +22,7 @@
     </properties>
 
     <dependencies>
+
         <!-- Web -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -93,14 +94,20 @@
             <artifactId>spring-boot-starter-amqp</artifactId>
         </dependency>
 
-        <!-- springdoc -->
+        <!-- Spring-cloud -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-stream-rabbit</artifactId>
+        </dependency>
+
+        <!-- Springdoc -->
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
             <version>2.2.0</version>
         </dependency>
 
-        <!-- security -->
+        <!-- Security -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
@@ -125,7 +132,7 @@
             <scope>runtime</scope>
         </dependency>
 
-        <!-- junitTest -->
+        <!-- JunitTest -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -135,15 +142,15 @@
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
-            <version>5.7.0</version>   <!-- или актуальную -->
+            <version>5.7.0</version>
             <scope>test</scope>
         </dependency>
 
-        <!-- Интеграция Mockito + JUnit 5 (нужен MockitoExtension) -->
+        <!-- Mockito + JUnit 5 -->
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-junit-jupiter</artifactId>
-            <version>5.7.0</version>   <!-- или актуальную -->
+            <version>5.7.0</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -153,7 +160,7 @@
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
-                <version>${spring-cloud.version}</version>
+                <version>2022.0.4</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
